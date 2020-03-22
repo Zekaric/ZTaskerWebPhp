@@ -1,0 +1,9 @@
+ErrorDocument 503 "This site does not support outdated browsers"
+RewriteEngine On
+RewriteCond %{HTTP_USER_AGENT} ^.*(MSIE\ 6\.0).*$ [NC]
+RewriteRule .* - [R=503,L]
+
+# To set your custom php.ini, add the following line to this file:
+# suphp_configpath /home/yourusername/path/to/php.ini
+Options -Indexes
+Redirect index.html http://www.zekaric.com/wp/index.php

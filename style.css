@@ -1,0 +1,220 @@
+/* MIT License ****************************************************************
+Copyright (c) 2015 Robbert de Groot
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+******************************************************************************/
+
+/******************************************************************************
+Basic styles.
+******************************************************************************/
+form
+{
+   margin:              0.5rem;
+}
+
+p
+{
+   font-size:           1rem;
+}
+
+table
+{
+   width:               100%;
+   /*border:              1px solid black;*/
+}
+
+td
+{
+   vertical-align:      top;
+}
+
+a
+{
+   color:               #555;
+   text-decoration:     none;
+}
+
+a:hover
+{
+   color:               #888;
+   text-decoration:     none;
+}
+
+
+/******************************************************************************
+Page level styles.
+******************************************************************************/
+a.lytStyleTitle
+{   
+   text-decoration:     none;
+}
+
+
+a.lytStyleMenu
+{
+   color:               white;
+   text-decoration:     none;
+}
+
+a.lytStyleMenu:hover
+{
+   color:               #99f;
+   text-decoration:     none;
+}
+
+p.lytStyleMenu
+{
+   font-size:           1.25rem;
+   color:               white;
+}
+
+td.lytStyleMenu
+{
+   text-align:          center;
+   background-color:    black;
+   padding:             0.25rem;
+}
+
+
+p.lytStyleFooter
+{
+   color:               white;
+}
+
+td.lytStyleColumn
+{
+   width:               70%;
+   padding:             1.0rem;
+}
+
+td.lytStyleColumnL
+{
+   width:               15%;
+   background-color:    #eee;
+   padding:             0.25rem;
+   vertical-align:      top;
+   border-right:        0.25rem solid black;
+}
+
+td.lytStyleColumnR 
+{
+   width:               15%;
+   background-color:    #eee;
+   padding:             0.25rem;
+   vertical-align:      top;
+   border-left:         0.25rem solid black;
+}
+
+a.lytStyleColumn
+{
+   color:               black;
+   text-decoration:     none;
+}
+
+a.lytStyleColumn:hover
+{
+   color:               #555;
+   text-decoration:     none;
+}
+
+td.lytStyleFooter
+{
+   text-align:          center;
+   background-color:    black;
+   padding:             0.25rem;
+}
+
+
+/******************************************************************************
+Post level styles.
+******************************************************************************/
+td.lytStylePostTitle
+{  
+   border-bottom:       0.25rem solid black;
+}
+
+h1.lytStylePostTitle
+{
+   font-family:         Arial, Helvetica, sans-serif;
+   font-size:           1.5rem;
+   font-weight:         bold;
+   padding-bottom:      0.25rem;
+}
+
+td.lytStylePostTitleSub
+{
+   padding-top:         0.25rem;
+   padding-bottom:      0.5rem;
+}
+
+td.lytStylePostTitleSubRight
+{
+   text-align:          right;
+   padding-top:         0.25rem;
+   padding-bottom:      0.5rem;
+}
+
+h1.lytStylePostTitleSub
+{
+   font-size:           0.75rem;
+}
+
+td.lytStylePostBody
+{
+   text-align:          justify;
+}
+
+p.lytStylePostBody
+{
+   margin-left:         2rem;
+   margin-right:        2rem;
+   margin-bottom:       1rem;
+}
+
+p.lytStylePostBodyCode
+{
+   margin-left:         3rem;
+   margin-right:        3rem;
+   margin-bottom:       1rem;
+   padding:             0.5rem;
+   font-family:         consolas, monospace;
+   background-color:    #eee;
+}
+
+ul.lytStylePostBody
+{
+   margin-left:         2rem;
+   margin-right:        2rem;
+   margin-bottom:       1rem;
+}
+
+ol.lytStylePostBody
+{
+   margin-left:         2rem;
+   margin-right:        2rem;
+   margin-bottom:       1rem;
+}
+
+li.lytStylePostBody
+{
+   margin-left:         2rem;
+   margin-right:        2rem;
+}
+
+
