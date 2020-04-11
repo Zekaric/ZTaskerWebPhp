@@ -31,19 +31,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************************/
 
-define("IS_DISPLAYING_PROJECT_LIST",   "Project");
-define("IS_DISPLAYING_ARCHIVE_LIST",   "Archive");
-define("IS_DISPLAYING_ACTIVE_LIST",    "Active");
+define("IS_DISPLAYING_PROJ_LIST",   "Project");
+define("IS_DISPLAYING_TASK_LIST",   "Task");
 
-define("KEY_PROJECT_LIST_ID",          "id");
-define("KEY_PROJECT_LIST_NAME",        "name");
-define("KEY_PROJECT_LIST_DESCRIPTION", "description");
-define("KEY_PROJECT_LIST_IS_VISIBLE",  "isVisible");
+define("KEY_PROJ_LIST_NAME",        "name");
+define("KEY_PROJ_LIST_DESC",        "description");
+define("KEY_PROJ_LIST_IS_VISIBLE",  "isVisible");
 
-define("KEY_TASK_LIST_ID",             "id");
-define("KEY_TASK_LIST_ID_PROJECT",     "idProject");
-define("KEY_TASK_LIST_PRIORITY",       "priority");
-define("KEY_TASK_LIST_EFFORT",         "effort");
-define("KEY_TASK_LIST_STATUS",         "status");
-define("KEY_TASK_LIST_DESCRIPTION",    "description");
+define("KEY_TASK_LIST_ID_PROJ",     "idProject");
+define("KEY_TASK_LIST_PRIORITY",    "priority");
+define("KEY_TASK_LIST_EFFORT",      "effort");
+define("KEY_TASK_LIST_STATUS",      "status");
+define("KEY_TASK_LIST_DESC",        "description");
 
+define("CMD_STATUS_NW",             "Needs Work");
+define("CMD_STATUS_IW",             "In Work");
+define("CMD_STATUS_NT",             "Needs Testing");
+define("CMD_STATUS_IT",             "In Testing");
+define("CMD_STATUS_ND",             "Needs Doc.");
+define("CMD_STATUS_ID",             "In Doc.");
+define("CMD_STATUS_NR",             "Needs Release");
+define("CMD_STATUS_IR",             "In Release");
+define("CMD_STATUS_AR",             "Archive Released");
+define("CMD_STATUS_AD",             "Archive Done");
+define("CMD_STATUS_AN",             "Archive None");

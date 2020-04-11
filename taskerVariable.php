@@ -46,7 +46,7 @@ require_once "tasker_Variable.php";
 
 ///////////////////////////////////////////////////////////////////////////////
 // Get functions
-function taskerVarGetListProject()
+function &taskerVarGetListProject()
 {
    global $taskerListProject;
    return $taskerListProject;
@@ -57,26 +57,15 @@ function taskerVarGetListProjectCount()
    return count(taskerVarGetListProject());
 }
 
-function taskerVarGetListTaskActive()
+function &taskerVarGetListTask()
 {
-   global $taskerListTaskActive;
-   return $taskerListTaskActive;
+   global $taskerListTask;
+   return $taskerListTask;
 }
 
-function taskerVarGetListTaskActiveCount()
+function taskerVarGetListTaskCount()
 {
-   return count(taskerVarGetListTaskActive());
-}
-
-function taskerVarGetListTaskArchive()
-{
-   global $taskerListTaskArchive;
-   return $taskerListTaskArchive;
-}
-
-function taskerVarGetListTaskArchiveCount()
-{
-   return count(taskerVarGetListTaskArchive());
+   return count(taskerVarGetListTask());
 }
 
 function taskerVarGetNextIdProject()
@@ -107,6 +96,30 @@ function taskerVarGetSortOrderTask()
 {
    global $taskerSortOrderTask;
    return $taskerSortOrderTask;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Is functions
+function taskerVarIsDisplayingProjectList()
+{
+   global $taskerIsDisplaying;
+
+   if ($taskerIsDisplaying == IS_DISPLAYING_PROJ_LIST)
+   {
+      return true;
+   }
+   return false;
+}
+
+function taskerVarIsDisplayingTaskList()
+{
+   global $taskerIsDisplaying;
+
+   if ($taskerIsDisplaying == IS_DISPLAYING_TASK_LIST)
+   {
+      return true;
+   }
+   return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -157,13 +170,12 @@ function taskerVarSave()
 
    $str = "<?php\n\n" .
       "\$taskerListProject      = array();\n" .
-      "\$taskerListTaskActive   = array();\n" .
-      "\$taskerListTaskArchive  = array();\n\n" .      
+      "\$taskerListTask         = array();\n" .
       "\$taskerNextIdProject    = " . $taskerNextIdProject      . ";\n"     .
       "\$taskerNextIdTask       = " . $taskerNextIdTask         . ";\n\n"   .
       "\$taskerIsDisplaying     = \"" . $taskerIsDisplaying     . "\";\n\n" .
       "\$taskerSortOrderProject = \"" . $taskerSortOrderProject . "\";\n"   .
       "\$taskerSortOrderTask    = \"" . $taskerSortOrderTask    . "\";\n";
 
-   zFileStoreText("taskerListProject.php", $str, true);
+   zFileStoreText("tasker_Variable.php", $str, true);
 }

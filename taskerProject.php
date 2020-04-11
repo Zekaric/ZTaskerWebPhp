@@ -51,12 +51,24 @@ require_once "taskerVariable.php";
 // Add project.
 function taskerProjectAdd($name, $isVisible, $description)
 {
+   global $taskerListProject;
+
+   // Get the project list.
+   $list = &taskerVarGetListProject();
+
+   // Get the index of the new project.
+   $index = count($list);
+
+   // Add a new project to the list.
+   $list[$index] = array();
+
+   // Modify that project.
    taskerProjectEdit(
-      count($taskerListProject),
-      taskerVarGetNextIdProject(),
+      $index,
       $name,
       $isVisible,
-      $description);
+      $description,
+      false);
 
    // Append the new project to the project list php.
    taskerProject_SaveNew();
@@ -70,41 +82,47 @@ function taskerProjectAdd($name, $isVisible, $description)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Edit a project.
-function taskerProjectEdit($index, $id, $name, $isVisible, $description)
+function taskerProjectEdit($index, $name, $isVisible, $description, $isSaving)
 {
-   taskerProjectSet($index, id, $name, $isVisible, $description);
+   taskerProjectSet($index, $name, $isVisible, $description);
 
-   // Save the project list.
-   taskerProject_Save();
+   if ($isSaving)
+   {
+      // Save the project list.
+      taskerProject_Save();
+   }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Get functions
 function taskerProjectGetDescription($index)
 {
-   return taskerVarGetListProject()[$index][KEY_PROJECT_LIST_DESCRIPTION];
-}
-
-function taskerProjectGetId($index)
-{
-   return taskerVarGetListProject()[$index][KEY_PROJECT_LIST_ID];
+   $list = &taskerVarGetListProject();
+   $proj = $list[$index];
+   
+   return $proj[KEY_PROJ_LIST_DESC];
 }
 
 function taskerProjectGetName($index)
 {
-   return taskerVarGetListProject()[$index][KEY_PROJECT_LIST_NAME];
+   $list = &taskerVarGetListProject();
+   $proj = $list[$index];
+   
+   return $proj[KEY_PROJ_LIST_NAME];
 }
 
 function taskerProjectIsVisible($index)
 {
-   return taskerVarGetListProject()[$index][KEY_PROJECT_LIST_IS_VISIBLE];
+   $list = &taskerVarGetListProject();
+   $proj = $list[$index];
+   
+   return $proj[KEY_PROJ_LIST_IS_VISIBLE];
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Set functions
-function taskerProjectSet($index, $id, $name, $isVisible, $description)
+function taskerProjectSet($index, $name, $isVisible, $description)
 {
-   taskerProjectSetId(         $index, id);
    taskerProjectSetName(       $index, $name);
    taskerProjectSetIsVisible(  $index, $isVisible);
    taskerProjectSetDescription($index, $description);
@@ -112,22 +130,26 @@ function taskerProjectSet($index, $id, $name, $isVisible, $description)
 
 function taskerProjectSetDescription($index, $value)
 {
-   taskerVarGetListProject()[$index][KEY_PROJECT_LIST_DESCRIPTION] = $value;
-}
-
-function taskerProjectSetId($index, $value)
-{
-   taskerVarGetListProject()[$index][KEY_PROJECT_LIST_ID] = $value;
+   $list = &taskerVarGetListProject();
+   $proj = &$list[$index];
+   
+   $proj[KEY_PROJ_LIST_DESC] = $value;
 }
 
 function taskerProjectSetName($index, $value)
 {
-   taskerVarGetListProject()[$index][KEY_PROJECT_LIST_NAME] = $value;
+   $list = &taskerVarGetListProject();
+   $proj = &$list[$index];
+   
+   $proj[KEY_PROJ_LIST_NAME] = $value;
 }
 
 function taskerProjectSetIsVisible($index, $value)
 {
-   taskerVarGetListProject()[$index][KEY_PROJECT_LIST_IS_VISIBLE] = $value;
+   $list = &taskerVarGetListProject();
+   $proj = &$list[$index];
+   
+   $proj[KEY_PROJ_LIST_IS_VISIBLE] = $value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -139,11 +161,19 @@ function taskerProjectSetIsVisible($index, $value)
 // compose the code string.
 function taskerProject_Compose($index)
 {
+   $isVis = "false";
+   if (taskerProjectIsVisible($index))
+   {
+      $isVis = "true";
+   }
+
+   $name = taskerProjectGetName($index);
+   $desc = taskerProjectGetDescription($index);
+
    $str = "\$taskerListProject[" . $index . "] = array(" .
-      "\"" . KEY_PROJECT_LIST_ID          . "\" => " . taskerProjectGetId(         $index) . ", " .
-      "\"" . KEY_PROJECT_LIST_IS_VISIBLE  . "\" => " . taskerProjectIsVisible(     $index) . ", " .
-      "\"" . KEY_PROJECT_LIST_NAME        . "\" => " . taskerProjectGetName(       $index) . ", " .
-      "\"" . KEY_PROJECT_LIST_DESCRIPTION . "\" => " . taskerProjectGetDescription($index) . ");\n";
+      "KEY_PROJ_LIST_IS_VISIBLE => " . $isVis . ", " .
+      "KEY_PROJ_LIST_NAME => \"" .     $name  . "\", " .
+      "KEY_PROJ_LIST_DESC => \"" .     $desc  . "\"); \$taskerNextIdProject++;\n";
 
    return $str;
 }
@@ -152,7 +182,8 @@ function taskerProject_Compose($index)
 // Save the project list.
 function taskerProject_Save()
 {
-   $file  = "<?php\n";
+   $file  = "<?php\n" . 
+      "\$taskerNextIdProject = 0\n";
    $count = taskerVarGetListProjectCount();
    for ($index = 0; $index < $count; $index++)
    {
@@ -160,7 +191,7 @@ function taskerProject_Save()
       $file .= $str;
    }
 
-   zFileStoreText("taskerListProject.php", $str, true);
+   zFileStoreText("taskerListProject.php", $file, true);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -170,5 +201,5 @@ function taskerProject_SaveNew()
    $index = taskerVarGetListProjectCount() - 1;
    $str   = taskerProject_Compose($index);
 
-   zFileAppendText("taskerListProject.php", $str, true);
+   zFileAppendText("tasker_ListProject.php", $str, true);
 }

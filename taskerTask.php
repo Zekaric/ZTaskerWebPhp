@@ -86,7 +86,7 @@ function taskerTaskEdit($index, $id, $idProject, $priority, $effort, $status, $d
 // Get functions
 function taskerTaskGetDescription($index)
 {
-   return taskerGetListTask()[$index][KEY_TASK_LIST_DESCRIPTION];
+   return taskerGetListTask()[$index][KEY_TASK_LIST_DESC];
 }
 
 function taskerTaskGetEffort($index)
@@ -101,7 +101,7 @@ function taskerTaskGetId($index)
 
 function taskerTaskGetIdProject($index)
 {
-   return taskerGetListTask()[$index][KEY_TASK_LIST_ID_PROJECT];
+   return taskerGetListTask()[$index][KEY_TASK_LIST_ID_PROJ];
 }
 
 function taskerTaskGetPriority($index)
@@ -128,7 +128,7 @@ function taskerTaskSet($index, $id, $idProject, $priority, $effort, $status, $de
 
 function taskerTaskSetDescription($index, $value)
 {
-   taskerGetListTask()[$index][KEY_TASK_LIST_DESCRIPTION] = $value;
+   taskerGetListTask()[$index][KEY_TASK_LIST_DESC] = $value;
 }
 
 function taskerTaskSetId($index, $value)
@@ -138,7 +138,7 @@ function taskerTaskSetId($index, $value)
 
 function taskerTaskSetIdProject($index, $value)
 {
-   taskerGetListTask()[$index][KEY_TASK_LIST_ID_PROJECT] = $value;
+   taskerGetListTask()[$index][KEY_TASK_LIST_ID_PROJ] = $value;
 }
 
 function taskerTaskSetEffort($index, $value)
@@ -168,12 +168,12 @@ function taskerTask_Compose($list, $index)
    global $taskerListProject;
 
    $str = "\$taskerListTask[" . $index . "] = array(" .
-      "\"" . KEY_TASK_LIST_ID          . "\" => " . taskerTaskGetId(         $index) . ", " .
-      "\"" . KEY_TASK_LIST_ID_PROJECT  . "\" => " . taskerTaskGetIdProject(  $index) . ", " .
-      "\"" . KEY_TASK_LIST_PRIORITY    . "\" => " . taskerTaskGetPriority(   $index) . ", " .
-      "\"" . KEY_TASK_LIST_EFFORT      . "\" => " . taskerTaskGetEffort(     $index) . ", " .
-      "\"" . KEY_TASK_LIST_STATUS      . "\" => " . taskerTaskGetStatus(     $index) . ", " .
-      "\"" . KEY_TASK_LIST_DESCRIPTION . "\" => " . taskerTaskGetDescription($index) . ");\n";
+      "\"" . KEY_TASK_LIST_ID       . "\" => " . taskerTaskGetId(         $index) . ", " .
+      "\"" . KEY_TASK_LIST_ID_PROJ  . "\" => " . taskerTaskGetIdProject(  $index) . ", " .
+      "\"" . KEY_TASK_LIST_PRIORITY . "\" => " . taskerTaskGetPriority(   $index) . ", " .
+      "\"" . KEY_TASK_LIST_EFFORT   . "\" => " . taskerTaskGetEffort(     $index) . ", " .
+      "\"" . KEY_TASK_LIST_STATUS   . "\" => " . taskerTaskGetStatus(     $index) . ", " .
+      "\"" . KEY_TASK_LIST_DESC     . "\" => " . taskerTaskGetDescription($index) . ");\n";
 
    return $str;
 }
