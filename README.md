@@ -44,3 +44,9 @@ chown www-data:www-data *
 chmod 755 *
 
 ... on the files in that folder for it to work properly.
+
+## Update
+
+This project is mostly done.  Until I actually used it day to day or find something lacking then I will continue with it.  
+
+Unfortunately, my QNAP's web server is acting rather oddly.  If I try to do anything 'quickly' with this code the QNAP tries to be smart and recover changes or something.  As a result the code is battling QNAP's built in behaviour and in the end causing oddness and corruption.  So all this work and I still can't use it.  I will probably use a dedicated LINUX machine and see if that works better.  The only down side is that the machine will need to schedule backups with the QNAP somehow.  I'm hoping it behaves properly.  When developing this code I was using XAMPP on windows and it was working very well.
