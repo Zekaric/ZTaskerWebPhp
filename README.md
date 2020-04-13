@@ -45,8 +45,9 @@ chmod 755 *
 
 ... on the files in that folder for it to work properly.
 
-## Update
+On your web server you will need to update your php.ini file.  By default it will cache the last run of a file and will not look at file updates unless you tell it to.  In the php.ini file look for a variable...
 
-This project is mostly done.  Until I actually used it day to day or find something lacking then I will continue with it.  
+opcache.enable = 0
+opcache.revalidate_freq = 0
 
-Unfortunately, my QNAP's web server is acting rather oddly.  If I try to do anything 'quickly' with this code the QNAP tries to be smart and recover changes or something.  As a result the code is battling QNAP's built in behaviour and in the end causing oddness and corruption.  So all this work and I still can't use it.  I will probably use a dedicated LINUX machine and see if that works better.  The only down side is that the machine will need to schedule backups with the QNAP somehow.  I'm hoping it behaves properly.  When developing this code I was using XAMPP on windows and it was working very well.
+I set both to 0 but I think you only need to set either to 0.  "revalidate_freq" is basically telling PHP to check the file every time it is to use a file.  In this code base this is necessary as I'm treating a php file as the data file and updating it on the fly.  If the frequency is too slow you may end up with a display that isn't matching what you have actually changed.
