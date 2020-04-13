@@ -54,6 +54,18 @@ table
    /*border:              1px solid black;*/
 }
 
+table.narrow
+{
+   margin:              0;
+   width:               1%;
+}
+
+table.wide
+{
+   margin:              0;
+   width:               100%;
+}
+
 th
 {
    vertical-align:      top;
@@ -106,11 +118,19 @@ td.bool
    padding-right:       var(--tableSpacing);
 }
 
-td.desc
+td.fill
 {
    width:               100%;
    vertical-align:      top;
    text-align:          left;
+}
+
+td.fillNoPad
+{
+   width:               100%;
+   vertical-align:      top;
+   text-align:          left;
+   padding-right:       0;
 }
 
 a

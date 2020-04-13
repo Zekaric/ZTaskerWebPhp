@@ -106,12 +106,11 @@ END;
       print <<< END
     <tr>
      <th></th>
-      <th>n:P&nbsp;ID</th>
-       <th>v:Vis</th>
-        <th>j:Project</th>
-         <th class="desc">d:Description</th>
+      <th><nobr>n:P ID</nobr></th>
+       <th><nobr>v:Vis</nobr></th>
+        <th><nobr>j:Project</nobr></th>
+         <th class="fill"><nobr>d:Description</nobr></th>
     </tr>
-    <tr>
 END;
 
       /////////////////////////////////////////////////////////////////////////
@@ -134,11 +133,12 @@ END;
 
          // Display the project data.
          print "" .
+            "    <tr>\n" .
             "     <td class=\"num\">"        . ($index + 1) . "</td>\n" .
             "      <td class=\"num\">"       . $projId      . "</td>\n" .
             "       <td class=\"bool\">"     . $projIsVis   . "</td>\n" .
             "        <td>"                   . $projName    . "</td>\n" .
-            "         <td class=\"desc\">"   . $projDesc    . "</td>\n" .
+            "         <td class=\"fill\">"   . $projDesc    . "</td>\n" .
             "    </tr>\n";
       }
    }
@@ -151,16 +151,56 @@ END;
 
       print <<< END
     <tr>
-     <th></th>
-      <th>i:ID</th>
-       <th>n:P&nbsp;ID</th>
-        <th>j:Project</th>
-         <th>p:Priority</th>
-          <th>e:Effort</th>
-           <th>s:Status</th>
-            <th class="desc">d:Description</th>
-    </tr>
-    <tr>
+     <td> 
+      <table class="narrow">
+       <tbody>
+        <tr>
+         <th><nobr>P ID</nobr></th>
+          <th><nobr>Vis</nobr></th>
+           <th><nobr>Project</nobr></th>
+        </tr>
+END;
+      
+      // For all projects...
+      for ($index = 0; $index < $countProject; $index++)
+      {
+         // Get the visibilty string.
+         $projIsVis = "<img class=sized src=rankBit0.svg />";
+         if (taskerProjectIsVisible($index))
+         {
+            $projIsVis = "<img class=sized src=rankBit1.svg />";
+         }
+
+         // Get the project name.
+         $projId   = taskerProjectGetId($index);
+         $projName = str_replace(" ", "&nbsp;", taskerProjectGetName($index));
+
+         // Display the project data.
+         print "" .
+            "         <tr>\n" .
+            "          <td class=\"num\">"   . $projId      . "</td>\n" .
+            "           <td class=\"bool\">" . $projIsVis   . "</td>\n" .
+            "            <td>"               . $projName    . "</td>\n" .
+            "         </tr>\n";
+      }
+
+      print <<< END
+       </tbody>
+      </table>
+     </td>
+     <td class="fillNoPad">
+      <table class="wide">
+       <tbody>
+        <tr>
+         <th></th>
+          <th>i:ID</th>
+           <th>n:P&nbsp;ID</th>
+            <th>j:Project</th>
+             <th>p:Priority</th>
+              <th>e:Effort</th>
+               <th>s:Status</th>
+                <th class="fill">d:Description</th>
+        </tr>
 END;
 
       /////////////////////////////////////////////////////////////////////////
@@ -230,21 +270,27 @@ END;
          // Display the task.
          $rowIndex++;
          print "" .
-            "     <td class=\"num\">"         . $rowIndex      . "</td>\n" .
-            "      <td class=\"num\">"        . $taskId        . "</td>\n" .
-            "       <td class=\"num\">"       . $projId        . "</td>\n" .
-            "        <td>"                    . $projName      . "</td>\n" .
-            "         <td>"                   . $taskPriority  . "</td>\n" .
-            "          <td>"                  . $taskEffort    . "</td>\n" .
-            "           <td>"                 . $taskStatus    . "</td>\n" .
-            "            <td class=\"desc\">" . $taskDesc      . "</td>\n" .
-            "    </tr>\n";
+            "        </tr>\n" .
+            "         <td class=\"num\">"         . $rowIndex      . "</td>\n" .
+            "          <td class=\"num\">"        . $taskId        . "</td>\n" .
+            "           <td class=\"num\">"       . $projId        . "</td>\n" .
+            "            <td>"                    . $projName      . "</td>\n" .
+            "             <td>"                   . $taskPriority  . "</td>\n" .
+            "              <td>"                  . $taskEffort    . "</td>\n" .
+            "               <td>"                 . $taskStatus    . "</td>\n" .
+            "                <td class=\"fill\">" . $taskDesc      . "</td>\n" .
+            "        </tr>\n";
       }
    }
 
    ////////////////////////////////////////////////////////////////////////////
    // Print the rest of the page.
    print <<< END
+        </tr>
+       </tbody>
+      </table>
+     </td>
+    </tr>
    </tbody>
   </table>
 
