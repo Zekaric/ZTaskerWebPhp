@@ -9,3 +9,7 @@ $taskerIsDisplaying     = "Task";
 
 $taskerSortOrderProject = "i";
 $taskerSortOrderTask    = "i";
+
+$taskerDefaultIdProject = 1;
+$taskerDefaultPriority  = 1;
+$taskerDefaultEffort    = 1;

@@ -46,6 +46,24 @@ require_once "tasker_Variable.php";
 
 ///////////////////////////////////////////////////////////////////////////////
 // Get functions
+function taskerVarGetDefaultEffort()
+{
+   global $taskerDefaultEffort;
+   return $taskerDefaultEffort;
+}
+
+function taskerVarGetDefaultIdProject()
+{
+   global $taskerDefaultIdProject;
+   return $taskerDefaultIdProject;
+}
+
+function taskerVarGetDefaultPriority()
+{
+   global $taskerDefaultPriority;
+   return $taskerDefaultPriority;
+}
+
 function &taskerVarGetListProject()
 {
    global $taskerListProject;
@@ -124,6 +142,19 @@ function taskerVarIsDisplayingTaskList()
 
 ///////////////////////////////////////////////////////////////////////////////
 // Set functions
+function taskerVarSetDefault($pid, $priority, $effort)
+{
+   global $taskerDefaultEffort;
+   global $taskerDefaultIdProject;
+   global $taskerDefaultPriority;
+
+   zDebugPrint($pid . "  " . $priority . "  " . $effort);
+
+   $taskerDefaultEffort    = $effort;
+   $taskerDefaultIdProject = $pid;
+   $taskerDefaultPriority  = $priority;
+}
+
 function taskerVarSetIsDisplaying($value)
 {
    global $taskerIsDisplaying;
@@ -175,15 +206,21 @@ function taskerVarSave()
    global $taskerIsDisplaying;
    global $taskerSortOrderProject;
    global $taskerSortOrderTask;
+   global $taskerDefaultEffort;
+   global $taskerDefaultIdProject;
+   global $taskerDefaultPriority;
 
    $str = "<?php\n\n" .
       "\$taskerListProject      = array();\n" .
       "\$taskerListTask         = array();\n" .
-      "\$taskerNextIdProject    = " . $taskerNextIdProject      . ";\n"     .
-      "\$taskerNextIdTask       = " . $taskerNextIdTask         . ";\n\n"   .
+      "\$taskerNextIdProject    = "   . $taskerNextIdProject    . ";\n"     .
+      "\$taskerNextIdTask       = "   . $taskerNextIdTask       . ";\n\n"   .
       "\$taskerIsDisplaying     = \"" . $taskerIsDisplaying     . "\";\n\n" .
       "\$taskerSortOrderProject = \"" . $taskerSortOrderProject . "\";\n"   .
-      "\$taskerSortOrderTask    = \"" . $taskerSortOrderTask    . "\";\n";
+      "\$taskerSortOrderTask    = \"" . $taskerSortOrderTask    . "\";\n\n" .
+      "\$taskerDefaultIdProject = "   . $taskerDefaultIdProject . ";\n"     .
+      "\$taskerDefaultPriority  = "   . $taskerDefaultPriority  . ";\n"     .
+      "\$taskerDefaultEffort    = "   . $taskerDefaultEffort    . ";\n";
 
    zFileStoreText("tasker_Variable.php", $str, true);
 }

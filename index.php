@@ -335,13 +335,16 @@ if ($str != "")
          // Add the new project.
          if ($op == "a")
          {
-            if (!isset($projId))    $projId     = 1;
-            if (!isset($priority))  $priority   = 1;
-            if (!isset($effort))    $effort     = 0;
+            if (!isset($projId))    $projId     = taskerVarGetDefaultIdProject();
+            if (!isset($priority))  $priority   = taskerVarGetDefaultPriority();
+            if (!isset($effort))    $effort     = taskerVarGetDefaultEffort();
             if (!isset($status))    $status     = "nw";
             if (!isset($desc))      $desc       = "[missing]";
 
             taskerTaskAdd($projId, $priority, $effort, $status, $desc);
+
+            taskerVarSetDefault($projId, $priority, $effort);
+            taskerVarSave();
          }
          // Edit the project.
          else
@@ -355,13 +358,23 @@ if ($str != "")
             }
             else 
             {
+               $defaultProjId   = taskerVarGetDefaultIdProject();
+               $defaultPriority = taskerVarGetDefaultPriority();
+               $defaultEffort   = taskerVarGetDefaultEffort();
+
                if (!isset($projId))    $projId     = taskerTaskGetIdProject(     $index);
+               else $defaultProjId   = $projId;
                if (!isset($priority))  $priority   = taskerTaskGetPriority(      $index);
+               else $defaultPriority = $priority;
                if (!isset($effort))    $effort     = taskerTaskGetEffort(        $index);
+               else $defaultEffor    = $effort;
                if (!isset($status))    $status     = taskerTaskGetStatus(        $index);
                if (!isset($desc))      $desc       = taskerProjectGetDescription($index);
    
                taskerTaskEdit($index, $projId, $priority, $effort, $status, $desc);
+
+               taskerVarSetDefault($defaultProjId, $defaultPriority, $defaultEffort);
+               taskerVarSave();
             }
          }
       }

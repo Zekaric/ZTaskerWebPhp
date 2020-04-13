@@ -227,7 +227,6 @@ END;
          switch (taskerTaskGetPriority($index))
          {
          default:
-         case 0: $taskPriority = "<img class=sized src= rank0.svg />"; break;
          case 1: $taskPriority = "<img class=sized src= rank1.svg />"; break;
          case 2: $taskPriority = "<img class=sized src= rank2.svg />"; break;
          case 3: $taskPriority = "<img class=sized src= rank3.svg />"; break;
@@ -293,7 +292,39 @@ END;
     </tr>
    </tbody>
   </table>
+END;
+   
+   $defaultPid     = taskerVarGetDefaultIdProject();
+   $defaultProject = taskerProjectGetNameFromId($defaultPid);
+   switch (taskerVarGetDefaultPriority($index))
+   {
+   default:
+   case 1: $defaultPriority = "<img class=sized src= rank1.svg />"; break;
+   case 2: $defaultPriority = "<img class=sized src= rank2.svg />"; break;
+   case 3: $defaultPriority = "<img class=sized src= rank3.svg />"; break;
+   case 4: $defaultPriority = "<img class=sized src= rank4.svg />"; break;
+   case 5: $defaultPriority = "<img class=sized src= rank5.svg />"; break;
+   }
 
+   // Get the effort image.
+   switch (taskerVarGetDefaultEffort($index))
+   {
+   default:
+   case 0: $defaultEffort = "<img class=sized src= rank0.svg />"; break;
+   case 1: $defaultEffort = "<img class=sized src= rank1.svg />"; break;
+   case 2: $defaultEffort = "<img class=sized src= rank2.svg />"; break;
+   case 3: $defaultEffort = "<img class=sized src= rank3.svg />"; break;
+   case 4: $defaultEffort = "<img class=sized src= rank4.svg />"; break;
+   case 5: $defaultEffort = "<img class=sized src= rank5.svg />"; break;
+   }
+
+   print "<p><nobr>Defaults:" .
+      "&nbsp;&nbsp;&nbsp;n:" . $defaultPid . " " . $defaultProject .
+      "&nbsp;&nbsp;&nbsp;p:" . $defaultPriority .
+      "&nbsp;&nbsp;&nbsp;e:" . $defaultEffort . 
+      "</nobr></p>\n";
+
+   print <<< END
   <form method="GET">
    <p><input name="cmd" id="cmd" type="text" size="150" autofocus /></p>
    <input type="submit" hidden />
