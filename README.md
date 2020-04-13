@@ -27,13 +27,15 @@ The data will be found in php files.  So that the PHP parser will be parsing the
 
 This code is intended to be run internally on a secure network and not open to the public.  It is not coded in a way for public access.
 
+This program is intended to be used by a single person.  Multiple users may work but it is not guaranteed.  There is no user tracking in this code.
+
 ## Install
 
 Copy the files to a browser accessable folder on your web server.
 
 Point your browser to that folder and you should be done.
 
-The only potentail gotcha may be tha you will have to ...
+The only potential gotcha may be tha you will have to ...
 
 chown www-data:www-data * 
 
