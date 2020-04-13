@@ -367,7 +367,7 @@ if ($str != "")
                if (!isset($priority))  $priority   = taskerTaskGetPriority(      $index);
                else $defaultPriority = $priority;
                if (!isset($effort))    $effort     = taskerTaskGetEffort(        $index);
-               else $defaultEffor    = $effort;
+               else $defaultEffort   = $effort;
                if (!isset($status))    $status     = taskerTaskGetStatus(        $index);
                if (!isset($desc))      $desc       = taskerProjectGetDescription($index);
    
