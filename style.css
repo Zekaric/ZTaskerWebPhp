@@ -43,6 +43,7 @@ form
 
 p
 {
+   margin-bottom:       var(--paraMargin);
    font-size:           1rem;
 }
 

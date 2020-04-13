@@ -148,14 +148,22 @@ function taskerVarUpdateNextIdProject()
 {
    global $taskerNextIdProject;
 
-   $taskerNextIdProject++;
+   $result = $taskerNextIdProject++;
+
+   taskerVarSave();
+
+   return $result;
 }
 
 function taskerVarUpdateNextIdTask()
 {
    global $taskerNextIdTask;
 
-   $taskerNextIdTask++;
+   $result = $taskerNextIdTask++;
+
+   taskerVarSave();
+
+   return $result;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

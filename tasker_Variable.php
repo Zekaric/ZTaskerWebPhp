@@ -1,13 +1,11 @@
 <?php
 
 $taskerListProject      = array();
-$taskerListTaskActive   = array();
-$taskerListTaskArchive  = array();
-
+$taskerListTask         = array();
 $taskerNextIdProject    = 1;
 $taskerNextIdTask       = 1;
-                                   
-$taskerIsDisplaying     = IS_DISPLAYING_PROJECT_LIST;
+
+$taskerIsDisplaying     = "Project";
 
 $taskerSortOrderProject = "i";
 $taskerSortOrderTask    = "i";

@@ -35,6 +35,7 @@ SOFTWARE.
 // include
 require_once "zDebug.php";
 require_once "zFile.php";
+require_once "zList.php";
 
 require_once "tasker_Constant.php";
 require_once "tasker_Variable.php";
@@ -51,155 +52,168 @@ require_once "taskerVariable.php";
 // Add project.
 function taskerProjectAdd($name, $isVisible, $description)
 {
-   global $taskerListProject;
-
    // Get the project list.
    $list = &taskerVarGetListProject();
-
+      
    // Get the index of the new project.
-   $index = count($list);
-
-   // Add a new project to the list.
-   $list[$index] = array();
-
-   // Modify that project.
-   taskerProjectEdit(
-      $index,
-      $name,
-      $isVisible,
-      $description,
-      false);
-
-   // Append the new project to the project list php.
-   taskerProject_SaveNew();
+   $index = zListAdd($list);
 
    // Increment the next project id.
-   taskerVarUpdateNextIdProject();
+   $id = taskerVarUpdateNextIdProject();
 
+   // Modify that project.
+   taskerProjectSet(
+      $list,
+      $index,
+      $id,
+      $name,
+      $isVisible,
+      $description);
+   
    // Save the changed next id project.
-   taskerVarSave();
+   zListSave(FILE_LIST_PROJ, $list, VAR_LIST_PROJ);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Edit a project.
-function taskerProjectEdit($index, $name, $isVisible, $description, $isSaving)
+function taskerProjectEdit($index, $name, $isVisible, $description)
 {
-   taskerProjectSet($index, $name, $isVisible, $description);
+   // Get the project list.
+   $list = &taskerVarGetListProject();
+      
+   taskerProjectSet(
+      $list,
+      $index,
+      taskerProjectGetId($index),
+      $name,
+      $isVisible,
+      $description);
 
-   if ($isSaving)
-   {
-      // Save the project list.
-      taskerProject_Save();
-   }
+   // Save the changed next id project.
+   zListSave(FILE_LIST_PROJ, $list, VAR_LIST_PROJ);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Get functions
 function taskerProjectGetDescription($index)
 {
-   $list = &taskerVarGetListProject();
-   $proj = $list[$index];
-   
-   return $proj[KEY_PROJ_LIST_DESC];
+   return zListGet(taskerVarGetListProject(), $index, KEY_PROJ_DESC);
+}
+
+function taskerProjectGetId($index)
+{
+   return zLIstGet(taskerVarGetListProject(), $index, KEY_PROJ_ID);
+}
+
+function taskerProjectGetIndex($id)
+{
+   // Get the project list.
+   $list = taskerVarGetListProject();
+
+   // For all projects...
+   $count = count($list);
+   for ($index = 0; $index < $count; $index++)
+   {
+      // Get the project id.
+      $idProject = zListGet($list, $index, KEY_PROJ_ID);
+
+      // If the ids match...
+      if ($id == $idProject)
+      {
+         // Return the index.
+         return $index;
+      }
+   }
+
+   // Return failure.
+   return -1;
 }
 
 function taskerProjectGetName($index)
 {
-   $list = &taskerVarGetListProject();
-   $proj = $list[$index];
-   
-   return $proj[KEY_PROJ_LIST_NAME];
+   return zListGet(taskerVarGetListProject(), $index, KEY_PROJ_NAME);
 }
 
+function taskerProjectGetNameFromId($id)
+{
+   return taskerProjectGetName(taskerProjectGetIndex($id));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Is functions
 function taskerProjectIsVisible($index)
 {
-   $list = &taskerVarGetListProject();
-   $proj = $list[$index];
-   
-   return $proj[KEY_PROJ_LIST_IS_VISIBLE];
+   return zListGet(taskerVarGetListProject(), $index, KEY_PROJ_IS_VISIBLE);
+}
+
+function taskerProjectIsVisibleFromId($id)
+{
+   return taskerProjectIsVisible(taskerProjectGetIndex($id));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Set functions
-function taskerProjectSet($index, $name, $isVisible, $description)
+function taskerProjectSet(&$list, $index, $id, $name, $isVisible, $description)
 {
-   taskerProjectSetName(       $index, $name);
-   taskerProjectSetIsVisible(  $index, $isVisible);
-   taskerProjectSetDescription($index, $description);
-}
-
-function taskerProjectSetDescription($index, $value)
-{
-   $list = &taskerVarGetListProject();
-   $proj = &$list[$index];
-   
-   $proj[KEY_PROJ_LIST_DESC] = $value;
-}
-
-function taskerProjectSetName($index, $value)
-{
-   $list = &taskerVarGetListProject();
-   $proj = &$list[$index];
-   
-   $proj[KEY_PROJ_LIST_NAME] = $value;
-}
-
-function taskerProjectSetIsVisible($index, $value)
-{
-   $list = &taskerVarGetListProject();
-   $proj = &$list[$index];
-   
-   $proj[KEY_PROJ_LIST_IS_VISIBLE] = $value;
+   zListSet($list, $index, KEY_PROJ_ID,         $id);
+   zListSet($list, $index, KEY_PROJ_NAME,       $name);
+   zListSet($list, $index, KEY_PROJ_IS_VISIBLE, $isVisible);
+   zListSet($list, $index, KEY_PROJ_DESC,       $description);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// local
-// function
-///////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-// compose the code string.
-function taskerProject_Compose($index)
+// Sort
+function taskerProjectSort()
 {
-   $isVis = "false";
-   if (taskerProjectIsVisible($index))
+   // List should already be in this order.
+   if (taskerVarGetSortOrderProject() == "i")
    {
-      $isVis = "true";
+      return;
    }
 
-   $name = taskerProjectGetName($index);
-   $desc = taskerProjectGetDescription($index);
+   // Get the project list.
+   $list = &taskerVarGetListProject();
 
-   $str = "\$taskerListProject[" . $index . "] = array(" .
-      "KEY_PROJ_LIST_IS_VISIBLE => " . $isVis . ", " .
-      "KEY_PROJ_LIST_NAME => \"" .     $name  . "\", " .
-      "KEY_PROJ_LIST_DESC => \"" .     $desc  . "\"); \$taskerNextIdProject++;\n";
-
-   return $str;
+   usort($list, 'taskerProjectSortFunction');
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Save the project list.
-function taskerProject_Save()
+function taskerProjectSortFunction($a, $b)
 {
-   $file  = "<?php\n" . 
-      "\$taskerNextIdProject = 0\n";
-   $count = taskerVarGetListProjectCount();
+   $order = taskerVarGetSortOrderProject();
+
+   $count = count($order);
    for ($index = 0; $index < $count; $index++)
    {
-      $str = taskerProject_Compose($index);
-      $file .= $str;
+      $letter = substr($order, $index, 1);
+
+      switch ($letter)
+      {
+      case "i": 
+      case "I":
+         $value = $a[KEY_PROJ_ID] - $b[KEY_PROJ_ID];
+         if ($letter == "I") $value = -$value;
+         if ($value != 0)    return $value;
+         break;
+
+      case "j": 
+      case "J":
+         $value = strnatcmp($a[KEY_PROJ_NAME] < $b[KEY_PROJ_NAME]);
+         if ($letter == "J") $value = -$value;
+         if ($value != 0)    return $value;
+         break;
+
+      case "d":
+      case "D":
+         $value = strnatcmp($a[KEY_PROJ_DESC] < $b[KEY_PROJ_DESC]);
+         if ($letter == "D") $value = -$value;
+         if ($value != 0)    return $value;
+         break;
+      }
    }
 
-   zFileStoreText("taskerListProject.php", $file, true);
-}
+   // Exactly the same. Project Id trumps all.  No two projects will have the
+   // same id.
+   if ($a[KEY_PROJ_ID] < $b[KEY_PROJ_ID]) return -1;
 
-///////////////////////////////////////////////////////////////////////////////
-// Save only an addition to the project list.
-function taskerProject_SaveNew()
-{
-   $index = taskerVarGetListProjectCount() - 1;
-   $str   = taskerProject_Compose($index);
-
-   zFileAppendText("tasker_ListProject.php", $str, true);
+   return 1;
 }

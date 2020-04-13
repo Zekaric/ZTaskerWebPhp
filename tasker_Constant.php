@@ -34,15 +34,17 @@ SOFTWARE.
 define("IS_DISPLAYING_PROJ_LIST",   "Project");
 define("IS_DISPLAYING_TASK_LIST",   "Task");
 
-define("KEY_PROJ_LIST_NAME",        "name");
-define("KEY_PROJ_LIST_DESC",        "description");
-define("KEY_PROJ_LIST_IS_VISIBLE",  "isVisible");
+define("KEY_PROJ_ID",               "id");
+define("KEY_PROJ_NAME",             "name");
+define("KEY_PROJ_DESC",             "description");
+define("KEY_PROJ_IS_VISIBLE",       "isVisible");
 
-define("KEY_TASK_LIST_ID_PROJ",     "idProject");
-define("KEY_TASK_LIST_PRIORITY",    "priority");
-define("KEY_TASK_LIST_EFFORT",      "effort");
-define("KEY_TASK_LIST_STATUS",      "status");
-define("KEY_TASK_LIST_DESC",        "description");
+define("KEY_TASK_ID",               "id");
+define("KEY_TASK_ID_PROJ",          "idProject");
+define("KEY_TASK_PRIORITY",         "priority");
+define("KEY_TASK_EFFORT",           "effort");
+define("KEY_TASK_STATUS",           "status");
+define("KEY_TASK_DESC",             "description");
 
 define("CMD_STATUS_NW",             "Needs Work");
 define("CMD_STATUS_IW",             "In Work");
@@ -55,3 +57,8 @@ define("CMD_STATUS_IR",             "In Release");
 define("CMD_STATUS_AR",             "Archive Released");
 define("CMD_STATUS_AD",             "Archive Done");
 define("CMD_STATUS_AN",             "Archive None");
+
+define("FILE_LIST_PROJ",            "tasker_ListProject.php");
+define("FILE_LIST_TASK",            "tasker_ListTask.php");
+define("VAR_LIST_PROJ",             "\$taskerListProject");
+define("VAR_LIST_TASK",             "\$taskerListTask");
