@@ -58,6 +58,11 @@ function zListAdd(&$list)
 // Get functions
 function zListGet($list, $index, $key)
 {
+   if ($index < 0)
+   {
+	   return null;
+   }
+   
    //zDebugPrint($index." ".$key);
    $array = $list[$index];
    //zDebugPrintArray($array);
@@ -68,6 +73,11 @@ function zListGet($list, $index, $key)
 // Set functions
 function zListSet(&$list, $index, $key, $value)
 {
+   if ($index < 0)
+   {
+	   return;
+   }
+   
    $array = &$list[$index];
    $array[$key] = $value;
 }
