@@ -124,6 +124,11 @@ function zListCompose($varName, $parentIndex, $array)
          break;
 
       case "string":
+         // Properly escape certain characters.
+         $value = str_replace("\$", "\\\$", $value);
+         $value = str_replace("\\", "\\\\", $value);
+         $value = str_replace("\"", "\\\"", $value);
+
          $str .= "\"" . $key . "\" => \"" . $value . "\"";
          break;
       }
