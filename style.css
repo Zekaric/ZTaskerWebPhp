@@ -82,6 +82,11 @@ th.desc
    margin:              1rem;
 }
 
+tr.altrow
+{
+   background-color:	#eee;
+}
+
 td
 {
    vertical-align:      top;

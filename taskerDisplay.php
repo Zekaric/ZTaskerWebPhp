@@ -105,7 +105,6 @@ END;
 
       print <<< END
     <tr>
-     <th></th>
       <th><nobr>n:P ID</nobr></th>
        <th><nobr>v:Vis</nobr></th>
         <th><nobr>j:Project</nobr></th>
@@ -132,9 +131,16 @@ END;
          $projDesc = taskerProjectGetDescription($index);
 
          // Display the project data.
+         if (($index % 2) == 0)
+         {
+            print "         <tr class=\"altrow\">\n";
+         }
+         else
+         {
+            print "         <tr>\n";
+         }
+		 
          print "" .
-            "    <tr>\n" .
-            "     <td class=\"num\">"        . ($index + 1) . "</td>\n" .
             "      <td class=\"num\">"       . $projId      . "</td>\n" .
             "       <td class=\"bool\">"     . $projIsVis   . "</td>\n" .
             "        <td>"                   . $projName    . "</td>\n" .
@@ -176,8 +182,16 @@ END;
          $projName = str_replace(" ", "&nbsp;", taskerProjectGetName($index));
 
          // Display the project data.
-         print "" .
-            "         <tr>\n" .
+         if (($index % 2) == 0)
+         {
+            print "         <tr class=\"altrow\">\n";
+         }
+         else
+         {
+            print "         <tr>\n";
+         }
+
+         print "" . 
             "          <td class=\"num\">"   . $projId      . "</td>\n" .
             "           <td class=\"bool\">" . $projIsVis   . "</td>\n" .
             "            <td>"               . $projName    . "</td>\n" .
@@ -192,7 +206,6 @@ END;
       <table class="wide">
        <tbody>
         <tr>
-         <th></th>
           <th>i:ID</th>
            <th>n:P&nbsp;ID</th>
             <th>j:Project</th>
@@ -267,10 +280,17 @@ END;
          $taskDesc = taskerTaskGetDescription($index);
 
          // Display the task.
-         $rowIndex++;
+         if (($rowIndex % 2) == 0)
+         {
+            print "" .
+                "        <tr class=\"altrow\">\n";
+         }
+         else
+         {
+            print "" .
+                "        <tr>\n";
+         }
          print "" .
-            "        </tr>\n" .
-            "         <td class=\"num\">"         . $rowIndex      . "</td>\n" .
             "          <td class=\"num\">"        . $taskId        . "</td>\n" .
             "           <td class=\"num\">"       . $projId        . "</td>\n" .
             "            <td>"                    . $projName      . "</td>\n" .
@@ -279,6 +299,8 @@ END;
             "               <td>"                 . $taskStatus    . "</td>\n" .
             "                <td class=\"fill\">" . $taskDesc      . "</td>\n" .
             "        </tr>\n";
+
+         $rowIndex++;
       }
    }
 
