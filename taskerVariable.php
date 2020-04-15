@@ -148,8 +148,6 @@ function taskerVarSetDefault($pid, $priority, $effort)
    global $taskerDefaultIdProject;
    global $taskerDefaultPriority;
 
-   zDebugPrint($pid . "  " . $priority . "  " . $effort);
-
    $taskerDefaultEffort    = $effort;
    $taskerDefaultIdProject = $pid;
    $taskerDefaultPriority  = $priority;
