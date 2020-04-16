@@ -360,23 +360,11 @@ END;
     <td><nobr>"l"["t" | "p"]</nobr></td>
      <td>switch between t)ask and p)roject lists.  "l" by itself will cycle between the views.</td>
    </tr><tr>
-    <td>"h."</td>
-     <td>hide all projects' tasks.</td>
+    <td>"v"["." | [project id]] ["" | "+" | "-"]</td>
+     <td>Set the visibility of project tasks.  "." for all projects instead of a specific project.  "+" to turn on visibility.  "-" to turn off visibility.  Nothing to toggle.</td>
    </tr><tr>
-    <td><nobr>"h"[project id]</nobr></td>
-     <td>hide a specific project's task.</td>
-   </tr><tr>
-    <td>"d."</td>
-     <td>display all projects' tasks.</td>
-   </tr><tr>
-    <td><nobr>"d"[project id]</nobr></td>
-     <td>display a specific project's task.</td>
-   </tr><tr>
-    <td>"v."</td>
-     <td>toggle the visibility of all projects' tasks.</td>
-   </tr><tr>
-    <td><nobr>"v"[project id]</nobr></td>
-     <td>toggle the visibility of a specific project's task.</td>
+    <td><nobr>"V"[project id]</nobr></td>
+     <td>Same as performing these two commands.  "v." and "v[project id] +".</td>
    </tr><tr>
     <td><nobr>"o"[col characters]</nobr></td>
      <td>sort order the list in the order of the columns listed.  User uppercase letter for reverse order.  You can list multiple column characters.</td>
@@ -397,11 +385,17 @@ END;
    {
       print <<< END
    </tr><tr>
-    <td><nobr>"a" "n"[pid] "p"["0" - "5"] "e"["0" - "5", "?"] "s"[2char] "`"[string]</nobr></td>
+    <td><nobr>"a" "n"[pid] "p"["1" - "5"] "e"["1" - "5", "?"] "s"[2char] "`"[string]</nobr></td>
      <td>add a new task.  If a value is missing then last known value is used. "`" option must be last.</td>
    </tr><tr>
-    <td><nobr>"e"[id] "n"[pid] "p"["0" - "5"] "e"["0" - "5", "?"] "s"[2char] "`"[string]</nobr></td>
+    <td><nobr>"e"[id] "n"[pid] "p"["1" - "5"] "e"["1" - "5", "?"] "s"[2char] "`"[string]</nobr></td>
      <td>change a task.  All are optional but one must exist.  "`" option must be last.</td>
+   </tr><tr>
+    <td><nobr>"~"[id]</nobr></td>
+     <td>delete a task.</td>
+   </tr><tr>
+    <td><nobr>"@"[project id]</nobr></td>
+     <td>delete all archived tasks for a project.</td>
    </tr><tr>
     <td><nobr>"s"[id] [[2char] | "+" | "-"]</nobr></td>
      <td>quick change status to a specific status, or the next logical status, or the previous logical status.</td>

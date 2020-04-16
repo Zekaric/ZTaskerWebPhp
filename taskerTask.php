@@ -51,7 +51,7 @@ require_once "taskerProject.php";
 ///////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
-// Add project.
+// Add a task.
 function taskerTaskAdd($idProject, $priority, $effort, $status, $description)
 {
    // Get the task list.
@@ -79,7 +79,7 @@ function taskerTaskAdd($idProject, $priority, $effort, $status, $description)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Edit a project.
+// Edit a task.
 function taskerTaskEdit($index, $idProject, $priority, $effort, $status, $description)
 {
    // Get the task list.
@@ -95,6 +95,20 @@ function taskerTaskEdit($index, $idProject, $priority, $effort, $status, $descri
       $effort,
       $status,
       $description);
+
+   // Save the changed next id project.
+   zListSave(FILE_LIST_TASK, $list, VAR_LIST_TASK);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Delete a task.
+function taskerTaskDelete($index)
+{
+   // Get the task list.
+   $list = & taskerVarGetListTask();
+
+   // Remove the task from the list.
+   array_splice($list, $index, 1);
 
    // Save the changed next id project.
    zListSave(FILE_LIST_TASK, $list, VAR_LIST_TASK);

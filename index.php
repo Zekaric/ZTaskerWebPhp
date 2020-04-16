@@ -380,13 +380,14 @@ if ($str != "")
       }
    }
    // Visibility of a project.
-   else if ($op == "h" ||
-            $op == "d" ||
-            $op == "v")
+   else if ($op == "v")
    {
       $parse = _ParseId($str);
       
-      $id = $parse[0];
+      $id    = $parse[0];
+
+      $str   = $parse[1];
+      $val   = substr(trim($str), 0, 2);
            
       if ($id == ".")
       {
@@ -394,7 +395,7 @@ if ($str != "")
          for ($index = 0; $index < $count; $index++)
          {
             // Hide
-            if      ($op == "h")
+            if      ($val == "-")
             {
                taskerProjectEdit(
                   $index,
@@ -403,7 +404,7 @@ if ($str != "")
                   taskerProjectGetDescription($index));
             }
             // Show
-            else if ($op == "d")
+            else if ($val == "+")
             {
                taskerProjectEdit(
                   $index,
@@ -412,13 +413,13 @@ if ($str != "")
                   taskerProjectGetDescription($index));
             }
             // Toggle
-            else if ($op == "v")
+            else 
             {
-               $val = taskerProjectIsVisible($index);
+               $vis = taskerProjectIsVisible($index);
                taskerProjectEdit(
                   $index,
                   taskerProjectGetName(       $index),
-                  !$val,
+                  !$vis,
                   taskerProjectGetDescription($index));
             }
          }
@@ -430,7 +431,7 @@ if ($str != "")
          if ($index != -1)
          {
             // Hide
-            if      ($op == "h")
+            if      ($val == "-")
             {
                taskerProjectEdit(
                   $index,
@@ -439,7 +440,7 @@ if ($str != "")
                   taskerProjectGetDescription($index));
             }
             // Show
-            else if ($op == "d")
+            else if ($val == "+")
             {
                taskerProjectEdit(
                   $index,
@@ -448,7 +449,7 @@ if ($str != "")
                   taskerProjectGetDescription($index));
             }
             // Toggle
-            else if ($op == "v")
+            else
             {
                $val = taskerProjectIsVisible($index);
                taskerProjectEdit(
@@ -460,6 +461,52 @@ if ($str != "")
          }
       }
    }
+   // "v. -" + "v[id] +"
+   else if ($op == "V")
+   {
+      $parse  = _ParseId($str);
+      $id     = (int) $parse[0];
+      $pindex = taskerTaskGetIndex($id);
+
+      if ($pindex != -1)
+      {
+         // For all projects...
+         $count = taskerVarGetListProjectCount();
+         for ($index = 0; $index < $count; $index++)
+         {
+            // Show this project.
+            if ($pindex == $index)
+            {
+               taskerProjectEdit(
+                  $index,
+                  taskerProjectGetName(       $index),
+                  true,
+                  taskerProjectGetDescription($index));
+            }
+            // Hide all others.
+            else
+            {
+               taskerProjectEdit(
+                  $index,
+                  taskerProjectGetName(       $index),
+                  false,
+                  taskerProjectGetDescription($index));
+            }
+         }
+      }
+   }
+   // Delete a task.
+   else if ($op == "~")
+   {
+       $parse = _ParseId($str);
+       $id    = (int) $parse[0];
+       $index = taskerTaskGetIndex($id);
+
+       if ($index != -1)
+       {
+           taskerTaskDelete($index);
+       }
+   }
    else if ($op == "s")
    {
       unset($status);
@@ -468,70 +515,73 @@ if ($str != "")
       $id    = (int) $parse[0];
       $index = taskerTaskGetIndex($id);
 
-      $str   = $parse[1];
-      $val   = substr(trim($str), 0, 2);
-
-      if      (substr($val, 0, 1) == "+")
+      if ($index != -1)
       {
-         $status = taskerTaskGetStatus($index);
-         switch ($status)
+         $str   = $parse[1];
+         $val   = substr(trim($str), 0, 2);
+    
+         if      (substr($val, 0, 1) == "+")
          {
-         case "nw": $status = "iw"; break;
-         case "iw": $status = "nt"; break;
-         case "nt": $status = "it"; break;
-         case "it": $status = "nd"; break;
-         case "nd": $status = "id"; break;
-         case "id": $status = "nr"; break;
-         case "nr": $status = "ir"; break;
-         case "ir": $status = "ar"; break;
-         default:   unset($status);
+            $status = taskerTaskGetStatus($index);
+            switch ($status)
+            {
+            case "nw": $status = "iw"; break;
+            case "iw": $status = "nt"; break;
+            case "nt": $status = "it"; break;
+            case "it": $status = "nd"; break;
+            case "nd": $status = "id"; break;
+            case "id": $status = "nr"; break;
+            case "nr": $status = "ir"; break;
+            case "ir": $status = "ar"; break;
+            default:   unset($status);
+            }
          }
-      }
-      else if (substr($val, 0, 1) == "-")
-      {
-         $status = taskerTaskGetStatus($index);
-         switch ($status)
+         else if (substr($val, 0, 1) == "-")
          {
-         case "iw": $status = "nw"; break;
-         case "nt": $status = "iw"; break;
-         case "it": $status = "nt"; break;
-         case "nd": $status = "it"; break;
-         case "id": $status = "nd"; break;
-         case "nr": $status = "id"; break;
-         case "ir": $status = "nr"; break;
-         case "ar": $status = "ir"; break;
-         default:   unset($status);
+            $status = taskerTaskGetStatus($index);
+            switch ($status)
+            {
+            case "iw": $status = "nw"; break;
+            case "nt": $status = "iw"; break;
+            case "it": $status = "nt"; break;
+            case "nd": $status = "it"; break;
+            case "id": $status = "nd"; break;
+            case "nr": $status = "id"; break;
+            case "ir": $status = "nr"; break;
+            case "ar": $status = "ir"; break;
+            default:   unset($status);
+            }
          }
-      }
-      else
-      {
-         $status = $val;
-         switch ($status)
+         else
          {
-         case "nw": 
-         case "iw": 
-         case "nt": 
-         case "it": 
-         case "nd": 
-         case "id": 
-         case "nr": 
-         case "ir": 
-         case "ar":
-         case "ad":
-         case "an": break;
-         default:   unset($status);
+            $status = $val;
+            switch ($status)
+            {
+            case "nw": 
+            case "iw": 
+            case "nt": 
+            case "it": 
+            case "nd": 
+            case "id": 
+            case "nr": 
+            case "ir": 
+            case "ar":
+            case "ad":
+            case "an": break;
+            default:   unset($status);
+            }
          }
-      }
-
-      if (isset($status))
-      {
-         taskerTaskEdit(
-            $index, 
-            taskerTaskGetIdProject(  $index),
-            taskerTaskGetPriority(   $index),
-            taskerTaskGetEffort(     $index),
-            $status,
-            taskerTaskGetDescription($index));
+    
+         if (isset($status))
+         {
+            taskerTaskEdit(
+               $index, 
+               taskerTaskGetIdProject(  $index),
+               taskerTaskGetPriority(   $index),
+               taskerTaskGetEffort(     $index),
+               $status,
+               taskerTaskGetDescription($index));
+         }
       }
    }
    else if ($op == "o")
