@@ -105,7 +105,7 @@ END;
 
       print <<< END
     <tr>
-      <th><nobr>n:P ID</nobr></th>
+      <th><nobr>n:PID</nobr></th>
        <th><nobr>v:Vis</nobr></th>
         <th><nobr>j:Project</nobr></th>
          <th class="fill"><nobr>d:Description</nobr></th>
@@ -161,7 +161,7 @@ END;
       <table class="narrow">
        <tbody>
         <tr>
-         <th><nobr>P ID</nobr></th>
+         <th><nobr>PID</nobr></th>
           <th><nobr>Vis</nobr></th>
            <th><nobr>Project</nobr></th>
         </tr>
@@ -207,7 +207,7 @@ END;
        <tbody>
         <tr>
           <th>i:ID</th>
-           <th>n:P&nbsp;ID</th>
+           <th>n:PID</th>
             <th>j:Project</th>
              <th>p:Priority</th>
               <th>e:Effort</th>
@@ -302,6 +302,27 @@ END;
 
          $rowIndex++;
       }
+
+      // Print a count. 
+      if (($rowIndex % 2) == 0)
+      {
+         print "" .
+             "        <tr class=\"altrow\">\n";
+      }
+      else
+      {
+         print "" .
+             "        <tr>\n";
+      }
+      print "" .
+            "          <td class=\"num\"><nobr>Count: " . $rowIndex . "</nobr></td>\n" .
+            "           <td></td>\n" .
+            "            <td></td>\n" .
+            "             <td></td>\n" .
+            "              <td></td>\n" .
+            "               <td></td>\n" .
+            "                <td class=\"fill\"></td>\n" .
+            "        </tr>\n";
    }
 
    ////////////////////////////////////////////////////////////////////////////
@@ -357,14 +378,14 @@ END;
     <th>Commands</th>
      <th class="desc">Description</th>
    </tr><tr>
-    <td><nobr>"l"["t" | "p"]</nobr></td>
+    <td><nobr>"l"[ | "t" | "p"]</nobr></td>
      <td>switch between t)ask and p)roject lists.  "l" by itself will cycle between the views.</td>
    </tr><tr>
-    <td>"v"["." | [project id]] ["" | "+" | "-"]</td>
+    <td>"v"["." | [pid]] [ | "+" | "-"]</td>
      <td>Set the visibility of project tasks.  "." for all projects instead of a specific project.  "+" to turn on visibility.  "-" to turn off visibility.  Nothing to toggle.</td>
    </tr><tr>
-    <td><nobr>"V"[project id]</nobr></td>
-     <td>Same as performing these two commands.  "v." and "v[project id] +".</td>
+    <td><nobr>"V"[pid]</nobr></td>
+     <td>Same as performing these two commands.  "v." and "v[pid] +".</td>
    </tr><tr>
     <td><nobr>"o"[col characters]</nobr></td>
      <td>sort order the list in the order of the columns listed.  User uppercase letter for reverse order.  You can list multiple column characters.</td>
@@ -385,16 +406,16 @@ END;
    {
       print <<< END
    </tr><tr>
-    <td><nobr>"a" "n"[pid] "p"["1" - "5"] "e"["1" - "5", "?"] "s"[2char] "`"[string]</nobr></td>
+    <td><nobr>"a" "n"[pid] "p"["1"-"5"] "e"["1"-"5", "?"] "s"[2char] "`"[string]</nobr></td>
      <td>add a new task.  If a value is missing then last known value is used. "`" option must be last.</td>
    </tr><tr>
-    <td><nobr>"e"[id] "n"[pid] "p"["1" - "5"] "e"["1" - "5", "?"] "s"[2char] "`"[string]</nobr></td>
+    <td><nobr>"e"[id] "n"[pid] "p"["1"-"5"] "e"["1"-"5", "?"] "s"[2char] "`"[string]</nobr></td>
      <td>change a task.  All are optional but one must exist.  "`" option must be last.</td>
    </tr><tr>
     <td><nobr>"~"[id]</nobr></td>
      <td>delete a task.</td>
    </tr><tr>
-    <td><nobr>"@"[project id]</nobr></td>
+    <td><nobr>"@"[pid]</nobr></td>
      <td>delete all archived tasks for a project.</td>
    </tr><tr>
     <td><nobr>"s"[id] [[2char] | "+" | "-"]</nobr></td>
