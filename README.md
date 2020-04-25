@@ -1,5 +1,5 @@
 
-# Zekaric: Manager Your Tasks (ZMYT, or Mighty)
+# Zekaric: Manage Your Tasks (ZMYT or Mighty)
 
 ## Table Of Contents
 **1 - Summary**<br />
