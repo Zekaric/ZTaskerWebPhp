@@ -1,5 +1,5 @@
 
-# Zekaric: Manage Your Tasks (ZMYT or Mighty)
+# Zekaric: Manage Your Tasks (ZMYT or My Tea)
 
 ## Table Of Contents
 **1 - Summary**<br />
@@ -12,7 +12,7 @@
 
 # 1 - Summary
 
-Mighty is a web based task manager for an internal network.  I.E. hosted on a local NAS for instance
+My Tea is a web based task manager for an internal network.  I.E. hosted on a local NAS for instance
 
 # 2 - Discussion
 
