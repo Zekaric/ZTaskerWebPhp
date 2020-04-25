@@ -1,5 +1,5 @@
 
-# ZTaskerWebPhp
+# Zekaric: Manager Your Tasks (ZMYT, or Mighty)
 
 ## Table Of Contents
 **1 - Summary**<br />
@@ -12,11 +12,11 @@
 
 # 1 - Summary
 
-Web based task tracker for internal network.  I.E. hosted on a local NAS for instance
+Mighty is a web based task manager for an internal network.  I.E. hosted on a local NAS for instance
 
 # 2 - Discussion
 
-I had made an attempt before using more JavaScript and more client side processing but I found that maddening because of the two different languages to have to deal with.  In the end after a time away, I felt I couldn't get back into the development because I forgot how it all worked together.  So in the end, it was not simple enough.  It could be made simpler and I've learnt a few things about PHP which I was doing incorrectly with my previous work.
+I had made an attempt before using more JavaScript and more client side processing but I found that maddening because of the two different languages to have to deal with.  In the end after a time away, I felt I couldn't get back into the development because I forgot how it all worked together.  So in the end, it was not simple enough.  It could be made simpler and I have learnt a few things about PHP which I was doing incorrectly with my previous work.
 
 This project basically uses no JavaScript.  It is all PHP.  No Database.  Data is stored in PHP source files.
 

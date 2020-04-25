@@ -69,12 +69,12 @@ function taskerDisplay()
   <meta charset="utf-8" />
   <link rel="stylesheet" type="text/css" href="style_reset.css">
   <link rel="stylesheet" type="text/css" href="style.css">
-  <title>Zekaric:Tasker</title>
+  <title>Zekaric:MYT</title>
  </head>
 
  <body>
   
-  <h1>Zekaric : Tasker 
+  <h1>Zekaric : MYT 
 END;
    
    if (taskerVarIsDisplayingProjectList())

@@ -1,5 +1,5 @@
 
-# Zekaric: Tasker
+# Zekaric: Manager Your Tasks (Z:MYT, Mighty)
 
 ## Table Of Contents
 **1 - Summary**<br />
@@ -20,7 +20,7 @@
 
 # 1 - Summary
 
-Zekaric: Tasker (Tasker) is a simple task tracker that is simple web program.  All work is performed on a command line prompt with simple commands.
+Mighty is a simple task tracker as well as a simple web program.  All work is performed on a command line prompt with simple commands.  The ideal is speed of entry and speed of keeping it all in order.
 
 # 2 - Install
 
@@ -53,7 +53,7 @@ I set both to 0 but I think you only need to set either to 0.  "revalidate_freq"
 
 # 3 - Use
 
-Once installed you should have an empty data set.  There will be no projects and no task items.  You should be seeing the Projects page.  The title will be "Zekaric : Tasker Projects".
+Once installed you should have an empty data set.  There will be no projects and no task items.  You should be seeing the Projects page.  The title will be "Zekaric : MYT Projects".
 
 There is a text field in the middle of the web page.  It should already have focus.  Just type in your commands into this text field and hit the enter key.
 
@@ -103,22 +103,22 @@ You can add "t" or "p" but it really is unnecessary.  "l" by itself will toggle 
 ### 3.2.1 - A Command, Add a Project
 
 ```
-a nZTasker `A simple task manager
+a nZMYT `A simple task manager
 ```
 
-The above is a typical add command.  It will create a project named ZTasker with a description associated with that project.  n option is not optional.  ` is optional and if present must be last.
+The above is a typical add command.  It will create a project named ZMYT with a description associated with that project.  n option is not optional.  ` is optional and if present must be last.
 
-Once you type that into the command line and hit enter you should see ZTasker appear in the list.
+Once you type that into the command line and hit enter you should see ZMYT appear in the list.
 
 PID values are automatically assigned.
 
 ### 3.2.2 - E Command, Edit a Project
 
 ```
-e1 nZ:Tasker `A simple and fast task manager.
+e1 nZ:MYT `A simple and fast task manager.
 ```
 
-The above will adjust the project with '1' as it's Project ID (PID) to "Z:Tasker" and updates its description as well.  n and ` options are optional but you should have at least one for this command to do anything.
+The above will adjust the project with '1' as it's Project ID (PID) to "Z:MYT" and updates its description as well.  n and ` options are optional but you should have at least one for this command to do anything.
 
 If the PID you provided doesn't exist then nothing happens.
 
@@ -142,7 +142,7 @@ Add a task to the list.
 
 "`" sets the description of the task.
 
-Once you type that into the command line and hit enter you should see ZTasker appear in the list.
+Once you type that into the command line and hit enter you should see ZMYT appear in the list.
 
 All options are optional.  "n", "p", "e" will default to what is shown above the command line.  "s" will default to "nw" which means needs work.  "`" is optional but technically needed for this command.
 

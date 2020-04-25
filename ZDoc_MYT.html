@@ -5,13 +5,13 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" type="text/css" href="style_reset.css">
   <link rel="stylesheet" type="text/css" href="style_zdoc.css">
-  <title>Zekaric: Tasker</title>
+  <title>Zekaric: Manager Your Tasks (Z:MYT, Mighty)</title>
  </head>
 
  <body class="zdoc">
 
 
-<h1 class="zdoc">Zekaric: Tasker</h1>
+<h1 class="zdoc">Zekaric: Manager Your Tasks (Z:MYT, Mighty)</h1>
 
 <h2 class="zdoc">Table Of Contents</h2>
 <p class="zdoc_toc1"><a href="#1">1 - Summary</a></p>
@@ -32,7 +32,7 @@
 
 
 <h1 class="zdoc"><a name="1">1 - Summary</a></h1>
-<p class="zdoc">Zekaric: Tasker (Tasker) is a simple task tracker that is simple web program.  All work is performed on a command line prompt with simple commands.</p>
+<p class="zdoc">Mighty is a simple task tracker as well as a simple web program.  All work is performed on a command line prompt with simple commands.  The ideal is speed of entry and speed of keeping it all in order.</p>
 
 
 <h1 class="zdoc"><a name="2">2 - Install</a></h1>
@@ -56,7 +56,7 @@ opcache.revalidate_freq = ...
 
 
 <h1 class="zdoc"><a name="3">3 - Use</a></h1>
-<p class="zdoc">Once installed you should have an empty data set.  There will be no projects and no task items.  You should be seeing the Projects page.  The title will be "Zekaric : Tasker Projects".</p>
+<p class="zdoc">Once installed you should have an empty data set.  There will be no projects and no task items.  You should be seeing the Projects page.  The title will be "Zekaric : MYT Projects".</p>
 <p class="zdoc">There is a text field in the middle of the web page.  It should already have focus.  Just type in your commands into this text field and hit the enter key.</p>
 <p class="zdoc">There is help text below the command line to show what commands are available in the current view.</p>
 
@@ -92,17 +92,17 @@ l
 
 <h3 class="zdoc"><a name="3.2.1">3.2.1 - A Command, Add a Project</a></h3>
 <pre class="zdoc">
-a nZTasker `A simple task manager
+a nZMYT `A simple task manager
 </pre>
-<p class="zdoc">The above is a typical add command.  It will create a project named ZTasker with a description associated with that project.  n option is not optional.  ` is optional and if present must be last.</p>
-<p class="zdoc">Once you type that into the command line and hit enter you should see ZTasker appear in the list.</p>
+<p class="zdoc">The above is a typical add command.  It will create a project named ZMYT with a description associated with that project.  n option is not optional.  ` is optional and if present must be last.</p>
+<p class="zdoc">Once you type that into the command line and hit enter you should see ZMYT appear in the list.</p>
 <p class="zdoc">PID values are automatically assigned.</p>
 
 <h3 class="zdoc"><a name="3.2.2">3.2.2 - E Command, Edit a Project</a></h3>
 <pre class="zdoc">
-e1 nZ:Tasker `A simple and fast task manager.
+e1 nZ:MYT `A simple and fast task manager.
 </pre>
-<p class="zdoc">The above will adjust the project with '1' as it's Project ID (PID) to "Z:Tasker" and updates its description as well.  n and ` options are optional but you should have at least one for this command to do anything.</p>
+<p class="zdoc">The above will adjust the project with '1' as it's Project ID (PID) to "Z:MYT" and updates its description as well.  n and ` options are optional but you should have at least one for this command to do anything.</p>
 <p class="zdoc">If the PID you provided doesn't exist then nothing happens.</p>
 
 <h2 class="zdoc"><a name="3.3">3.3 - Task List Commands</a></h2>
@@ -117,7 +117,7 @@ a n12 p1 e? siw `Fix problem with that thing
 <p class="zdoc">"e" sets the effort of the task.  "1" means the task is easy, small, requiring little time.  "5" mean the task is difficult, large, and requires copious amounts of time.  "?" means the task effort is unknown because there are factors for knowledge that isn't known yet.</p>
 <p class="zdoc">"s" sets the initial status.</p>
 <p class="zdoc">"`" sets the description of the task.</p>
-<p class="zdoc">Once you type that into the command line and hit enter you should see ZTasker appear in the list.</p>
+<p class="zdoc">Once you type that into the command line and hit enter you should see ZMYT appear in the list.</p>
 <p class="zdoc">All options are optional.  "n", "p", "e" will default to what is shown above the command line.  "s" will default to "nw" which means needs work.  "`" is optional but technically needed for this command.</p>
 <p class="zdoc">PID values are automatically assigned.</p>
 
