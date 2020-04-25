@@ -2,14 +2,14 @@
 
 $taskerListProject      = array();
 $taskerListTask         = array();
-$taskerNextIdProject    = 3;
-$taskerNextIdTask       = 9;
+$taskerNextIdProject    = 1;
+$taskerNextIdTask       = 1;
 
-$taskerIsDisplaying     = "Task";
+$taskerIsDisplaying     = "Project";
 
 $taskerSortOrderProject = "i";
-$taskerSortOrderTask    = "s";
+$taskerSortOrderTask    = "i";
 
-$taskerDefaultIdProject = 2;
+$taskerDefaultIdProject = 1;
 $taskerDefaultPriority  = 1;
 $taskerDefaultEffort    = 1;

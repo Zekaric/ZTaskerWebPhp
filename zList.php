@@ -70,6 +70,22 @@ function zListGet($list, $index, $key)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// Save the project list.
+function zListSave($file, $list, $varName)
+{
+   $count = count($list);
+
+   $content = "<?php\n";
+
+   for ($index = 0; $index < $count; $index++)
+   {
+      $content .= _zListCompose($varName, $index, $list[$index]);
+   }
+
+   zFileStoreText($file, $content, true);
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // Set functions
 function zListSet(&$list, $index, $key, $value)
 {
@@ -89,7 +105,7 @@ function zListSet(&$list, $index, $key, $value)
 
 ///////////////////////////////////////////////////////////////////////////////
 // compose the code string.
-function zListCompose($varName, $parentIndex, $array)
+function _zListCompose($varName, $parentIndex, $array)
 {
    // Cell is an array.  Get the number of elements.
    $count   = count($array);
@@ -147,18 +163,3 @@ function zListCompose($varName, $parentIndex, $array)
    return $str;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Save the project list.
-function zListSave($file, $list, $varName)
-{
-   $count = count($list);
-
-   $content = "<?php\n";
-
-   for ($index = 0; $index < $count; $index++)
-   {
-      $content .= zListCompose($varName, $index, $list[$index]);
-   }
-
-   zFileStoreText($file, $content, true);
-}

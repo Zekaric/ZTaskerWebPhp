@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+ <head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="style_reset.css">
+  <link rel="stylesheet" type="text/css" href="style_zdoc.css">
+  <title>Zekaric: PHP: z*.php</title>
+ </head>
+
+ <body class="zdoc">
+
+
+<h1 class="zdoc">Zekaric: PHP: z*.php</h1>
+
+<h2 class="zdoc">Table Of Contents</h2>
+<p class="zdoc_toc1"><a href="#1">1 - Summary</a></p>
+<p class="zdoc_toc1"><a href="#2">2 - Licence: MIT</a></p>
+<p class="zdoc_toc1"><a href="#3">3 - zFile</a></p>
+<p class="zdoc_toc2"><a href="#3.1">3.1 - zDirCreate</a></p>
+<p class="zdoc_toc2"><a href="#3.2">3.2 - zDirIsExsiting</a></p>
+<p class="zdoc_toc2"><a href="#3.3">3.3 - zFileAppendText</a></p>
+<p class="zdoc_toc2"><a href="#3.4">3.4 - zFileConnect</a></p>
+<p class="zdoc_toc2"><a href="#3.5">3.5 - zFileConnectIsGood</a></p>
+<p class="zdoc_toc2"><a href="#3.6">3.6 - zFileDisconnect</a></p>
+<p class="zdoc_toc2"><a href="#3.7">3.7 - zFileIsExisting</a></p>
+<p class="zdoc_toc2"><a href="#3.8">3.8 - zFileLoadText</a></p>
+<p class="zdoc_toc2"><a href="#3.9">3.9 - zFileLoadTextArray</a></p>
+<p class="zdoc_toc2"><a href="#3.10">3.10 - zFileStoreText</a></p>
+<p class="zdoc_toc2"><a href="#3.11">3.11 - zFileStoreTextArray</a></p>
+<p class="zdoc_toc2"><a href="#3.12">3.12 - zFileWriteText</a></p>
+<p class="zdoc_toc1"><a href="#4">4 - zList</a></p>
+<p class="zdoc_toc2"><a href="#4.1">4.1 - zListAdd</a></p>
+<p class="zdoc_toc2"><a href="#4.2">4.2 - zListGet</a></p>
+<p class="zdoc_toc2"><a href="#4.3">4.3 - zListSave</a></p>
+<p class="zdoc_toc2"><a href="#4.4">4.4 - zListSet</a></p>
+<p class="zdoc_toc1"><a href="#5">5 - zLock</a></p>
+<p class="zdoc_toc2"><a href="#5.1">5.1 - zLockCreate</a></p>
+<p class="zdoc_toc2"><a href="#5.2">5.2 - zLockCreateFile</a></p>
+<p class="zdoc_toc2"><a href="#5.3">5.3 - zLockDestroy</a></p>
+<p class="zdoc_toc1"><a href="#6">6 - zUtil</a></p>
+<p class="zdoc_toc2"><a href="#6.1">6.1 - zUtilGetValue</a></p>
+
+
+<h1 class="zdoc"><a name="1">1 - Summary</a></h1>
+<p class="zdoc">A collection of generic php functions.  Basically defining a library of useful, lightweight functions for php development.</p>
+
+
+<h1 class="zdoc"><a name="2">2 - Licence: MIT</a></h1>
+<pre class="zdoc">
+Copyright (c) 2015 Robbert de Groot
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</pre>
+
+
+<h1 class="zdoc"><a name="3">3 - zFile</a></h1>
+<p class="zdoc">Functions for file io with optional file locking.</p>
+
+<h2 class="zdoc"><a name="3.1">3.1 - zDirCreate</a></h2>
+<p class="zdoc">Create a directory</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$result = zDirCreate($dirName);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$dirName</strong></nobr></td>
+<td class="zdoc_fill">The name of the directory to create.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>bool</strong></nobr></td>
+<td class="zdoc_fill"><strong>true</strong> if the directory was created.  <strong>false</strong> if not.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.2">3.2 - zDirIsExsiting</a></h2>
+<p class="zdoc">Check if a directory exists.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$result = zDirIsExisting($dirName);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$dirName</strong></nobr></td>
+<td class="zdoc_fill">The name of the directory.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>bool</strong></nobr></td>
+<td class="zdoc_fill"><strong>true</strong> if the directory exists.  <strong>false</strong> if not.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.3">3.3 - zFileAppendText</a></h2>
+<p class="zdoc">Append a string to a file.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+zFileAppendText($filePath, $string, $isLocking)
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$filePath</strong></nobr></td>
+<td class="zdoc_fill">Path to the file.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$string</strong></nobr></td>
+<td class="zdoc_fill">The string to append to the file.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$isLocking</strong></nobr></td>
+<td class="zdoc_fill">When in doubt pass in true.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>bool</strong></nobr></td>
+<td class="zdoc_fill"><strong>true</strong> if the append happened.  <strong>false</strong> if a lock could not be obtained or the file could not be openned.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.4">3.4 - zFileConnect</a></h2>
+<p class="zdoc">Connect to a file for reading or writing.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$fileConnection = zFileConnect($filePath, $mode, $isLocking)
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$filePath</strong></nobr></td>
+<td class="zdoc_fill">Path to the file.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$mode</strong></nobr></td>
+<td class="zdoc_fill">See php fopen() for mode value.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$isLocking</strong></nobr></td>
+<td class="zdoc_fill">When in doubt pass in true.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>File Connection Array</strong></nobr></td>
+<td class="zdoc_fill">An array of key values.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.5">3.5 - zFileConnectIsGood</a></h2>
+<p class="zdoc">Check to see if the file connection was made.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$result = zFileConnectIsGood($fileCon);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$fileCon</strong></nobr></td>
+<td class="zdoc_fill">The file connection array returned from zFileConnect.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>bool</strong></nobr></td>
+<td class="zdoc_fill"><strong>true</strong> if the file is open.  <strong>false</strong> if not.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.6">3.6 - zFileDisconnect</a></h2>
+<p class="zdoc">Disconnect from a file.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+zFileDisconnect($fileCon);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$fileCon</strong></nobr></td>
+<td class="zdoc_fill">The file connection array returned from zFileConnect.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<p class="zdoc">No return value;</p>
+
+<h2 class="zdoc"><a name="3.7">3.7 - zFileIsExisting</a></h2>
+<p class="zdoc">Test to see if a file exits.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$result = zFileIsExisting($filePath);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$filePath</strong></nobr></td>
+<td class="zdoc_fill">Path to the file.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>bool</strong></nobr></td>
+<td class="zdoc_fill"><strong>true</strong> if the file exists.  <strong>false</strong> if not.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.8">3.8 - zFileLoadText</a></h2>
+<p class="zdoc">Load the entire text file into one giant string.  This routine will open, read, and close the file.  You do not need a file connection array.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$string = zFileLoadText($filePath, $isLocking);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$filePath</strong></nobr></td>
+<td class="zdoc_fill">Path to the file.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$isLocking</strong></nobr></td>
+<td class="zdoc_fill">When in doubt pass in true.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>string</strong></nobr></td>
+<td class="zdoc_fill">The entire file loaded into a string.  This is assuming the file is a text file.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.9">3.9 - zFileLoadTextArray</a></h2>
+<p class="zdoc">Load the entire text file into an array of strings, one line of text file per string.  This routine will open, read, and close the file.  You do not need a file connection array.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$stringArray = zFileLoadTextArray($filePath, $isLocking);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$filePath</strong></nobr></td>
+<td class="zdoc_fill">Path to the file.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$isLocking</strong></nobr></td>
+<td class="zdoc_fill">When in doubt pass in true.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>array of strings</strong></nobr></td>
+<td class="zdoc_fill">The entire file loaded into an array of strings.  One line per string.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.10">3.10 - zFileStoreText</a></h2>
+<p class="zdoc">Replaces the entire file with the provided string.  This routine will open, write, and close the file.  You do not need a file connection array.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$result = zFileStoreText($filePath, $string, $isLocking);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$filePath</strong></nobr></td>
+<td class="zdoc_fill">Path to the file.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$string</strong></nobr></td>
+<td class="zdoc_fill">The string to write to the file.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$isLocking</strong></nobr></td>
+<td class="zdoc_fill">When in doubt pass in true.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>bool</strong></nobr></td>
+<td class="zdoc_fill"><strong>true</strong> when everything was ok.  <strong>false</strong> otherwise.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.11">3.11 - zFileStoreTextArray</a></h2>
+<p class="zdoc">Replaces the entire file with the provided array of strings.  This routine will open, write, and close the file.  You do not need a file connection array.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$result = zFileStoreTextArray($filePath, $lineArray, $isLocking);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$filePath</strong></nobr></td>
+<td class="zdoc_fill">Path to the file.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$lineArray</strong></nobr></td>
+<td class="zdoc_fill">The array of strings to write to the file.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$isLocking</strong></nobr></td>
+<td class="zdoc_fill">When in doubt pass in true.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>bool</strong></nobr></td>
+<td class="zdoc_fill"><strong>true</strong> when everything was ok.  <strong>false</strong> otherwise.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.12">3.12 - zFileWriteText</a></h2>
+<p class="zdoc">Write to a file.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+zFileWriteText($fileCon, $string)
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$fileCon</strong></nobr></td>
+<td class="zdoc_fill">The file connection array returned from zFileConnect.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$string</strong></nobr></td>
+<td class="zdoc_fill">The string to write to the file.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>bool</strong></nobr></td>
+<td class="zdoc_fill">always true.</td>
+
+</tr>
+
+</tbody></table>
+
+
+<h1 class="zdoc"><a name="4">4 - zList</a></h1>
+<p class="zdoc">Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.</p>
+
+<h2 class="zdoc"><a name="4.1">4.1 - zListAdd</a></h2>
+<p class="zdoc">Add a new record to the array.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$index = zListAdd($list);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
+<td class="zdoc_fill">The list to modify.  Pass in by reference.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>integer</strong></nobr></td>
+<td class="zdoc_fill">The index of the new record.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="4.2">4.2 - zListGet</a></h2>
+<p class="zdoc">Get a record's key'ed value from the array.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$value = zListGet($list, $index, $key);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
+<td class="zdoc_fill">The list of records.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$index</strong></nobr></td>
+<td class="zdoc_fill">The index of the record in the list.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$key</strong></nobr></td>
+<td class="zdoc_fill">The key value in the record we want the value for.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>*</strong></nobr></td>
+<td class="zdoc_fill">The value associated with the key for the record.  Type will depend on what is stored there.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="4.3">4.3 - zListSave</a></h2>
+<p class="zdoc">Save the array of records to a php file.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+zListSave($file, $list, $varName);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$file</strong></nobr></td>
+<td class="zdoc_fill">The file name to use to write to.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
+<td class="zdoc_fill">The list of records.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$varName</strong></nobr></td>
+<td class="zdoc_fill">The name of the php variable to be used for the array of records.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<p class="zdoc">No return value.</p>
+
+<h2 class="zdoc"><a name="4.4">4.4 - zListSet</a></h2>
+<p class="zdoc">Set a record's key'ed value in the array.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+zListGet($list, $index, $key, $value);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
+<td class="zdoc_fill">The list of records.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$index</strong></nobr></td>
+<td class="zdoc_fill">The index of the record in the list.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$key</strong></nobr></td>
+<td class="zdoc_fill">The key value in the record we want to set.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$value</strong></nobr></td>
+<td class="zdoc_fill">The value we want to associate with the key.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<p class="zdoc">No return value.</p>
+
+
+<h1 class="zdoc"><a name="5">5 - zLock</a></h1>
+<p class="zdoc">File/Folder locking at a file/folder level.  This is very simple locking in that it uses and operating system trick of making a folder in the folder you want to make a lock in.  If two processes try to create the same folder, only one process will be successful.  The other will fail.  The one which is successful will be able to proceed.  Releasing the lock will mean the deletion of the folder.  Eventually the other process will be able to create the folder an 'obtain' a lock.</p>
+
+<h2 class="zdoc"><a name="5.1">5.1 - zLockCreate</a></h2>
+<p class="zdoc">Create a lock.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$lock = zLockCreate($name);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$name</strong></nobr></td>
+<td class="zdoc_fill">Just a generic lock name.  Programmer choice what the name means.  A folder named "lock_" . $name will be created.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>string</strong></nobr></td>
+<td class="zdoc_fill">Name of the lock on success.  "" on failure.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="5.2">5.2 - zLockCreateFile</a></h2>
+<p class="zdoc">Create a lock on a specific file name.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$lock = zLockCreateFile($fileName);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$fileName</strong></nobr></td>
+<td class="zdoc_fill">Name of the file you wish to lock.  A folder named "lock_file_" . $fileName will be created.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>string</strong></nobr></td>
+<td class="zdoc_fill">Name of the lock on success.  "" on failure.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="5.3">5.3 - zLockDestroy</a></h2>
+<p class="zdoc">Release a lock.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+zLockDestroy($name);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$name</strong></nobr></td>
+<td class="zdoc_fill">Whatever string you get back from zLockCreate() and zLockCreateFile() is what you need to pass into this function to properly destroy the lock.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<p class="zdoc">No return value.</p>
+
+
+<h1 class="zdoc"><a name="6">6 - zUtil</a></h1>
+<p class="zdoc">A collection of routines that are generic that do not have a dedicated heading for them.</p>
+
+<h2 class="zdoc"><a name="6.1">6.1 - zUtilGetValue</a></h2>
+<p class="zdoc">Fetch the value for a key from a GET or POST message.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$value = zUtilGetValue($key);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$key</strong></nobr></td>
+<td class="zdoc_fill">The string key you want to find the value for.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Result:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>string</strong></nobr></td>
+<td class="zdoc_fill">The string for the key.  "" no defined key or value.</td>
+
+</tr>
+
+</tbody></table>
+ </body>
+
+</html>

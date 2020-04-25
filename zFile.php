@@ -57,13 +57,13 @@ function zDirIsExisting($dirName)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Append to a file
-function zFileAppendText($fileName, $string, $isLocking)
+function zFileAppendText($filePath, $string, $isLocking)
 {
    // Open the file.
-   $fileCon = zFileConnect($fileName, "a", $isLocking);
+   $fileCon = zFileConnect($filePath, "a", $isLocking);
    if (!zFileConnectIsGood($fileCon))
    {
-      return false; // "zFileStore: ERROR: Unable to open file '" . $fileName . "' for writing.";
+      return false; // "zFileStore: ERROR: Unable to open file '" . $filePath . "' for writing.";
    }
 
    // Write the file contents.
@@ -78,25 +78,25 @@ function zFileAppendText($fileName, $string, $isLocking)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Open a file.
-function zFileConnect($file, $mode, $isLocking)
+function zFileConnect($filePath, $mode, $isLocking)
 {
    $fileCon = array();
 
-   $fileCon["name"]       = $file;
+   $fileCon["name"]       = $filePath;
    $fileCon["isLocking"]  = $isLocking;
    $fileCon["lock"]       = "";
    $fileCon["file"]       = false;
 
    if ($isLocking)
    {
-      $fileCon["lock"] = zLockCreateFile($file);
+      $fileCon["lock"] = zLockCreateFile($filePath);
       if ($fileCon["lock"] == "")
       {
          return $fileCon;
       }
    }
 
-   $fileCon["file"] = fopen($file, $mode);
+   $fileCon["file"] = fopen($filePath, $mode);
    
    // File open failed.
    if (!$fileCon["file"])
@@ -140,22 +140,22 @@ function zFileDisconnect($fileCon)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Check to see if a file exists.
-function zFileIsExisting($fileName)
+function zFileIsExisting($filePath)
 {
-   return file_exists($fileName);
+   return file_exists($filePath);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Read in a complete text file as one big string.  Does not trim new lines.
-function zFileLoadText($fileName, $isLocking)
+function zFileLoadText($filePath, $isLocking)
 {
    $text = "";
    
    // Open the file.
-   $fileCon = zFileConnect($fileName, "r", $isLocking);
+   $fileCon = zFileConnect($filePath, "r", $isLocking);
    if (!zFileConnectIsGood($fileCon))
    {
-	   return "zFileLoad: ERROR: Unable to open file '" . $fileName . "' for reading.";
+	   return "zFileLoad: ERROR: Unable to open file '" . $filePath . "' for reading.";
    }
 
    // Read in the file contents.
@@ -179,15 +179,15 @@ function zFileLoadText($fileName, $isLocking)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Read in a complete text file as an array of strings.
-function zFileLoadTextArray($fileName, $isLocking)
+function zFileLoadTextArray($filePath, $isLocking)
 {
    $lineArray = array();
    
    // Open the file.
-   $fileCon = zFileConnect($fileName, "r", $isLocking);
+   $fileCon = zFileConnect($filePath, "r", $isLocking);
    if (!zFileConnectIsGood($fileCon))
    {
-	   return "zFileLoad: ERROR: Unable to open file '" . $fileName . "' for reading.";
+	   return "zFileLoad: ERROR: Unable to open file '" . $filePath . "' for reading.";
    }
 
    // Read in the file contents.
@@ -203,7 +203,7 @@ function zFileLoadTextArray($fileName, $isLocking)
    }
       
    // Close the file.
-   zFileClose($fileName, $fileCon, $lock);
+   zFileClose($filePath, $fileCon, $lock);
    
    // Return the array of lines.
    return $lineArray;
@@ -211,13 +211,13 @@ function zFileLoadTextArray($fileName, $isLocking)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Store the file contents from a single string.
-function zFileStoreText($fileName, $string, $isLocking)
+function zFileStoreText($filePath, $string, $isLocking)
 {
    // Open the file.
-   $fileCon = zFileConnect($fileName, "w", $isLocking);
+   $fileCon = zFileConnect($filePath, "w", $isLocking);
    if (!zFileConnectIsGood($fileCon))
    {
-      return false; // "zFileStore: ERROR: Unable to open file '" . $fileName . "' for writing.";
+      return false; // "zFileStore: ERROR: Unable to open file '" . $filePath . "' for writing.";
    }
 
    // Write the file contents.
@@ -231,13 +231,13 @@ function zFileStoreText($fileName, $string, $isLocking)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Store the file contents from a string array.
-function zFileStoreTextArray($fileName, $lineArray, $isLocking)
+function zFileStoreTextArray($filePath, $lineArray, $isLocking)
 {
    // Open the file.
-   $fileCon = zFileConnect($fileName, "w", $isLocking);
+   $fileCon = zFileConnect($filePath, "w", $isLocking);
    if (!zFileConnectIsGood($fileCon))
    {
-      return false; // "zFileStore: ERROR: Unable to open file '" . $fileName . "' for writing.";
+      return false; // "zFileStore: ERROR: Unable to open file '" . $filePath . "' for writing.";
    }
 
    // Write all the lines in the array to the file.

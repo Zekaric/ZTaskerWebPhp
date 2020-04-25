@@ -81,12 +81,14 @@ SOFTWARE.
 function zLockCreate($name)
 {
    $count = 0;
+
+   $folderName = "lock_" . $name;
    
    while (true)
    {
       // mkdir is 'atomic' in that it will succeed if we created the directory.
       // it will fail if we did not create the directory.  
-      if (mkdir($name))
+      if (mkdir($folderName))
       {
          // If we succeed we have the lock.
          break;
@@ -103,7 +105,7 @@ function zLockCreate($name)
       usleep(500000);
    }
    
-   return $name;
+   return $folderName;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -112,7 +114,7 @@ function zLockCreate($name)
 function zLockCreateFile($fileName)
 {
    // Locking on the file.
-   return zLockCreate(_zLockFileName($fileName));
+   return zLockCreate("file_" . $fileName);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -120,13 +122,4 @@ function zLockCreateFile($fileName)
 function zLockDestroy($name)
 {
    rmdir($name);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// The file lock name.
-// Local to zLock use only.
-function _zLockFileName($fileName)
-{
-   // Creating a unique lock name.
-   return "lock_file_" . $fileName;
 }

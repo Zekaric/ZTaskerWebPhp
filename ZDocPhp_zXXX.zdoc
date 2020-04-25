@@ -1,0 +1,459 @@
+H	Zekaric: PHP: z*.php
+HH	Table Of Contents
+toc
+
+h	|chapter| - Summary
+	A collection of generic php functions.  Basically defining a library of useful, lightweight functions for php development.
+
+h	|chapter| - Licence: MIT
+...[
+Copyright (c) 2015 Robbert de Groot
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+...]
+
+h	|chapter| - zFile
+	Functions for file io with optional file locking.
+
+hh	|chapter| - zDirCreate
+	Create a directory
+HHH	Use:
+...	$result = zDirCreate($dirName);
+HHH	Parameter:
+t[
+t-
+tcx	|*$dirName*|
+tc*	The name of the directory to create.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*bool*|
+tc*	|*true*| if the directory was created.  |*false*| if not.
+t]
+
+hh	|chapter| - zDirIsExsiting
+	Check if a directory exists.
+HHH	Use:
+...	$result = zDirIsExisting($dirName);
+HHH	Parameter:
+t[
+t-
+tcx	|*$dirName*|
+tc*	The name of the directory.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*bool*|
+tc*	|*true*| if the directory exists.  |*false*| if not.
+t]
+
+hh	|chapter| - zFileAppendText
+	Append a string to a file.
+HHH	Use:
+...	zFileAppendText($filePath, $string, $isLocking)
+HHH	Parameter:
+t[
+t-
+tcx	|*$filePath*|
+tc*	Path to the file.
+t-
+tcx	|*$string*|
+tc*	The string to append to the file.
+t-
+tcx	|*$isLocking*|
+tc*	When in doubt pass in true.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*bool*|
+tc*	|*true*| if the append happened.  |*false*| if a lock could not be obtained or the file could not be openned.
+t]
+
+hh	|chapter| - zFileConnect
+	Connect to a file for reading or writing.
+HHH	Use:
+...	$fileConnection = zFileConnect($filePath, $mode, $isLocking)
+HHH	Parameter:
+t[
+t-
+tcx	|*$filePath*|
+tc*	Path to the file.
+t-
+tcx	|*$mode*|
+tc*	See php fopen() for mode value.
+t-
+tcx	|*$isLocking*|
+tc*	When in doubt pass in true.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*File Connection Array*|
+tc*	An array of key values.
+t]
+
+hh	|chapter| - zFileConnectIsGood
+	Check to see if the file connection was made.
+HHH	Use:
+...	$result = zFileConnectIsGood($fileCon);
+HHH	Parameter:
+t[
+t-
+tcx	|*$fileCon*|
+tc*	The file connection array returned from zFileConnect.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*bool*|
+tc*	|*true*| if the file is open.  |*false*| if not.
+t]
+
+hh	|chapter| - zFileDisconnect
+	Disconnect from a file.
+HHH	Use:
+...	zFileDisconnect($fileCon);
+HHH	Parameter:
+t[
+t-
+tcx	|*$fileCon*|
+tc*	The file connection array returned from zFileConnect.
+t]
+HHH	Result:
+	No return value;
+
+hh	|chapter| - zFileIsExisting
+	Test to see if a file exits.
+HHH	Use:
+...	$result = zFileIsExisting($filePath);
+HHH	Parameter:
+t[
+t-
+tcx	|*$filePath*|
+tc*	Path to the file.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*bool*|
+tc*	|*true*| if the file exists.  |*false*| if not.
+t]
+
+hh	|chapter| - zFileLoadText
+	Load the entire text file into one giant string.  This routine will open, read, and close the file.  You do not need a file connection array.
+HHH	Use:
+...	$string = zFileLoadText($filePath, $isLocking);
+HHH	Parameter:
+t[
+t-
+tcx	|*$filePath*|
+tc*	Path to the file.
+t-
+tcx	|*$isLocking*|
+tc*	When in doubt pass in true.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*string*|
+tc*	The entire file loaded into a string.  This is assuming the file is a text file.
+t]
+
+hh	|chapter| - zFileLoadTextArray
+	Load the entire text file into an array of strings, one line of text file per string.  This routine will open, read, and close the file.  You do not need a file connection array.
+HHH	Use:
+...	$stringArray = zFileLoadTextArray($filePath, $isLocking);
+HHH	Parameter:
+t[
+t-
+tcx	|*$filePath*|
+tc*	Path to the file.
+t-
+tcx	|*$isLocking*|
+tc*	When in doubt pass in true.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*array of strings*|
+tc*	The entire file loaded into an array of strings.  One line per string.
+t]
+
+hh	|chapter| - zFileStoreText
+	Replaces the entire file with the provided string.  This routine will open, write, and close the file.  You do not need a file connection array.
+HHH	Use:
+...	$result = zFileStoreText($filePath, $string, $isLocking);
+HHH	Parameter:
+t[
+t-
+tcx	|*$filePath*|
+tc*	Path to the file.
+t-
+tcx	|*$string*|
+tc*	The string to write to the file.
+t-
+tcx	|*$isLocking*|
+tc*	When in doubt pass in true.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*bool*|
+tc*	|*true*| when everything was ok.  |*false*| otherwise.
+t]
+
+hh	|chapter| - zFileStoreTextArray
+	Replaces the entire file with the provided array of strings.  This routine will open, write, and close the file.  You do not need a file connection array.
+HHH	Use:
+...	$result = zFileStoreTextArray($filePath, $lineArray, $isLocking);
+HHH	Parameter:
+t[
+t-
+tcx	|*$filePath*|
+tc*	Path to the file.
+t-
+tcx	|*$lineArray*|
+tc*	The array of strings to write to the file.
+t-
+tcx	|*$isLocking*|
+tc*	When in doubt pass in true.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*bool*|
+tc*	|*true*| when everything was ok.  |*false*| otherwise.
+t]
+
+hh	|chapter| - zFileWriteText
+	Write to a file.
+HHH	Use:
+...	zFileWriteText($fileCon, $string)
+HHH	Parameter:
+t[
+t-
+tcx	|*$fileCon*|
+tc*	The file connection array returned from zFileConnect.
+t-
+tcx	|*$string*|
+tc*	The string to write to the file.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*bool*|
+tc*	always true.
+t]
+
+
+h	|chapter| - zList
+
+	Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.
+
+
+hh	|chapter| - zListAdd
+
+	Add a new record to the array.
+
+HHH	Use:
+
+...	$index = zListAdd($list);
+
+HHH	Parameter:
+
+t[
+t-
+tcx	|*$list*|
+tc*	The list to modify.  Pass in by reference.
+t]
+
+HHH	Return:
+
+t[
+t-
+tcx	|*integer*|
+tc*	The index of the new record.
+t]
+
+
+hh	|chapter| - zListGet
+
+	Get a record's key'ed value from the array.
+
+HHH	Use:
+
+...	$value = zListGet($list, $index, $key);
+
+HHH	Parameter:
+
+t[
+t-
+tcx	|*$list*|
+tc*	The list of records.
+t-
+tcx	|*$index*|
+tc*	The index of the record in the list.
+t-
+tcx	|*$key*|
+tc*	The key value in the record we want the value for.
+t]
+
+HHH	Return:
+
+t[
+t-
+tcx	|***|
+tc*	The value associated with the key for the record.  Type will depend on what is stored there.
+t]
+
+
+hh	|chapter| - zListSave
+
+	Save the array of records to a php file.
+
+HHH	Use:
+
+...	zListSave($file, $list, $varName);
+
+HHH	Parameter:
+
+t[
+t-
+tcx	|*$file*|
+tc*	The file name to use to write to.
+t-
+tcx	|*$list*|
+tc*	The list of records.
+t-
+tcx	|*$varName*|
+tc*	The name of the php variable to be used for the array of records.
+t]
+
+HHH	Return:
+
+	No return value.
+
+
+hh	|chapter| - zListSet
+
+	Set a record's key'ed value in the array.
+
+HHH	Use:
+
+...	zListGet($list, $index, $key, $value);
+
+HHH	Parameter:
+
+t[
+t-
+tcx	|*$list*|
+tc*	The list of records.
+t-
+tcx	|*$index*|
+tc*	The index of the record in the list.
+t-
+tcx	|*$key*|
+tc*	The key value in the record we want to set.
+t-
+tcx	|*$value*|
+tc*	The value we want to associate with the key.
+t]
+
+HHH	Return:
+
+	No return value.
+
+
+
+
+h	|chapter| - zLock
+	File/Folder locking at a file/folder level.  This is very simple locking in that it uses and operating system trick of making a folder in the folder you want to make a lock in.  If two processes try to create the same folder, only one process will be successful.  The other will fail.  The one which is successful will be able to proceed.  Releasing the lock will mean the deletion of the folder.  Eventually the other process will be able to create the folder an 'obtain' a lock.
+
+hh	|chapter| - zLockCreate
+	Create a lock.
+HHH	Use:
+...	$lock = zLockCreate($name);
+HHH	Parameter:
+t[
+t-
+tcx	|*$name*|
+tc*	Just a generic lock name.  Programmer choice what the name means.  A folder named "lock_" . $name will be created.
+t]
+HHH	Return:
+t[
+t-
+tcx	|*string*|
+tc*	Name of the lock on success.  "" on failure.
+t]
+
+hh	|chapter| - zLockCreateFile
+	Create a lock on a specific file name.
+HHH	Use:
+...	$lock = zLockCreateFile($fileName);
+HHH	Parameter:
+t[
+t-
+tcx	|*$fileName*|
+tc*	Name of the file you wish to lock.  A folder named "lock_file_" . $fileName will be created.
+t]
+HHH	Return:
+t[
+t-
+tcx	|*string*|
+tc*	Name of the lock on success.  "" on failure.
+t]
+
+hh	|chapter| - zLockDestroy
+	Release a lock.
+HHH	Use:
+...	zLockDestroy($name);
+HHH	Parameter:
+t[
+t-
+tcx	|*$name*|
+tc*	Whatever string you get back from zLockCreate() and zLockCreateFile() is what you need to pass into this function to properly destroy the lock.
+t]
+HHH	Return:
+	No return value.
+
+
+
+
+h	|chapter| - zUtil
+	A collection of routines that are generic that do not have a dedicated heading for them.
+
+hh	|chapter| - zUtilGetValue
+	Fetch the value for a key from a GET or POST message.
+HHH	Use:
+...	$value = zUtilGetValue($key);
+HHH	Parameter:
+t[
+t-
+tcx	|*$key*|
+tc*	The string key you want to find the value for.
+t]
+HHH	Result:
+t[
+t-
+tcx	|*string*|
+tc*	The string for the key.  "" no defined key or value.
+t]
