@@ -5,18 +5,18 @@
 **1 - Summary**<br />
 **2 - Install**<br />
 **3 - Use**<br />
- Common Commands<br />
-  O Command, Ordering the Project list<br />
-  V Command, Visibility setting of a Project<br />
-  L Command, Change list.<br />
- Project List Commands<br />
-  A Command, Add a Project<br />
-  E Command, Edit a Project<br />
- Task List Commands<br />
-  A Command, Add a Task<br />
-  E Command, Edit a Project<br />
-  S Command, Change the Status of a Task<br />
-  Tilde Command, Delete a Task<br />
+ 3.1 - Common Commands<br />
+  3.1.1 - O Command, Ordering the Project list<br />
+  3.1.2 - V Command, Visibility setting of a Project<br />
+  3.1.3 - L Command, Change list.<br />
+ 3.2 - Project List Commands<br />
+  3.2.1 - A Command, Add a Project<br />
+  3.2.2 - E Command, Edit a Project<br />
+ 3.3 - Task List Commands<br />
+  3.3.1 - A Command, Add a Task<br />
+  3.3.2 - E Command, Edit a Project<br />
+  3.3.3 - S Command, Change the Status of a Task<br />
+  3.3.4 - Tilde Command, Delete a Task<br />
 
 # 1 - Summary
 
@@ -59,11 +59,11 @@ There is a text field in the middle of the web page.  It should already have foc
 
 There is help text below the command line to show what commands are available in the current view.
 
-## Common Commands
+## 3.1 - Common Commands
 
 These commands for the command line are the same no matter which list you are currently showing.
 
-### O Command, Ordering the Project list
+### 3.1.1 - O Command, Ordering the Project list
 
 ```
 ojV
@@ -73,7 +73,7 @@ Order the list by column "j" and then by column "v".  Each column has a letter p
 
 A capital letter will invert the sort order for that column.  So in the above command the visibility (vis) column will be inverted in sort order.
 
-### V Command, Visibility setting of a Project
+### 3.1.2 - V Command, Visibility setting of a Project
 
 ```
 v23 +
@@ -90,7 +90,7 @@ Third v command similar to the second one except there is no "+" or "-" that fol
 
 Fourth v command uses a capital V.  This essentially performs the command "v. -" followed by a "v4 +" command.  Or in other words.  Make only the project with PID equal to 4 visible and everything else invisible.
 
-### L Command, Change list.
+### 3.1.3 - L Command, Change list.
 
 ```
 l
@@ -98,9 +98,9 @@ l
 
 You can add "t" or "p" but it really is unnecessary.  "l" by itself will toggle between the project list and the task list.
 
-## Project List Commands
+## 3.2 - Project List Commands
 
-### A Command, Add a Project
+### 3.2.1 - A Command, Add a Project
 
 ```
 a nZTasker `A simple task manager
@@ -112,7 +112,7 @@ Once you type that into the command line and hit enter you should see ZTasker ap
 
 PID values are automatically assigned.
 
-### E Command, Edit a Project
+### 3.2.2 - E Command, Edit a Project
 
 ```
 e1 nZ:Tasker `A simple and fast task manager.
@@ -122,9 +122,9 @@ The above will adjust the project with '1' as it's Project ID (PID) to "Z:Tasker
 
 If the PID you provided doesn't exist then nothing happens.
 
-## Task List Commands
+## 3.3 - Task List Commands
 
-### A Command, Add a Task
+### 3.3.1 - A Command, Add a Task
 
 ```
 a n12 p1 e? siw `Fix problem with that thing
@@ -148,7 +148,7 @@ All options are optional.  "n", "p", "e" will default to what is shown above the
 
 PID values are automatically assigned.
 
-### E Command, Edit a Project
+### 3.3.2 - E Command, Edit a Project
 
 ```
 e1 n12 p2 e3 siw `Fix problem with that thing and that other thing.
@@ -158,7 +158,7 @@ Edit an existing task.  Id number must be a valid task id and cannot be omitted 
 
 See "a" command above.  Again all options are optional.  Existing values will not change if they are not provided.
 
-### S Command, Change the Status of a Task
+### 3.3.3 - S Command, Change the Status of a Task
 
 ```
 s1 +
@@ -172,7 +172,7 @@ Second command will change the status of Task whose id is 2 to the previous logi
 
 Third command will change the status of Task whose id is 3 to "ad" which is "Archive Done"
 
-### Tilde Command, Delete a Task
+### 3.3.4 - Tilde Command, Delete a Task
 
 ```
 ~13

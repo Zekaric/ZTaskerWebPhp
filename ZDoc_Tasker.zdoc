@@ -26,16 +26,16 @@ h	|chapter| - Use
 	There is a text field in the middle of the web page.  It should already have focus.  Just type in your commands into this text field and hit the enter key.
 	There is help text below the command line to show what commands are available in the current view.
 
-hh	Common Commands
+hh	|chapter| - Common Commands
 
 	These commands for the command line are the same no matter which list you are currently showing.
 
-hhh	O Command, Ordering the Project list
+hhh	|chapter| - O Command, Ordering the Project list
 ...	ojV
 	Order the list by column "j" and then by column "v".  Each column has a letter prefix.  This is the letter you provide to the "o" command.  You can sort by one or more columns.
 	A capital letter will invert the sort order for that column.  So in the above command the visibility (vis) column will be inverted in sort order.
 
-hhh	V Command, Visibility setting of a Project
+hhh	|chapter| - V Command, Visibility setting of a Project
 ...[
 v23 +
 v. -
@@ -47,26 +47,26 @@ V4
 	Third v command similar to the second one except there is no "+" or "-" that follows.  This will toggle the visibility of each project in the list.
 	Fourth v command uses a capital V.  This essentially performs the command "v. -" followed by a "v4 +" command.  Or in other words.  Make only the project with PID equal to 4 visible and everything else invisible.
 
-hhh	L Command, Change list.
+hhh	|chapter| - L Command, Change list.
 ...	l
 	You can add "t" or "p" but it really is unnecessary.  "l" by itself will toggle between the project list and the task list.
 
-hh	Project List Commands
+hh	|chapter| - Project List Commands
 
-hhh	A Command, Add a Project
+hhh	|chapter| - A Command, Add a Project
 ...	a nZTasker `A simple task manager
 	The above is a typical add command.  It will create a project named ZTasker with a description associated with that project.  n option is not optional.  ` is optional and if present must be last.
 	Once you type that into the command line and hit enter you should see ZTasker appear in the list.  
 	PID values are automatically assigned.  
 
-hhh	E Command, Edit a Project
+hhh	|chapter| - E Command, Edit a Project
 ...	e1 nZ:Tasker `A simple and fast task manager.
 	The above will adjust the project with '1' as it's Project ID (PID) to "Z:Tasker" and updates its description as well.  n and ` options are optional but you should have at least one for this command to do anything.
 	If the PID you provided doesn't exist then nothing happens.
 
-hh	Task List Commands
+hh	|chapter| - Task List Commands
 
-hhh	A Command, Add a Task
+hhh	|chapter| - A Command, Add a Task
 ...	a n12 p1 e? siw `Fix problem with that thing
 	Add a task to the list.  
 	"n" provides the project to assign the task to.  
@@ -78,12 +78,12 @@ hhh	A Command, Add a Task
 	All options are optional.  "n", "p", "e" will default to what is shown above the command line.  "s" will default to "nw" which means needs work.  "`" is optional but technically needed for this command.
 	PID values are automatically assigned.  
 
-hhh	E Command, Edit a Project
+hhh	|chapter| - E Command, Edit a Project
 ...	e1 n12 p2 e3 siw `Fix problem with that thing and that other thing.
 	Edit an existing task.  Id number must be a valid task id and cannot be omitted or can be ".".
 	See "a" command above.  Again all options are optional.  Existing values will not change if they are not provided.
 
-hhh	S Command, Change the Status of a Task
+hhh	|chapter| - S Command, Change the Status of a Task
 ...[
 s1 +
 s2 -
@@ -93,6 +93,6 @@ s3 ad
 	Second command will change the status of Task whose id is 2 to the previous logical state.
 	Third command will change the status of Task whose id is 3 to "ad" which is "Archive Done"
 
-hhh	Tilde Command, Delete a Task
+hhh	|chapter| - Tilde Command, Delete a Task
 ...	~13
 	Delete task with id equal to 13.

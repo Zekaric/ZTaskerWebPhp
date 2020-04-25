@@ -17,18 +17,18 @@
 <p class="zdoc_toc1"><a href="#1">1 - Summary</a></p>
 <p class="zdoc_toc1"><a href="#2">2 - Install</a></p>
 <p class="zdoc_toc1"><a href="#3">3 - Use</a></p>
-<p class="zdoc_toc2"><a href="#3.1">Common Commands</a></p>
-<p class="zdoc_toc3"><a href="#3.1.1">O Command, Ordering the Project list</a></p>
-<p class="zdoc_toc3"><a href="#3.1.2">V Command, Visibility setting of a Project</a></p>
-<p class="zdoc_toc3"><a href="#3.1.3">L Command, Change list.</a></p>
-<p class="zdoc_toc2"><a href="#3.2">Project List Commands</a></p>
-<p class="zdoc_toc3"><a href="#3.2.1">A Command, Add a Project</a></p>
-<p class="zdoc_toc3"><a href="#3.2.2">E Command, Edit a Project</a></p>
-<p class="zdoc_toc2"><a href="#3.3">Task List Commands</a></p>
-<p class="zdoc_toc3"><a href="#3.3.1">A Command, Add a Task</a></p>
-<p class="zdoc_toc3"><a href="#3.3.2">E Command, Edit a Project</a></p>
-<p class="zdoc_toc3"><a href="#3.3.3">S Command, Change the Status of a Task</a></p>
-<p class="zdoc_toc3"><a href="#3.3.4">Tilde Command, Delete a Task</a></p>
+<p class="zdoc_toc2"><a href="#3.1">3.1 - Common Commands</a></p>
+<p class="zdoc_toc3"><a href="#3.1.1">3.1.1 - O Command, Ordering the Project list</a></p>
+<p class="zdoc_toc3"><a href="#3.1.2">3.1.2 - V Command, Visibility setting of a Project</a></p>
+<p class="zdoc_toc3"><a href="#3.1.3">3.1.3 - L Command, Change list.</a></p>
+<p class="zdoc_toc2"><a href="#3.2">3.2 - Project List Commands</a></p>
+<p class="zdoc_toc3"><a href="#3.2.1">3.2.1 - A Command, Add a Project</a></p>
+<p class="zdoc_toc3"><a href="#3.2.2">3.2.2 - E Command, Edit a Project</a></p>
+<p class="zdoc_toc2"><a href="#3.3">3.3 - Task List Commands</a></p>
+<p class="zdoc_toc3"><a href="#3.3.1">3.3.1 - A Command, Add a Task</a></p>
+<p class="zdoc_toc3"><a href="#3.3.2">3.3.2 - E Command, Edit a Project</a></p>
+<p class="zdoc_toc3"><a href="#3.3.3">3.3.3 - S Command, Change the Status of a Task</a></p>
+<p class="zdoc_toc3"><a href="#3.3.4">3.3.4 - Tilde Command, Delete a Task</a></p>
 
 
 <h1 class="zdoc"><a name="1">1 - Summary</a></h1>
@@ -60,17 +60,17 @@ opcache.revalidate_freq = ...
 <p class="zdoc">There is a text field in the middle of the web page.  It should already have focus.  Just type in your commands into this text field and hit the enter key.</p>
 <p class="zdoc">There is help text below the command line to show what commands are available in the current view.</p>
 
-<h2 class="zdoc"><a name="3.1">Common Commands</a></h2>
+<h2 class="zdoc"><a name="3.1">3.1 - Common Commands</a></h2>
 <p class="zdoc">These commands for the command line are the same no matter which list you are currently showing.</p>
 
-<h3 class="zdoc"><a name="3.1.1">O Command, Ordering the Project list</a></h3>
+<h3 class="zdoc"><a name="3.1.1">3.1.1 - O Command, Ordering the Project list</a></h3>
 <pre class="zdoc">
 ojV
 </pre>
 <p class="zdoc">Order the list by column "j" and then by column "v".  Each column has a letter prefix.  This is the letter you provide to the "o" command.  You can sort by one or more columns.</p>
 <p class="zdoc">A capital letter will invert the sort order for that column.  So in the above command the visibility (vis) column will be inverted in sort order.</p>
 
-<h3 class="zdoc"><a name="3.1.2">V Command, Visibility setting of a Project</a></h3>
+<h3 class="zdoc"><a name="3.1.2">3.1.2 - V Command, Visibility setting of a Project</a></h3>
 <pre class="zdoc">
 v23 +
 v. -
@@ -82,15 +82,15 @@ V4
 <p class="zdoc">Third v command similar to the second one except there is no "+" or "-" that follows.  This will toggle the visibility of each project in the list.</p>
 <p class="zdoc">Fourth v command uses a capital V.  This essentially performs the command "v. -" followed by a "v4 +" command.  Or in other words.  Make only the project with PID equal to 4 visible and everything else invisible.</p>
 
-<h3 class="zdoc"><a name="3.1.3">L Command, Change list.</a></h3>
+<h3 class="zdoc"><a name="3.1.3">3.1.3 - L Command, Change list.</a></h3>
 <pre class="zdoc">
 l
 </pre>
 <p class="zdoc">You can add "t" or "p" but it really is unnecessary.  "l" by itself will toggle between the project list and the task list.</p>
 
-<h2 class="zdoc"><a name="3.2">Project List Commands</a></h2>
+<h2 class="zdoc"><a name="3.2">3.2 - Project List Commands</a></h2>
 
-<h3 class="zdoc"><a name="3.2.1">A Command, Add a Project</a></h3>
+<h3 class="zdoc"><a name="3.2.1">3.2.1 - A Command, Add a Project</a></h3>
 <pre class="zdoc">
 a nZTasker `A simple task manager
 </pre>
@@ -98,16 +98,16 @@ a nZTasker `A simple task manager
 <p class="zdoc">Once you type that into the command line and hit enter you should see ZTasker appear in the list.</p>
 <p class="zdoc">PID values are automatically assigned.</p>
 
-<h3 class="zdoc"><a name="3.2.2">E Command, Edit a Project</a></h3>
+<h3 class="zdoc"><a name="3.2.2">3.2.2 - E Command, Edit a Project</a></h3>
 <pre class="zdoc">
 e1 nZ:Tasker `A simple and fast task manager.
 </pre>
 <p class="zdoc">The above will adjust the project with '1' as it's Project ID (PID) to "Z:Tasker" and updates its description as well.  n and ` options are optional but you should have at least one for this command to do anything.</p>
 <p class="zdoc">If the PID you provided doesn't exist then nothing happens.</p>
 
-<h2 class="zdoc"><a name="3.3">Task List Commands</a></h2>
+<h2 class="zdoc"><a name="3.3">3.3 - Task List Commands</a></h2>
 
-<h3 class="zdoc"><a name="3.3.1">A Command, Add a Task</a></h3>
+<h3 class="zdoc"><a name="3.3.1">3.3.1 - A Command, Add a Task</a></h3>
 <pre class="zdoc">
 a n12 p1 e? siw `Fix problem with that thing
 </pre>
@@ -121,14 +121,14 @@ a n12 p1 e? siw `Fix problem with that thing
 <p class="zdoc">All options are optional.  "n", "p", "e" will default to what is shown above the command line.  "s" will default to "nw" which means needs work.  "`" is optional but technically needed for this command.</p>
 <p class="zdoc">PID values are automatically assigned.</p>
 
-<h3 class="zdoc"><a name="3.3.2">E Command, Edit a Project</a></h3>
+<h3 class="zdoc"><a name="3.3.2">3.3.2 - E Command, Edit a Project</a></h3>
 <pre class="zdoc">
 e1 n12 p2 e3 siw `Fix problem with that thing and that other thing.
 </pre>
 <p class="zdoc">Edit an existing task.  Id number must be a valid task id and cannot be omitted or can be ".".</p>
 <p class="zdoc">See "a" command above.  Again all options are optional.  Existing values will not change if they are not provided.</p>
 
-<h3 class="zdoc"><a name="3.3.3">S Command, Change the Status of a Task</a></h3>
+<h3 class="zdoc"><a name="3.3.3">3.3.3 - S Command, Change the Status of a Task</a></h3>
 <pre class="zdoc">
 s1 +
 s2 -
@@ -138,7 +138,7 @@ s3 ad
 <p class="zdoc">Second command will change the status of Task whose id is 2 to the previous logical state.</p>
 <p class="zdoc">Third command will change the status of Task whose id is 3 to "ad" which is "Archive Done"</p>
 
-<h3 class="zdoc"><a name="3.3.4">Tilde Command, Delete a Task</a></h3>
+<h3 class="zdoc"><a name="3.3.4">3.3.4 - Tilde Command, Delete a Task</a></h3>
 <pre class="zdoc">
 ~13
 </pre>
