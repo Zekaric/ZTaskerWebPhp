@@ -1,11 +1,11 @@
 <?php
-/* taskerTask *****************************************************************
+/* mytTask *****************************************************************
 
 Author: Robbert de Groot
 
 Description:
 
-Manage the taskerListTask[Active|Archive].php file.
+Manage the mytListTask[Active|Archive].php file.
 
 ******************************************************************************/
 
@@ -32,18 +32,30 @@ SOFTWARE.
 ******************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////
+// Global variable needed before myt_ListTask.php
+$mytListTask = array();
+
+///////////////////////////////////////////////////////////////////////////////
+// constant
+define("LIST_TASK_FILE",    "myt_ListTask.php");
+define("LIST_TASK_VAR",     "\$mytListTask");
+
+define("KEY_TASK_ID",       "id");
+define("KEY_TASK_ID_PROJ",  "idProject");
+define("KEY_TASK_PRIORITY", "priority");
+define("KEY_TASK_EFFORT",   "effort");
+define("KEY_TASK_STATUS",   "status");
+define("KEY_TASK_DESC",     "description");
+
+///////////////////////////////////////////////////////////////////////////////
 // include
+require_once "zDataList.php";
 require_once "zDebug.php";
-require_once "zFile.php";
-require_once "zList.php";
 
-require_once "tasker_Constant.php";
-require_once "tasker_Variable.php";
-require_once "tasker_ListProject.php";
-require_once "tasker_ListTask.php";
+require_once LIST_TASK_FILE;
 
-require_once "taskerVariable.php";
-require_once "taskerProject.php";
+require_once "mytVariable.php";
+require_once "mytProject.php";
 
 ///////////////////////////////////////////////////////////////////////////////
 // global
@@ -52,20 +64,18 @@ require_once "taskerProject.php";
 
 ///////////////////////////////////////////////////////////////////////////////
 // Add a task.
-function taskerTaskAdd($idProject, $priority, $effort, $status, $description)
+function mytTaskAdd($idProject, $priority, $effort, $status, $description)
 {
-   // Get the task list.
-   $list = &taskerVarGetListTask();
+   global $mytListTask;
 
    // Get the index of the new task.
-   $index = zListAdd($list);
+   $index = zDataListAdd($mytListTask);
 
    // Increment the next project id.
-   $id = taskerVarUpdateNextIdTask();
+   $id = mytVarUpdateNextIdTask();
 
    // Modify that task.
-   taskerTaskSet(
-      $list,
+   mytTaskSet(
       $index,
       $id,
       $idProject,
@@ -73,75 +83,78 @@ function taskerTaskAdd($idProject, $priority, $effort, $status, $description)
       $effort,
       $status,
       $description);
-
-   // Save the changed next id project.
-   zListSave(FILE_LIST_TASK, $list, VAR_LIST_TASK);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Edit a task.
-function taskerTaskEdit($index, $idProject, $priority, $effort, $status, $description)
+function mytTaskEdit($index, $idProject, $priority, $effort, $status, $description)
 {
-   // Get the task list.
-   $list = &taskerVarGetListTask();
+   global $mytListTask;
 
    // Modify that task.
-   taskerTaskSet(
-      $list,
+   mytTaskSet(
       $index,
-      taskerTaskGetId($index),
+      mytTaskGetId($index),
       $idProject,
       $priority,
       $effort,
       $status,
       $description);
-
-   // Save the changed next id project.
-   zListSave(FILE_LIST_TASK, $list, VAR_LIST_TASK);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Delete a task.
-function taskerTaskDelete($index)
+function mytTaskDelete($index)
 {
-   // Get the task list.
-   $list = & taskerVarGetListTask();
+   global $mytListTask;
 
    // Remove the task from the list.
-   array_splice($list, $index, 1);
+   array_splice($mytListTask, $index, 1);
 
    // Save the changed next id project.
-   zListSave(FILE_LIST_TASK, $list, VAR_LIST_TASK);
+   zDataListSave(LIST_TASK_FILE, $mytListTask, LIST_TASK_VAR);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Get functions
-function taskerTaskGetDescription($index)
+function mytTaskGetCount()
 {
-   return zListGet(taskerVarGetListTask(), $index, KEY_TASK_DESC);
+   global $mytListTask;
+
+   return count($mytListTask);
 }
 
-function taskerTaskGetEffort($index)
+function mytTaskGetDescription($index)
 {
-   return zListGet(taskerVarGetListTask(), $index, KEY_TASK_EFFORT);
+   global $mytListTask;
+
+   return zDataListGet($mytListTask, $index, KEY_TASK_DESC);
 }
 
-function taskerTaskGetId($index)
+function mytTaskGetEffort($index)
 {
-   return zListGet(taskerVarGetListTask(), $index, KEY_TASK_ID);
+   global $mytListTask;
+
+   return zDataListGet($mytListTask, $index, KEY_TASK_EFFORT);
 }
 
-function taskerTaskGetIndex($id)
+function mytTaskGetId($index)
 {
-   // Get the task list
-   $list = taskerVarGetListTask();
+   global $mytListTask;
+
+   return zDataListGet($mytListTask, $index, KEY_TASK_ID);
+}
+
+function mytTaskGetIndex($id)
+{
+   global $mytListTask;
 
    // For all tasks...
-   $count = count($list);
+   $count = count($mytListTask);
    for ($index = 0; $index < $count; $index++)
    {
       // Get the task id.
-      $idTask = zListGet($list, $index, KEY_TASK_ID);
+      $idTask = zDataListGet($mytListTask, $index, KEY_TASK_ID);
       
       // if the ids match...
       if ($id == $idTask)
@@ -155,22 +168,28 @@ function taskerTaskGetIndex($id)
    return -1;
 }
 
-function taskerTaskGetIdProject($index)
+function mytTaskGetIdProject($index)
 {
-   return zListGet(taskerVarGetListTask(), $index, KEY_TASK_ID_PROJ);
+   global $mytListTask;
+
+   return zDataListGet($mytListTask, $index, KEY_TASK_ID_PROJ);
 }
 
-function taskerTaskGetPriority($index)
+function mytTaskGetPriority($index)
 {
-   return zListGet(taskerVarGetListTask(), $index, KEY_TASK_PRIORITY);
+   global $mytListTask;
+
+   return zDataListGet($mytListTask, $index, KEY_TASK_PRIORITY);
 }
 
-function taskerTaskGetStatus($index)
+function mytTaskGetStatus($index)
 {
-   return zListGet(taskerVarGetListTask(), $index, KEY_TASK_STATUS);
+   global $mytListTask;
+
+   return zDataListGet($mytListTask, $index, KEY_TASK_STATUS);
 }
 
-function taskerTaskGetStatusValue($status)
+function mytTaskGetStatusValue($status)
 {
    switch ($status)
    {
@@ -193,35 +212,41 @@ function taskerTaskGetStatusValue($status)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Set functions
-function taskerTaskSet(&$list, $index, $id, $idProject, $priority, $effort, $status, $description)
+function mytTaskSet($index, $id, $idProject, $priority, $effort, $status, $description)
 {
-   zListSet(taskerVarGetListTask(), $index, KEY_TASK_ID,       $id);
-   zListSet(taskerVarGetListTask(), $index, KEY_TASK_ID_PROJ,  $idProject);
-   zListSet(taskerVarGetListTask(), $index, KEY_TASK_PRIORITY, $priority);
-   zListSet(taskerVarGetListTask(), $index, KEY_TASK_EFFORT,   $effort);
-   zListSet(taskerVarGetListTask(), $index, KEY_TASK_STATUS,   $status);
-   zListSet(taskerVarGetListTask(), $index, KEY_TASK_DESC,     $description);
+   global $mytListTask;
+
+   zDataListSet($mytListTask, $index, KEY_TASK_ID,       $id);
+   zDataListSet($mytListTask, $index, KEY_TASK_ID_PROJ,  $idProject);
+   zDataListSet($mytListTask, $index, KEY_TASK_PRIORITY, $priority);
+   zDataListSet($mytListTask, $index, KEY_TASK_EFFORT,   $effort);
+   zDataListSet($mytListTask, $index, KEY_TASK_STATUS,   $status);
+   zDataListSet($mytListTask, $index, KEY_TASK_DESC,     $description);
+
+   // Save the changed next id project.
+   zDataListSave(LIST_TASK_FILE, $mytListTask, LIST_TASK_VAR);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Sort
-function taskerTaskSort()
+function mytTaskSort()
 {
+   global $mytListTask;
+
    // List should already be in this order.
-   if (taskerVarGetSortOrderTask() == "i")
+   if (mytVarGetSortOrderTask() == "i")
    {
       return;
    }
 
-   // Get the project list.
-   $list = &taskerVarGetListTask();
-
-   usort($list, 'taskerTaskSortFunction');
+   usort($mytListTask, 'mytTaskSortFunction');
 }
 
-function taskerTaskSortFunction($a, $b)
+///////////////////////////////////////////////////////////////////////////////
+// The actual compare function for the sort.
+function mytTaskSortFunction($a, $b)
 {
-   $order = taskerVarGetSortOrderTask();
+   $order = mytVarGetSortOrderTask();
 
    $count = strlen($order);
    for ($index = 0; $index < $count; $index++)
@@ -246,9 +271,9 @@ function taskerTaskSortFunction($a, $b)
 
       case "j": 
       case "J":
-         $aProj = taskerProjectGetNameFromId($a[KEY_TASK_ID_PROJ]);
-         $bProj = taskerProjectGetNameFromId($b[KEY_TASK_ID_PROJ]);
-         $value = strnatcmp($aProj < $bProj);
+         $aProj = mytProjectGetNameFromId($a[KEY_TASK_ID_PROJ]);
+         $bProj = mytProjectGetNameFromId($b[KEY_TASK_ID_PROJ]);
+         $value = strnatcmp($aProj, $bProj);
          if ($letter == "J") $value = -$value;
          if ($value != 0)    return $value;
          break;
@@ -269,7 +294,7 @@ function taskerTaskSortFunction($a, $b)
 
       case "s":
       case "S":
-         $value = taskerTaskGetStatusValue($a[KEY_TASK_STATUS]) - taskerTaskGetStatusValue($b[KEY_TASK_STATUS]);
+         $value = mytTaskGetStatusValue($a[KEY_TASK_STATUS]) - mytTaskGetStatusValue($b[KEY_TASK_STATUS]);
          if ($letter == "S") $value = -$value;
          if ($value != 0)    return $value;
          break;

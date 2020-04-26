@@ -1,11 +1,11 @@
 <?php
-/* taskerProject **************************************************************
+/* mytProject **************************************************************
 
 Author: Robbert de Groot
 
 Description:
 
-Manage the taskerListProject.php file.
+Manage the mytListProject.php file.
 
 ******************************************************************************/
 
@@ -32,16 +32,27 @@ SOFTWARE.
 ******************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////
+// Global variable needed before myt_ListProject.php
+$mytListProject = array();
+
+///////////////////////////////////////////////////////////////////////////////
+// constant
+define("LIST_PROJ_FILE",      "myt_ListProject.php");
+define("LIST_PROJ_VAR",       "\$mytListProject");
+
+define("KEY_PROJ_ID",         "id");
+define("KEY_PROJ_NAME",       "name");
+define("KEY_PROJ_DESC",       "description");
+define("KEY_PROJ_IS_VISIBLE", "isVisible");
+
+///////////////////////////////////////////////////////////////////////////////
 // include
+require_once "zDataList.php";
 require_once "zDebug.php";
-require_once "zFile.php";
-require_once "zList.php";
 
-require_once "tasker_Constant.php";
-require_once "tasker_Variable.php";
-require_once "tasker_ListProject.php";
+require_once LIST_PROJ_FILE;
 
-require_once "taskerVariable.php";
+require_once "mytVariable.php";
 
 ///////////////////////////////////////////////////////////////////////////////
 // global
@@ -50,72 +61,70 @@ require_once "taskerVariable.php";
 
 ///////////////////////////////////////////////////////////////////////////////
 // Add project.
-function taskerProjectAdd($name, $isVisible, $description)
+function mytProjectAdd($name, $isVisible, $description)
 {
-   // Get the project list.
-   $list = &taskerVarGetListProject();
-      
+   global $mytListProject;
+
    // Get the index of the new project.
-   $index = zListAdd($list);
+   $index = zDataListAdd($mytListProject);
 
    // Increment the next project id.
-   $id = taskerVarUpdateNextIdProject();
+   $id = mytVarUpdateNextIdProject();
 
    // Modify that project.
-   taskerProjectSet(
-      $list,
+   mytProjectSet(
       $index,
       $id,
       $name,
       $isVisible,
       $description);
-   
-   // Save the changed next id project.
-   zListSave(FILE_LIST_PROJ, $list, VAR_LIST_PROJ);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Edit a project.
-function taskerProjectEdit($index, $name, $isVisible, $description)
+function mytProjectEdit($index, $name, $isVisible, $description)
 {
-   // Get the project list.
-   $list = &taskerVarGetListProject();
-      
-   taskerProjectSet(
-      $list,
+   mytProjectSet(
       $index,
-      taskerProjectGetId($index),
+      mytProjectGetId($index),
       $name,
       $isVisible,
       $description);
-
-   // Save the changed next id project.
-   zListSave(FILE_LIST_PROJ, $list, VAR_LIST_PROJ);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Get functions
-function taskerProjectGetDescription($index)
+function mytProjectGetCount()
 {
-   return zListGet(taskerVarGetListProject(), $index, KEY_PROJ_DESC);
+   global $mytListProject;
+
+   return count($mytListProject);
 }
 
-function taskerProjectGetId($index)
+function mytProjectGetDescription($index)
 {
-   return zLIstGet(taskerVarGetListProject(), $index, KEY_PROJ_ID);
+   global $mytListProject;
+
+   return zDataListGet($mytListProject, $index, KEY_PROJ_DESC);
 }
 
-function taskerProjectGetIndex($id)
+function mytProjectGetId($index)
 {
-   // Get the project list.
-   $list = taskerVarGetListProject();
+   global $mytListProject;
+   
+   return zDataListGet($mytListProject, $index, KEY_PROJ_ID);
+}
+
+function mytProjectGetIndex($id)
+{
+   global $mytListProject;
 
    // For all projects...
-   $count = count($list);
+   $count = count($mytListProject);
    for ($index = 0; $index < $count; $index++)
    {
       // Get the project id.
-      $idProject = zListGet($list, $index, KEY_PROJ_ID);
+      $idProject = zDataListGet($mytListProject, $index, KEY_PROJ_ID);
 
       // If the ids match...
       if ($id == $idProject)
@@ -129,59 +138,71 @@ function taskerProjectGetIndex($id)
    return -1;
 }
 
-function taskerProjectGetName($index)
+function mytProjectGetName($index)
 {
-   return zListGet(taskerVarGetListProject(), $index, KEY_PROJ_NAME);
+   global $mytListProject;
+
+   return zDataListGet($mytListProject, $index, KEY_PROJ_NAME);
 }
 
-function taskerProjectGetNameFromId($id)
+function mytProjectGetNameFromId($id)
 {
-   return taskerProjectGetName(taskerProjectGetIndex($id));
+   global $mytListProject;
+
+   return mytProjectGetName(mytProjectGetIndex($id));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Is functions
-function taskerProjectIsVisible($index)
+function mytProjectIsVisible($index)
 {
-   return zListGet(taskerVarGetListProject(), $index, KEY_PROJ_IS_VISIBLE);
+   global $mytListProject;
+
+   return zDataListGet($mytListProject, $index, KEY_PROJ_IS_VISIBLE);
 }
 
-function taskerProjectIsVisibleFromId($id)
+function mytProjectIsVisibleFromId($id)
 {
-   return taskerProjectIsVisible(taskerProjectGetIndex($id));
+   return mytProjectIsVisible(mytProjectGetIndex($id));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Set functions
-function taskerProjectSet(&$list, $index, $id, $name, $isVisible, $description)
+function mytProjectSet($index, $id, $name, $isVisible, $description)
 {
-   zListSet($list, $index, KEY_PROJ_ID,         $id);
-   zListSet($list, $index, KEY_PROJ_NAME,       $name);
-   zListSet($list, $index, KEY_PROJ_IS_VISIBLE, $isVisible);
-   zListSet($list, $index, KEY_PROJ_DESC,       $description);
+   global $mytListProject;
+
+   zDataListSet($mytListProject, $index, KEY_PROJ_ID,         $id);
+   zDataListSet($mytListProject, $index, KEY_PROJ_NAME,       $name);
+   zDataListSet($mytListProject, $index, KEY_PROJ_IS_VISIBLE, $isVisible);
+   zDataListSet($mytListProject, $index, KEY_PROJ_DESC,       $description);
+   
+   // Save the changed next id project.
+   zDataListSave(LIST_PROJ_FILE, $mytListProject, LIST_PROJ_VAR);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Sort
-function taskerProjectSort()
+function mytProjectSort()
 {
+   global $mytListProject;
+
    // List should already be in this order.
-   if (taskerVarGetSortOrderProject() == "i")
+   if (mytVarGetSortOrderProject() == "i")
    {
       return;
    }
 
-   // Get the project list.
-   $list = &taskerVarGetListProject();
-
-   usort($list, 'taskerProjectSortFunction');
+   usort($mytListProject, 'mytProjectSortFunction');
 }
 
-function taskerProjectSortFunction($a, $b)
+///////////////////////////////////////////////////////////////////////////////
+// Sort function to determin how one item relates to another.
+function mytProjectSortFunction($a, $b)
 {
-   $order = taskerVarGetSortOrderProject();
+   $order = mytVarGetSortOrderProject();
 
-   $count = count($order);
+   $count = strlen($order);
    for ($index = 0; $index < $count; $index++)
    {
       $letter = substr($order, $index, 1);
@@ -190,6 +211,8 @@ function taskerProjectSortFunction($a, $b)
       {
       case "i": 
       case "I":
+      case "n":
+      case "N":
          $value = $a[KEY_PROJ_ID] - $b[KEY_PROJ_ID];
          if ($letter == "I") $value = -$value;
          if ($value != 0)    return $value;
@@ -197,14 +220,14 @@ function taskerProjectSortFunction($a, $b)
 
       case "j": 
       case "J":
-         $value = strnatcmp($a[KEY_PROJ_NAME] < $b[KEY_PROJ_NAME]);
+         $value = strnatcmp($a[KEY_PROJ_NAME], $b[KEY_PROJ_NAME]);
          if ($letter == "J") $value = -$value;
          if ($value != 0)    return $value;
          break;
 
       case "d":
       case "D":
-         $value = strnatcmp($a[KEY_PROJ_DESC] < $b[KEY_PROJ_DESC]);
+         $value = strnatcmp($a[KEY_PROJ_DESC], $b[KEY_PROJ_DESC]);
          if ($letter == "D") $value = -$value;
          if ($value != 0)    return $value;
          break;

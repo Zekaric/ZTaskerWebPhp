@@ -1,11 +1,11 @@
 <?php
-/* taskerVariable *************************************************************
+/* mytDisplay **************************************************************
 
 Author: Robbert de Groot
 
 Description:
 
-Manage the tasker_Variable.php file.
+Display the interface.
 
 ******************************************************************************/
 
@@ -32,13 +32,26 @@ SOFTWARE.
 ******************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////
+// constant
+define("CMD_STATUS_NW",             "Needs Work");
+define("CMD_STATUS_IW",             "In Work");
+define("CMD_STATUS_NT",             "Needs Testing");
+define("CMD_STATUS_IT",             "In Testing");
+define("CMD_STATUS_ND",             "Needs Doc.");
+define("CMD_STATUS_ID",             "In Doc.");
+define("CMD_STATUS_NR",             "Needs Release");
+define("CMD_STATUS_IR",             "In Release");
+define("CMD_STATUS_AR",             "Archive Released");
+define("CMD_STATUS_AD",             "Archive Done");
+define("CMD_STATUS_AN",             "Archive None");
+
+///////////////////////////////////////////////////////////////////////////////
 // include
 require_once "zDebug.php";
 
-require_once "tasker_Constant.php";
-require_once "tasker_Variable.php";
-require_once "tasker_ListProject.php";
-require_once "tasker_ListTask.php";
+require_once "mytVariable.php";
+require_once "mytProject.php";
+require_once "mytTask.php";
 
 ///////////////////////////////////////////////////////////////////////////////
 // global
@@ -47,16 +60,14 @@ require_once "tasker_ListTask.php";
 
 ///////////////////////////////////////////////////////////////////////////////
 // Display the page.
-function taskerDisplay()
+function mytDisplay()
 {
    // Before display sort the list.
-   if (taskerVarIsDisplayingProjectList())
+   mytProjectSort();
+
+   if (!mytVarIsDisplayingProjectList())
    {
-      taskerProjectSort();
-   }
-   else
-   {
-      taskerTaskSort();
+      mytTaskSort();
    }
 
    ////////////////////////////////////////////////////////////////////////////
@@ -77,7 +88,7 @@ function taskerDisplay()
   <h1>Zekaric : MYT 
 END;
    
-   if (taskerVarIsDisplayingProjectList())
+   if (mytVarIsDisplayingProjectList())
    {
       print "Projects";
    }
@@ -94,11 +105,11 @@ END;
 END;
 
    // Get the project list.  It's always needed.
-   $countProject = taskerVarGetListProjectCount();
+   $countProject = mytProjectGetCount();
 
    ////////////////////////////////////////////////////////////////////////////
    // Printing the project list.
-   if (taskerVarIsDisplayingProjectList())
+   if (mytVarIsDisplayingProjectList())
    {
       /////////////////////////////////////////////////////////////////////////
       // Print the table header.
@@ -120,15 +131,15 @@ END;
       {
          // Get the visibilty string.
          $projIsVis = "<img class=sized src=rankBit0.svg />";
-         if (taskerProjectIsVisible($index))
+         if (mytProjectIsVisible($index))
          {
             $projIsVis = "<img class=sized src=rankBit1.svg />";
          }
 
          // Get the project name.
-         $projId   = taskerProjectGetId($index);
-         $projName = str_replace(" ", "&nbsp;", taskerProjectGetName($index));
-         $projDesc = taskerProjectGetDescription($index);
+         $projId   = mytProjectGetId($index);
+         $projName = str_replace(" ", "&nbsp;", mytProjectGetName($index));
+         $projDesc = mytProjectGetDescription($index);
 
          // Display the project data.
          if (($index % 2) == 0)
@@ -172,14 +183,14 @@ END;
       {
          // Get the visibilty string.
          $projIsVis = "<img class=sized src=rankBit0.svg />";
-         if (taskerProjectIsVisible($index))
+         if (mytProjectIsVisible($index))
          {
             $projIsVis = "<img class=sized src=rankBit1.svg />";
          }
 
          // Get the project name.
-         $projId   = taskerProjectGetId($index);
-         $projName = str_replace(" ", "&nbsp;", taskerProjectGetName($index));
+         $projId   = mytProjectGetId($index);
+         $projName = str_replace(" ", "&nbsp;", mytProjectGetName($index));
 
          // Display the project data.
          if (($index % 2) == 0)
@@ -220,24 +231,52 @@ END;
       // Print the table contents.
 
       // For all tasks.
-      $count = taskerVarGetListTaskCount();
+      $count = mytTaskGetCount();
 
       $rowIndex = 0;
       for ($index = 0; $index < $count; $index++)
       {
          // Get the data.
-         $taskId   = taskerTaskGetId($index);
-         $projId   = taskerTaskGetIdProject($index);
+         $taskId   = mytTaskGetId($index);
+         $projId   = mytTaskGetIdProject($index);
 
-         if (!taskerProjectIsVisibleFromId($projId))
+         // Check if we should be displaying this task.
+         if (!mytProjectIsVisibleFromId($projId))
          {
             continue;
          }
 
-         $projName = str_replace(" ", "&nbsp;", taskerProjectGetNameFromId($projId));
+         $status = mytTaskGetStatus($index);
+         if (($status == "nw" || $status == "iw") &&
+             !mytVarIsVisibleWork())
+         {
+            continue;
+         }
+         if (($status == "nt" || $status == "it") &&
+             !mytVarIsVisibleTesting())
+         {
+            continue;
+         }
+         if (($status == "nd" || $status == "id") &&
+             !mytVarIsVisibleDocumentation())
+         {
+            continue;
+         }
+         if (($status == "nr" || $status == "ir") &&
+             !mytVarIsVisibleRelease())
+         {
+            continue;
+         }
+         if (($status == "ar" || $status == "ad" || $status == "an") &&
+             !mytVarIsVisibleArchive())
+         {
+            continue;
+         }
+
+         $projName = str_replace(" ", "&nbsp;", mytProjectGetNameFromId($projId));
 
          // Get the priority image.
-         switch (taskerTaskGetPriority($index))
+         switch (mytTaskGetPriority($index))
          {
          default:
          case 1: $taskPriority = "<img class=sized src= rank1.svg />"; break;
@@ -248,7 +287,7 @@ END;
          }
 
          // Get the effort image.
-         switch (taskerTaskGetEffort($index))
+         switch (mytTaskGetEffort($index))
          {
          default:
          case 0: $taskEffort = "<img class=sized src= rank0.svg />"; break;
@@ -260,7 +299,7 @@ END;
          }
 
          // Get the status
-         switch (taskerTaskGetStatus($index))
+         switch ($status)
          {
          default:
          case "nw": $taskStatus = str_replace(" ", "&nbsp;", CMD_STATUS_NW); break;
@@ -277,7 +316,7 @@ END;
          }
 
          // Get the description
-         $taskDesc = taskerTaskGetDescription($index);
+         $taskDesc = mytTaskGetDescription($index);
 
          // Display the task.
          if (($rowIndex % 2) == 0)
@@ -337,35 +376,97 @@ END;
   </table>
 END;
    
-   $defaultPid     = taskerVarGetDefaultIdProject();
-   $defaultProject = taskerProjectGetNameFromId($defaultPid);
-   switch (taskerVarGetDefaultPriority($index))
+   if (!mytVarIsDisplayingProjectList())
    {
-   default:
-   case 1: $defaultPriority = "<img class=sized src= rank1.svg />"; break;
-   case 2: $defaultPriority = "<img class=sized src= rank2.svg />"; break;
-   case 3: $defaultPriority = "<img class=sized src= rank3.svg />"; break;
-   case 4: $defaultPriority = "<img class=sized src= rank4.svg />"; break;
-   case 5: $defaultPriority = "<img class=sized src= rank5.svg />"; break;
-   }
+      print <<< END
+  <table>
+   <tbody>
+    <tr>
+     <th>Task Visibility</th>
+     <th class="fill">Default values</th>
+    </tr>
+    <tr>
+     <td>
+END;
 
-   // Get the effort image.
-   switch (taskerVarGetDefaultEffort($index))
-   {
-   default:
-   case 0: $defaultEffort = "<img class=sized src= rank0.svg />"; break;
-   case 1: $defaultEffort = "<img class=sized src= rank1.svg />"; break;
-   case 2: $defaultEffort = "<img class=sized src= rank2.svg />"; break;
-   case 3: $defaultEffort = "<img class=sized src= rank3.svg />"; break;
-   case 4: $defaultEffort = "<img class=sized src= rank4.svg />"; break;
-   case 5: $defaultEffort = "<img class=sized src= rank5.svg />"; break;
-   }
+      // Print the task visibilities.
+      $aIsVis = "<img class=sized src=rankBit0.svg />";
+      if (mytVarIsVisibleArchive())
+      {
+         $aIsVis = "<img class=sized src=rankBit1.svg />";
+      }
+      $dIsVis = "<img class=sized src=rankBit0.svg />";
+      if (mytVarIsVisibleDocumentation())
+      {
+         $dIsVis = "<img class=sized src=rankBit1.svg />";
+      }
+      $rIsVis = "<img class=sized src=rankBit0.svg />";
+      if (mytVarIsVisibleRelease())
+      {
+         $rIsVis = "<img class=sized src=rankBit1.svg />";
+      }
+      $tIsVis = "<img class=sized src=rankBit0.svg />";
+      if (mytVarIsVisibleTesting())
+      {
+         $tIsVis = "<img class=sized src=rankBit1.svg />";
+      }
+      $wIsVis = "<img class=sized src=rankBit0.svg />";
+      if (mytVarIsVisibleWork())
+      {
+         $wIsVis = "<img class=sized src=rankBit1.svg />";
+      }
 
-   print "<p><nobr>Defaults:" .
-      "&nbsp;&nbsp;&nbsp;n:" . $defaultPid . " " . $defaultProject .
-      "&nbsp;&nbsp;&nbsp;p:" . $defaultPriority .
-      "&nbsp;&nbsp;&nbsp;e:" . $defaultEffort . 
-      "</nobr></p>\n";
+      print "<table><tbody>" .
+         "<tr><td><nobr>" . $wIsVis . " Work</nobr></td></tr>" .
+         "<tr><td><nobr>" . $tIsVis . " Testing</nobr></td></tr>" .
+         "<tr><td><nobr>" . $dIsVis . " Documentation</nobr></td></tr>" .
+         "<tr><td><nobr>" . $rIsVis . " Release</nobr></td></tr>" .
+         "<tr><td><nobr>" . $aIsVis . " Archive</nobr></td></tr>" .
+         "</tbody></table>\n";
+
+      print <<< END
+     </td>
+     <td class="fill">
+END;
+
+      // Print the defaults.
+      $defaultPid     = mytVarGetDefaultIdProject();
+      $defaultProject = mytProjectGetNameFromId($defaultPid);
+      switch (mytVarGetDefaultPriority($index))
+      {
+      default:
+      case 1: $defaultPriority = "<img class=sized src= rank1.svg />"; break;
+      case 2: $defaultPriority = "<img class=sized src= rank2.svg />"; break;
+      case 3: $defaultPriority = "<img class=sized src= rank3.svg />"; break;
+      case 4: $defaultPriority = "<img class=sized src= rank4.svg />"; break;
+      case 5: $defaultPriority = "<img class=sized src= rank5.svg />"; break;
+      }
+   
+      // Get the effort image.
+      switch (mytVarGetDefaultEffort($index))
+      {
+      default:
+      case 0: $defaultEffort = "<img class=sized src= rank0.svg />"; break;
+      case 1: $defaultEffort = "<img class=sized src= rank1.svg />"; break;
+      case 2: $defaultEffort = "<img class=sized src= rank2.svg />"; break;
+      case 3: $defaultEffort = "<img class=sized src= rank3.svg />"; break;
+      case 4: $defaultEffort = "<img class=sized src= rank4.svg />"; break;
+      case 5: $defaultEffort = "<img class=sized src= rank5.svg />"; break;
+      }
+   
+      print "<table><tbody>" .
+         "<tr><td>n</td><td class=\"fill\"><nobr>" . $defaultPid . " " . $defaultProject . "</nobr></td></tr>\n" .
+         "<tr><td>p</td><td>" . $defaultPriority . "</td></tr>\n" .
+         "<tr><td>e</td><td>" . $defaultEffort . "</td></tr>\n" .
+         "</tbody></table>\n";
+
+      print <<< END
+     </td>
+    </tr>
+   </tobdy>
+  </table>
+END;
+   }
 
    print <<< END
   <form method="GET">
@@ -378,48 +479,48 @@ END;
     <th>Commands</th>
      <th class="desc">Description</th>
    </tr><tr>
-    <td><nobr>"l"[ | "t" | "p"]</nobr></td>
-     <td>switch between t)ask and p)roject lists.  "l" by itself will cycle between the views.</td>
+    <td><nobr>l</nobr></td>
+     <td>Switch between t)ask and p)roject lists</td>
    </tr><tr>
-    <td>"v"["." | [pid]] [ | "+" | "-"]</td>
+    <td>p[. | [pid]] [ | + | -]</td>
      <td>Set the visibility of project tasks.  "." for all projects instead of a specific project.  "+" to turn on visibility.  "-" to turn off visibility.  Nothing to toggle.</td>
    </tr><tr>
-    <td><nobr>"V"[pid]</nobr></td>
-     <td>Same as performing these two commands.  "v." and "v[pid] +".</td>
+    <td><nobr>P[pid]</nobr></td>
+     <td>Same as performing these two commands.  "p." and "p[pid] +".</td>
    </tr><tr>
-    <td><nobr>"o"[col characters]</nobr></td>
-     <td>sort order the list in the order of the columns listed.  User uppercase letter for reverse order.  You can list multiple column characters.</td>
+    <td><nobr>o[col character]*</nobr></td>
+     <td>Sort order the list in the order of the columns listed.  User uppercase letter for reverse order.  You can list multiple column characters.</td>
 END;
 
-   if (taskerVarIsDisplayingProjectList())
+   if (mytVarIsDisplayingProjectList())
    {
       print <<< END
    </tr><tr>
-    <td><nobr>"a" "n"[string] "`"[string]</nobr></td>
-     <td>add a new project. "`" option must be last.</td>
+    <td><nobr>a n[string] `[string]</nobr></td>
+     <td>Add a new project. "`" option must be last.</td>
    </tr><tr>
-    <td><nobr>"e"[pid] "n"[string] "`"[string]</nobr></td>
-     <td>change a project.  "n" and "`" options but one must be present.  "`" option must be last.</td>
+    <td><nobr>e[pid] n[string] `[string]</nobr></td>
+     <td>Edit a project.  "n" and "`" options but one must be present.  "`" option must be last.</td>
 END;
    }
    else
    {
       print <<< END
    </tr><tr>
-    <td><nobr>"a" "n"[pid] "p"["1"-"5"] "e"["1"-"5", "?"] "s"[2char] "`"[string]</nobr></td>
-     <td>add a new task.  If a value is missing then last known value is used. "`" option must be last.</td>
+    <td><nobr>a n[pid] p[1-5] e[1-5 | ?] s[2char] `[string]</nobr></td>
+     <td>Add a new task.  If a value is missing then a default value is used. "`" option must be last.</td>
    </tr><tr>
-    <td><nobr>"e"[id] "n"[pid] "p"["1"-"5"] "e"["1"-"5", "?"] "s"[2char] "`"[string]</nobr></td>
-     <td>change a task.  All are optional but one must exist.  "`" option must be last.</td>
+    <td><nobr>e[id] n[pid] p[1-5] e[1-5 | ?] s[2char] `[string]</nobr></td>
+     <td>Edit a task.  All are optional but one must exist.  "`" option must be last.</td>
    </tr><tr>
-    <td><nobr>"~"[id]</nobr></td>
-     <td>delete a task.</td>
+    <td><nobr>~[id]</nobr></td>
+     <td>Delete a task.</td>
    </tr><tr>
-    <td><nobr>"@"[pid]</nobr></td>
-     <td>delete all archived tasks for a project.</td>
+    <td><nobr>s[id] [[2char] | + | -]</nobr></td>
+     <td>Quick edit the status to a specific value, or the next/previous logical status.</td>
    </tr><tr>
-    <td><nobr>"s"[id] [[2char] | "+" | "-"]</nobr></td>
-     <td>quick change status to a specific status, or the next logical status, or the previous logical status.</td>
+    <td><nobr>t[. | a | d | t | w]*</nobr></td>
+     <td>Toggle the visibility of tasks.  "." to show/hide all the status.  "a" for archived task.  "d" for documentation tasks.  "t" for testing tasks.  "w" for work tasks.</td>
    </tr>
   </table>
 
@@ -428,20 +529,20 @@ END;
     <th colspan="6"><nobr>Status Values</nobr></th>
     <th class="desc"></th>
    </tr><tr>
-    <td>"nw":</td><td><nobr>Needs Work</nobr></td>
-     <td>"iw":</td><td><nobr>In Work</nobr></td>
-      <td>"ar":</td><td><nobr>Archive Released</nobr></td>
+    <td>nw:</td><td><nobr>Needs Work</nobr></td>
+    <td>iw:</td><td><nobr>In Work</nobr></td>
+    <td>ar:</td><td><nobr>Archive Released</nobr></td>
    </tr><tr>
-    <td>"nt":</td><td><nobr>Needs Testing</nobr></td>
-     <td>"it":</td><td><nobr>In Testing</nobr></td>
-      <td>"ad":</td><td><nobr>Archive Done</nobr></td>
+    <td>nt:</td><td><nobr>Needs Testing</nobr></td>
+    <td>it:</td><td><nobr>In Testing</nobr></td>
+    <td>ad:</td><td><nobr>Archive Done</nobr></td>
    </tr><tr>
-    <td>"nd":</td><td><nobr>Needs Doc.</nobr></td>
-     <td>"id":</td><td><nobr>In Doc.</nobr></td>
-      <td>"an":</td><td><nobr>Archive None</nobr></td>
+    <td>nd:</td><td><nobr>Needs Doc.</nobr></td>
+    <td>id:</td><td><nobr>In Doc.</nobr></td>
+    <td>an:</td><td><nobr>Archive None</nobr></td>
    </tr><tr>
-    <td>"nr":</td><td><nobr>Needs Release</nobr></td>
-     <td>"ir":</td><td><nobr>In Release</nobr></td>
+    <td>nr:</td><td><nobr>Needs Release</nobr></td>
+    <td>ir:</td><td><nobr>In Release</nobr></td>
    </tr>
   </table>
   

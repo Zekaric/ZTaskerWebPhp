@@ -36,15 +36,10 @@ SOFTWARE.
 require_once "zDebug.php";
 require_once "zUtil.php";
 
-require_once "tasker_Constant.php";
-require_once "tasker_Variable.php";
-require_once "tasker_ListProject.php";
-require_once "tasker_ListTask.php";
-
-require_once "taskerVariable.php";
-require_once "taskerDisplay.php";
-require_once "taskerProject.php";
-require_once "taskerTask.php";
+require_once "mytVariable.php";
+require_once "mytDisplay.php";
+require_once "mytProject.php";
+require_once "mytTask.php";
 
 ///////////////////////////////////////////////////////////////////////////////
 // function
@@ -77,7 +72,7 @@ function _ParseCommand($str)
    if ($param == "`")
    {
       $result[0] = $param;
-      $result[1] = $str;
+      $result[1] = trim($str);
       $result[2] = "";
 
       return $result;
@@ -118,7 +113,7 @@ function _ParseCommand($str)
          $letter = substr($str, 0, 1);
          if ($letter == "`")
          {
-            $result[1] = $val;
+            $result[1] = trim($val);
             $result[2] = trim($str);
       
             return $result;
@@ -184,27 +179,18 @@ if ($str != "")
       // Switch to projects.
       if      ($list == "p")
       {
-         taskerVarSetIsDisplaying(IS_DISPLAYING_PROJ_LIST);
-         taskerVarSave();
+         mytVarSetIsDisplayingProjectList(true);
       }
       // Switch to tasks
       else if ($list == "t")
       {
-         taskerVarSetIsDisplaying(IS_DISPLAYING_TASK_LIST);
-         taskerVarSave();
+         mytVarSetIsDisplayingProjectList(false);
       }
       // Switch lists
       else if ($list == "")
       {
-         if (taskerVarIsDisplayingProjectList())
-         {
-            taskerVarSetIsDisplaying(IS_DISPLAYING_TASK_LIST);
-         }
-         else
-         {
-            taskerVarSetIsDisplaying(IS_DISPLAYING_PROJ_LIST);
-         }
-         taskerVarSave();
+         mytVarSetIsDisplayingProjectList(
+            !mytVarIsDisplayingProjectList());
       }
    }
    // Add a...
@@ -221,7 +207,7 @@ if ($str != "")
       }
 
       // ... projects
-      if (taskerVarIsDisplayingProjectList())      
+      if (mytVarIsDisplayingProjectList())      
       {
          unset($name);
          unset($desc);
@@ -240,12 +226,12 @@ if ($str != "")
             if      ($param == "j")
             {
                $isSomethingSet = true;
-               $name = $parse[1];
+               $name           = $parse[1];
             }
             else if ($param == "`")
             {
                $isSomethingSet = true;
-               $desc = $parse[1];
+               $desc           = $parse[1];
                break;
             }
          }
@@ -256,13 +242,13 @@ if ($str != "")
             if (!isset($name)) $name  = "[missing]";
             if (!isset($desc)) $desc  = "[missing]";
 
-            taskerProjectAdd($name, true, $desc);
+            mytProjectAdd($name, true, $desc);
          }
          // Edit the project.
          else
          {
             // Get the index of the project.
-            $index = taskerProjectGetIndex($id);
+            $index = mytProjectGetIndex($id);
 
             if (!$isSomethingSet ||
                 $index == -1)
@@ -271,11 +257,11 @@ if ($str != "")
             }
             else 
             {
-                                  $isVis = taskerProjectIsVisible(     $index);
-               if (!isset($name)) $name  = taskerProjectGetName(       $index);
-               if (!isset($desc)) $desc  = taskerProjectGetDescription($index);
+                                  $isVis = mytProjectIsVisible(     $index);
+               if (!isset($name)) $name  = mytProjectGetName(       $index);
+               if (!isset($desc)) $desc  = mytProjectGetDescription($index);
    
-               taskerProjectEdit($index, $name, $isVis, $desc);
+               mytProjectEdit($index, $name, $isVis, $desc);
             }
          }
       }
@@ -335,21 +321,20 @@ if ($str != "")
          // Add the new project.
          if ($op == "a")
          {
-            if (!isset($projId))    $projId     = taskerVarGetDefaultIdProject();
-            if (!isset($priority))  $priority   = taskerVarGetDefaultPriority();
-            if (!isset($effort))    $effort     = taskerVarGetDefaultEffort();
+            if (!isset($projId))    $projId     = mytVarGetDefaultIdProject();
+            if (!isset($priority))  $priority   = mytVarGetDefaultPriority();
+            if (!isset($effort))    $effort     = mytVarGetDefaultEffort();
             if (!isset($status))    $status     = "nw";
             if (!isset($desc))      $desc       = "[missing]";
 
-            taskerTaskAdd($projId, $priority, $effort, $status, $desc);
+            mytTaskAdd($projId, $priority, $effort, $status, $desc);
 
-            taskerVarSetDefault($projId, $priority, $effort);
-            taskerVarSave();
+            mytVarSetDefault($projId, $priority, $effort);
          }
          // Edit the project.
          else
          {
-            $index = taskerTaskGetIndex($id);
+            $index = mytTaskGetIndex($id);
 
             if (!$isSomethingSet ||
                 $index == -1)
@@ -358,29 +343,28 @@ if ($str != "")
             }
             else 
             {
-               $defaultProjId   = taskerVarGetDefaultIdProject();
-               $defaultPriority = taskerVarGetDefaultPriority();
-               $defaultEffort   = taskerVarGetDefaultEffort();
+               $defaultProjId   = mytVarGetDefaultIdProject();
+               $defaultPriority = mytVarGetDefaultPriority();
+               $defaultEffort   = mytVarGetDefaultEffort();
 
-               if (!isset($projId))    $projId     = taskerTaskGetIdProject(     $index);
+               if (!isset($projId))    $projId     = mytTaskGetIdProject(  $index);
                else $defaultProjId   = $projId;
-               if (!isset($priority))  $priority   = taskerTaskGetPriority(      $index);
+               if (!isset($priority))  $priority   = mytTaskGetPriority(   $index);
                else $defaultPriority = $priority;
-               if (!isset($effort))    $effort     = taskerTaskGetEffort(        $index);
+               if (!isset($effort))    $effort     = mytTaskGetEffort(     $index);
                else $defaultEffort   = $effort;
-               if (!isset($status))    $status     = taskerTaskGetStatus(        $index);
-               if (!isset($desc))      $desc       = taskerProjectGetDescription($index);
+               if (!isset($status))    $status     = mytTaskGetStatus(     $index);
+               if (!isset($desc))      $desc       = mytTaskGetDescription($index);
    
-               taskerTaskEdit($index, $projId, $priority, $effort, $status, $desc);
+               mytTaskEdit($index, $projId, $priority, $effort, $status, $desc);
 
-               taskerVarSetDefault($defaultProjId, $defaultPriority, $defaultEffort);
-               taskerVarSave();
+               mytVarSetDefault($defaultProjId, $defaultPriority, $defaultEffort);
             }
          }
       }
    }
    // Visibility of a project.
-   else if ($op == "v")
+   else if ($op == "p")
    {
       $parse = _ParseId($str);
       
@@ -391,107 +375,139 @@ if ($str != "")
            
       if ($id == ".")
       {
-         $count = taskerVarGetListProjectCount();
+         $count = mytProjectGetCount();
          for ($index = 0; $index < $count; $index++)
          {
             // Hide
             if      ($val == "-")
             {
-               taskerProjectEdit(
+               mytProjectEdit(
                   $index,
-                  taskerProjectGetName(       $index),
+                  mytProjectGetName(       $index),
                   false,
-                  taskerProjectGetDescription($index));
+                  mytProjectGetDescription($index));
             }
             // Show
             else if ($val == "+")
             {
-               taskerProjectEdit(
+               mytProjectEdit(
                   $index,
-                  taskerProjectGetName(       $index),
+                  mytProjectGetName(       $index),
                   true,
-                  taskerProjectGetDescription($index));
+                  mytProjectGetDescription($index));
             }
             // Toggle
             else 
             {
-               $vis = taskerProjectIsVisible($index);
-               taskerProjectEdit(
+               $vis = mytProjectIsVisible($index);
+               mytProjectEdit(
                   $index,
-                  taskerProjectGetName(       $index),
+                  mytProjectGetName(       $index),
                   !$vis,
-                  taskerProjectGetDescription($index));
+                  mytProjectGetDescription($index));
             }
          }
       }
       else
       {
-         $index = taskerProjectGetIndex($id);
+         $index = mytProjectGetIndex($id);
          
          if ($index != -1)
          {
             // Hide
             if      ($val == "-")
             {
-               taskerProjectEdit(
+               mytProjectEdit(
                   $index,
-                  taskerProjectGetName(       $index),
+                  mytProjectGetName(       $index),
                   false,
-                  taskerProjectGetDescription($index));
+                  mytProjectGetDescription($index));
             }
             // Show
             else if ($val == "+")
             {
-               taskerProjectEdit(
+               mytProjectEdit(
                   $index,
-                  taskerProjectGetName(       $index),
+                  mytProjectGetName(       $index),
                   true,
-                  taskerProjectGetDescription($index));
+                  mytProjectGetDescription($index));
             }
             // Toggle
             else
             {
-               $val = taskerProjectIsVisible($index);
-               taskerProjectEdit(
+               $val = mytProjectIsVisible($index);
+               mytProjectEdit(
                   $index,
-                  taskerProjectGetName(       $index),
+                  mytProjectGetName(       $index),
                   !$val,
-                  taskerProjectGetDescription($index));
+                  mytProjectGetDescription($index));
             }
          }
       }
    }
    // "v. -" + "v[id] +"
-   else if ($op == "V")
+   else if ($op == "P")
    {
       $parse  = _ParseId($str);
       $id     = (int) $parse[0];
-      $pindex = taskerTaskGetIndex($id);
+      $pindex = mytTaskGetIndex($id);
 
       if ($pindex != -1)
       {
          // For all projects...
-         $count = taskerVarGetListProjectCount();
+         $count = mytProjectGetCount();
          for ($index = 0; $index < $count; $index++)
          {
             // Show this project.
             if ($pindex == $index)
             {
-               taskerProjectEdit(
+               mytProjectEdit(
                   $index,
-                  taskerProjectGetName(       $index),
+                  mytProjectGetName(       $index),
                   true,
-                  taskerProjectGetDescription($index));
+                  mytProjectGetDescription($index));
             }
             // Hide all others.
             else
             {
-               taskerProjectEdit(
+               mytProjectEdit(
                   $index,
-                  taskerProjectGetName(       $index),
+                  mytProjectGetName(       $index),
                   false,
-                  taskerProjectGetDescription($index));
+                  mytProjectGetDescription($index));
             }
+         }
+      }
+   }
+   // Visibility of a project.
+   else if ($op == "t")
+   {
+      while (strlen($str))
+      {
+         $val = substr($str, 0, 1);
+         $str = substr($str, 1);
+              
+         zDebugPrint($val);
+
+         if ($val == "." || $val == "a")
+         {
+            mytVarSetIsVisibleArchive(!mytVarIsVisibleArchive());
+         }
+         if ($val == "." || $val == "d")
+         {
+            mytVarSetIsVisibleDocumentation(!mytVarIsVisibleDocumentation());
+         }
+         if ($val == "." || $val == "r")
+         {
+            mytVarSetIsVisibleRelease(!mytVarIsVisibleRelease());
+         }
+         if ($val == "." || $val == "t")
+         {
+            mytVarSetIsVisibleTesting(!mytVarIsVisibleTesting());
+         }
+         if ($val == "." || $val == "w")
+         {
+            mytVarSetIsVisibleWork(!mytVarIsVisibleWork());
          }
       }
    }
@@ -500,11 +516,11 @@ if ($str != "")
    {
        $parse = _ParseId($str);
        $id    = (int) $parse[0];
-       $index = taskerTaskGetIndex($id);
+       $index = mytTaskGetIndex($id);
 
        if ($index != -1)
        {
-           taskerTaskDelete($index);
+           mytTaskDelete($index);
        }
    }
    else if ($op == "s")
@@ -513,7 +529,7 @@ if ($str != "")
 
       $parse = _ParseId($str);
       $id    = (int) $parse[0];
-      $index = taskerTaskGetIndex($id);
+      $index = mytTaskGetIndex($id);
 
       if ($index != -1)
       {
@@ -522,7 +538,7 @@ if ($str != "")
     
          if      (substr($val, 0, 1) == "+")
          {
-            $status = taskerTaskGetStatus($index);
+            $status = mytTaskGetStatus($index);
             switch ($status)
             {
             case "nw": $status = "iw"; break;
@@ -538,7 +554,7 @@ if ($str != "")
          }
          else if (substr($val, 0, 1) == "-")
          {
-            $status = taskerTaskGetStatus($index);
+            $status = mytTaskGetStatus($index);
             switch ($status)
             {
             case "iw": $status = "nw"; break;
@@ -574,30 +590,29 @@ if ($str != "")
     
          if (isset($status))
          {
-            taskerTaskEdit(
+            mytTaskEdit(
                $index, 
-               taskerTaskGetIdProject(  $index),
-               taskerTaskGetPriority(   $index),
-               taskerTaskGetEffort(     $index),
+               mytTaskGetIdProject(  $index),
+               mytTaskGetPriority(   $index),
+               mytTaskGetEffort(     $index),
                $status,
-               taskerTaskGetDescription($index));
+               mytTaskGetDescription($index));
          }
       }
    }
    else if ($op == "o")
    {
       $order = trim($str);
-      if (taskerVarIsDisplayingProjectList())
+      if (mytVarIsDisplayingProjectList())
       {
-         taskerVarSetSortOrderProject($order);
+         mytVarSetSortOrderProject($order);
       }
       else
       {
-         taskerVarSetSortOrderTask($order);
+         mytVarSetSortOrderTask($order);
       }
-      taskerVarSave();
    }
 }
 
 // Display the result page.
-taskerDisplay();
+mytDisplay();
