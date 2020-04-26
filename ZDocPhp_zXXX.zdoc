@@ -28,6 +28,157 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ...]
 
+h	|chapter| - zData
+	Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.
+
+hh	|chapter| - zDataGet
+		Get a data's key'ed value.
+HHH	Use:
+...		$value = zDataListGet($data, $key);
+HHH	Parameter:
+t[
+t-
+tcx		|*$data*|
+tc*		The data structure.
+t-
+tcx		|*$key*|
+tc*		The key value in the record we want the value for.
+t]
+HHH	Return:
+t[
+t-
+tcx		|***|
+tc*		The value associated with the key for the data.  Type will depend on what is stored there.
+t]
+
+
+hh	|chapter| - zDataSave
+		Save the array of records to a php file.
+HHH	Use:
+...		zDataSave($file, $data, $varName);
+HHH	Parameter:
+t[
+t-
+tcx		|*$file*|
+tc*		The file name to use to write to.
+t-
+tcx		|*$list*|
+tc*		The list of records.
+t-
+tcx		|*$varName*|
+tc*		The name of the php variable to be used for the array of records.
+t]
+HHH	Return:
+		No return value.
+
+hh	|chapter| - zDataSet
+		Set a data's key'ed value.
+HHH	Use:
+...		zDataGet($data, $key, $value);
+HHH	Parameter:
+t[
+t-
+tcx		|*$data*|
+tc*		The data structure.
+t-
+tcx		|*$key*|
+tc*		The key value in the data we want to set.
+t-
+tcx		|*$value*|
+tc*		The value we want to associate with the key.
+t]
+HHH	Return:
+		No return value.
+
+
+
+h	|chapter| - zDataList
+	Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.
+
+hh	|chapter| - zDataListAdd
+		Add a new record to the array.
+HHH	Use:
+...		$index = zDataListAdd($list);
+HHH	Parameter:
+t[
+t-
+tcx		|*$list*|
+tc*		The list to modify.  Pass in by reference.
+t]
+HHH	Return:
+t[
+t-
+tcx		|*integer*|
+tc*		The index of the new record.
+t]
+
+hh	|chapter| - zDataListGet
+		Get a record's key'ed value from the array.
+HHH	Use:
+...		$value = zDataListGet($list, $index, $key);
+HHH	Parameter:
+t[
+t-
+tcx		|*$list*|
+tc*		The list of records.
+t-
+tcx		|*$index*|
+tc*		The index of the record in the list.
+t-
+tcx		|*$key*|
+tc*		The key value in the record we want the value for.
+t]
+HHH	Return:
+t[
+t-
+tcx		|***|
+tc*		The value associated with the key for the record.  Type will depend on what is stored there.
+t]
+
+hh	|chapter| - zDataListSave
+		Save the array of records to a php file.
+HHH	Use:
+...		zDataListSave($file, $list, $varName);
+HHH	Parameter:
+t[
+t-
+tcx		|*$file*|
+tc*		The file name to use to write to.
+t-
+tcx		|*$list*|
+tc*		The list of records.
+t-
+tcx		|*$varName*|
+tc*		The name of the php variable to be used for the array of records.
+t]
+HHH	Return:
+		No return value.
+
+hh	|chapter| - zDataListSet
+		Set a record's key'ed value in the array.
+HHH	Use:
+...		zDataListGet($list, $index, $key, $value);
+HHH	Parameter:
+t[
+t-
+tcx		|*$list*|
+tc*		The list of records.
+t-
+tcx		|*$index*|
+tc*		The index of the record in the list.
+t-
+tcx		|*$key*|
+tc*		The key value in the record we want to set.
+t-
+tcx		|*$value*|
+tc*		The value we want to associate with the key.
+t]
+HHH	Return:
+		No return value.
+
+
+
+
 h	|chapter| - zFile
 	Functions for file io with optional file locking.
 
@@ -263,126 +414,6 @@ t-
 tcx	|*bool*|
 tc*	always true.
 t]
-
-
-h	|chapter| - zList
-
-	Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.
-
-
-hh	|chapter| - zListAdd
-
-	Add a new record to the array.
-
-HHH	Use:
-
-...	$index = zListAdd($list);
-
-HHH	Parameter:
-
-t[
-t-
-tcx	|*$list*|
-tc*	The list to modify.  Pass in by reference.
-t]
-
-HHH	Return:
-
-t[
-t-
-tcx	|*integer*|
-tc*	The index of the new record.
-t]
-
-
-hh	|chapter| - zListGet
-
-	Get a record's key'ed value from the array.
-
-HHH	Use:
-
-...	$value = zListGet($list, $index, $key);
-
-HHH	Parameter:
-
-t[
-t-
-tcx	|*$list*|
-tc*	The list of records.
-t-
-tcx	|*$index*|
-tc*	The index of the record in the list.
-t-
-tcx	|*$key*|
-tc*	The key value in the record we want the value for.
-t]
-
-HHH	Return:
-
-t[
-t-
-tcx	|***|
-tc*	The value associated with the key for the record.  Type will depend on what is stored there.
-t]
-
-
-hh	|chapter| - zListSave
-
-	Save the array of records to a php file.
-
-HHH	Use:
-
-...	zListSave($file, $list, $varName);
-
-HHH	Parameter:
-
-t[
-t-
-tcx	|*$file*|
-tc*	The file name to use to write to.
-t-
-tcx	|*$list*|
-tc*	The list of records.
-t-
-tcx	|*$varName*|
-tc*	The name of the php variable to be used for the array of records.
-t]
-
-HHH	Return:
-
-	No return value.
-
-
-hh	|chapter| - zListSet
-
-	Set a record's key'ed value in the array.
-
-HHH	Use:
-
-...	zListGet($list, $index, $key, $value);
-
-HHH	Parameter:
-
-t[
-t-
-tcx	|*$list*|
-tc*	The list of records.
-t-
-tcx	|*$index*|
-tc*	The index of the record in the list.
-t-
-tcx	|*$key*|
-tc*	The key value in the record we want to set.
-t-
-tcx	|*$value*|
-tc*	The value we want to associate with the key.
-t]
-
-HHH	Return:
-
-	No return value.
-
-
 
 
 h	|chapter| - zLock

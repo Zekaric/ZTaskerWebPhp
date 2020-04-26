@@ -4,30 +4,34 @@
 ## Table Of Contents
 **1 - Summary**<br />
 **2 - Licence: MIT**<br />
-**3 - zFile**<br />
- 3.1 - zDirCreate<br />
- 3.2 - zDirIsExsiting<br />
- 3.3 - zFileAppendText<br />
- 3.4 - zFileConnect<br />
- 3.5 - zFileConnectIsGood<br />
- 3.6 - zFileDisconnect<br />
- 3.7 - zFileIsExisting<br />
- 3.8 - zFileLoadText<br />
- 3.9 - zFileLoadTextArray<br />
- 3.10 - zFileStoreText<br />
- 3.11 - zFileStoreTextArray<br />
- 3.12 - zFileWriteText<br />
-**4 - zList**<br />
- 4.1 - zListAdd<br />
- 4.2 - zListGet<br />
- 4.3 - zListSave<br />
- 4.4 - zListSet<br />
-**5 - zLock**<br />
- 5.1 - zLockCreate<br />
- 5.2 - zLockCreateFile<br />
- 5.3 - zLockDestroy<br />
-**6 - zUtil**<br />
- 6.1 - zUtilGetValue<br />
+**3 - zData**<br />
+ 3.1 - zDataGet<br />
+ 3.2 - zDataSave<br />
+ 3.3 - zDataSet<br />
+**4 - zDataList**<br />
+ 4.1 - zDataListAdd<br />
+ 4.2 - zDataListGet<br />
+ 4.3 - zDataListSave<br />
+ 4.4 - zDataListSet<br />
+**5 - zFile**<br />
+ 5.1 - zDirCreate<br />
+ 5.2 - zDirIsExsiting<br />
+ 5.3 - zFileAppendText<br />
+ 5.4 - zFileConnect<br />
+ 5.5 - zFileConnectIsGood<br />
+ 5.6 - zFileDisconnect<br />
+ 5.7 - zFileIsExisting<br />
+ 5.8 - zFileLoadText<br />
+ 5.9 - zFileLoadTextArray<br />
+ 5.10 - zFileStoreText<br />
+ 5.11 - zFileStoreTextArray<br />
+ 5.12 - zFileWriteText<br />
+**6 - zLock**<br />
+ 6.1 - zLockCreate<br />
+ 6.2 - zLockCreateFile<br />
+ 6.3 - zLockDestroy<br />
+**7 - zUtil**<br />
+ 7.1 - zUtilGetValue<br />
 
 # 1 - Summary
 
@@ -57,11 +61,177 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-# 3 - zFile
+# 3 - zData
+
+Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.
+
+## 3.1 - zDataGet
+
+Get a data's key'ed value.
+
+### Use:
+
+```
+$value = zDataListGet($data, $key);
+```
+
+### Parameter:
+
+|
+| **$data** | The data structure. |
+| **$key** | The key value in the record we want the value for. |
+
+
+### Return:
+
+|
+| ***** | The value associated with the key for the data.  Type will depend on what is stored there. |
+
+
+## 3.2 - zDataSave
+
+Save the array of records to a php file.
+
+### Use:
+
+```
+zDataSave($file, $data, $varName);
+```
+
+### Parameter:
+
+|
+| **$file** | The file name to use to write to. |
+| **$list** | The list of records. |
+| **$varName** | The name of the php variable to be used for the array of records. |
+
+
+### Return:
+
+No return value.
+
+## 3.3 - zDataSet
+
+Set a data's key'ed value.
+
+### Use:
+
+```
+zDataGet($data, $key, $value);
+```
+
+### Parameter:
+
+|
+| **$data** | The data structure. |
+| **$key** | The key value in the data we want to set. |
+| **$value** | The value we want to associate with the key. |
+
+
+### Return:
+
+No return value.
+
+# 4 - zDataList
+
+Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.
+
+## 4.1 - zDataListAdd
+
+Add a new record to the array.
+
+### Use:
+
+```
+$index = zDataListAdd($list);
+```
+
+### Parameter:
+
+|
+| **$list** | The list to modify.  Pass in by reference. |
+
+
+### Return:
+
+|
+| **integer** | The index of the new record. |
+
+
+## 4.2 - zDataListGet
+
+Get a record's key'ed value from the array.
+
+### Use:
+
+```
+$value = zDataListGet($list, $index, $key);
+```
+
+### Parameter:
+
+|
+| **$list** | The list of records. |
+| **$index** | The index of the record in the list. |
+| **$key** | The key value in the record we want the value for. |
+
+
+### Return:
+
+|
+| ***** | The value associated with the key for the record.  Type will depend on what is stored there. |
+
+
+## 4.3 - zDataListSave
+
+Save the array of records to a php file.
+
+### Use:
+
+```
+zDataListSave($file, $list, $varName);
+```
+
+### Parameter:
+
+|
+| **$file** | The file name to use to write to. |
+| **$list** | The list of records. |
+| **$varName** | The name of the php variable to be used for the array of records. |
+
+
+### Return:
+
+No return value.
+
+## 4.4 - zDataListSet
+
+Set a record's key'ed value in the array.
+
+### Use:
+
+```
+zDataListGet($list, $index, $key, $value);
+```
+
+### Parameter:
+
+|
+| **$list** | The list of records. |
+| **$index** | The index of the record in the list. |
+| **$key** | The key value in the record we want to set. |
+| **$value** | The value we want to associate with the key. |
+
+
+### Return:
+
+No return value.
+
+# 5 - zFile
 
 Functions for file io with optional file locking.
 
-## 3.1 - zDirCreate
+## 5.1 - zDirCreate
 
 Create a directory
 
@@ -83,7 +253,7 @@ $result = zDirCreate($dirName);
 | **bool** | **true** if the directory was created.  **false** if not. |
 
 
-## 3.2 - zDirIsExsiting
+## 5.2 - zDirIsExsiting
 
 Check if a directory exists.
 
@@ -105,7 +275,7 @@ $result = zDirIsExisting($dirName);
 | **bool** | **true** if the directory exists.  **false** if not. |
 
 
-## 3.3 - zFileAppendText
+## 5.3 - zFileAppendText
 
 Append a string to a file.
 
@@ -129,7 +299,7 @@ zFileAppendText($filePath, $string, $isLocking)
 | **bool** | **true** if the append happened.  **false** if a lock could not be obtained or the file could not be openned. |
 
 
-## 3.4 - zFileConnect
+## 5.4 - zFileConnect
 
 Connect to a file for reading or writing.
 
@@ -153,7 +323,7 @@ $fileConnection = zFileConnect($filePath, $mode, $isLocking)
 | **File Connection Array** | An array of key values. |
 
 
-## 3.5 - zFileConnectIsGood
+## 5.5 - zFileConnectIsGood
 
 Check to see if the file connection was made.
 
@@ -175,7 +345,7 @@ $result = zFileConnectIsGood($fileCon);
 | **bool** | **true** if the file is open.  **false** if not. |
 
 
-## 3.6 - zFileDisconnect
+## 5.6 - zFileDisconnect
 
 Disconnect from a file.
 
@@ -195,7 +365,7 @@ zFileDisconnect($fileCon);
 
 No return value;
 
-## 3.7 - zFileIsExisting
+## 5.7 - zFileIsExisting
 
 Test to see if a file exits.
 
@@ -217,7 +387,7 @@ $result = zFileIsExisting($filePath);
 | **bool** | **true** if the file exists.  **false** if not. |
 
 
-## 3.8 - zFileLoadText
+## 5.8 - zFileLoadText
 
 Load the entire text file into one giant string.  This routine will open, read, and close the file.  You do not need a file connection array.
 
@@ -240,7 +410,7 @@ $string = zFileLoadText($filePath, $isLocking);
 | **string** | The entire file loaded into a string.  This is assuming the file is a text file. |
 
 
-## 3.9 - zFileLoadTextArray
+## 5.9 - zFileLoadTextArray
 
 Load the entire text file into an array of strings, one line of text file per string.  This routine will open, read, and close the file.  You do not need a file connection array.
 
@@ -263,7 +433,7 @@ $stringArray = zFileLoadTextArray($filePath, $isLocking);
 | **array of strings** | The entire file loaded into an array of strings.  One line per string. |
 
 
-## 3.10 - zFileStoreText
+## 5.10 - zFileStoreText
 
 Replaces the entire file with the provided string.  This routine will open, write, and close the file.  You do not need a file connection array.
 
@@ -287,7 +457,7 @@ $result = zFileStoreText($filePath, $string, $isLocking);
 | **bool** | **true** when everything was ok.  **false** otherwise. |
 
 
-## 3.11 - zFileStoreTextArray
+## 5.11 - zFileStoreTextArray
 
 Replaces the entire file with the provided array of strings.  This routine will open, write, and close the file.  You do not need a file connection array.
 
@@ -311,7 +481,7 @@ $result = zFileStoreTextArray($filePath, $lineArray, $isLocking);
 | **bool** | **true** when everything was ok.  **false** otherwise. |
 
 
-## 3.12 - zFileWriteText
+## 5.12 - zFileWriteText
 
 Write to a file.
 
@@ -334,106 +504,11 @@ zFileWriteText($fileCon, $string)
 | **bool** | always true. |
 
 
-# 4 - zList
-
-Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.
-
-## 4.1 - zListAdd
-
-Add a new record to the array.
-
-### Use:
-
-```
-$index = zListAdd($list);
-```
-
-### Parameter:
-
-|
-| **$list** | The list to modify.  Pass in by reference. |
-
-
-### Return:
-
-|
-| **integer** | The index of the new record. |
-
-
-## 4.2 - zListGet
-
-Get a record's key'ed value from the array.
-
-### Use:
-
-```
-$value = zListGet($list, $index, $key);
-```
-
-### Parameter:
-
-|
-| **$list** | The list of records. |
-| **$index** | The index of the record in the list. |
-| **$key** | The key value in the record we want the value for. |
-
-
-### Return:
-
-|
-| ***** | The value associated with the key for the record.  Type will depend on what is stored there. |
-
-
-## 4.3 - zListSave
-
-Save the array of records to a php file.
-
-### Use:
-
-```
-zListSave($file, $list, $varName);
-```
-
-### Parameter:
-
-|
-| **$file** | The file name to use to write to. |
-| **$list** | The list of records. |
-| **$varName** | The name of the php variable to be used for the array of records. |
-
-
-### Return:
-
-No return value.
-
-## 4.4 - zListSet
-
-Set a record's key'ed value in the array.
-
-### Use:
-
-```
-zListGet($list, $index, $key, $value);
-```
-
-### Parameter:
-
-|
-| **$list** | The list of records. |
-| **$index** | The index of the record in the list. |
-| **$key** | The key value in the record we want to set. |
-| **$value** | The value we want to associate with the key. |
-
-
-### Return:
-
-No return value.
-
-# 5 - zLock
+# 6 - zLock
 
 File/Folder locking at a file/folder level.  This is very simple locking in that it uses and operating system trick of making a folder in the folder you want to make a lock in.  If two processes try to create the same folder, only one process will be successful.  The other will fail.  The one which is successful will be able to proceed.  Releasing the lock will mean the deletion of the folder.  Eventually the other process will be able to create the folder an 'obtain' a lock.
 
-## 5.1 - zLockCreate
+## 6.1 - zLockCreate
 
 Create a lock.
 
@@ -455,7 +530,7 @@ $lock = zLockCreate($name);
 | **string** | Name of the lock on success.  "" on failure. |
 
 
-## 5.2 - zLockCreateFile
+## 6.2 - zLockCreateFile
 
 Create a lock on a specific file name.
 
@@ -477,7 +552,7 @@ $lock = zLockCreateFile($fileName);
 | **string** | Name of the lock on success.  "" on failure. |
 
 
-## 5.3 - zLockDestroy
+## 6.3 - zLockDestroy
 
 Release a lock.
 
@@ -497,11 +572,11 @@ zLockDestroy($name);
 
 No return value.
 
-# 6 - zUtil
+# 7 - zUtil
 
 A collection of routines that are generic that do not have a dedicated heading for them.
 
-## 6.1 - zUtilGetValue
+## 7.1 - zUtilGetValue
 
 Fetch the value for a key from a GET or POST message.
 

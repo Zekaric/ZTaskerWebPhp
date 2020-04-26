@@ -16,30 +16,34 @@
 <h2 class="zdoc">Table Of Contents</h2>
 <p class="zdoc_toc1"><a href="#1">1 - Summary</a></p>
 <p class="zdoc_toc1"><a href="#2">2 - Licence: MIT</a></p>
-<p class="zdoc_toc1"><a href="#3">3 - zFile</a></p>
-<p class="zdoc_toc2"><a href="#3.1">3.1 - zDirCreate</a></p>
-<p class="zdoc_toc2"><a href="#3.2">3.2 - zDirIsExsiting</a></p>
-<p class="zdoc_toc2"><a href="#3.3">3.3 - zFileAppendText</a></p>
-<p class="zdoc_toc2"><a href="#3.4">3.4 - zFileConnect</a></p>
-<p class="zdoc_toc2"><a href="#3.5">3.5 - zFileConnectIsGood</a></p>
-<p class="zdoc_toc2"><a href="#3.6">3.6 - zFileDisconnect</a></p>
-<p class="zdoc_toc2"><a href="#3.7">3.7 - zFileIsExisting</a></p>
-<p class="zdoc_toc2"><a href="#3.8">3.8 - zFileLoadText</a></p>
-<p class="zdoc_toc2"><a href="#3.9">3.9 - zFileLoadTextArray</a></p>
-<p class="zdoc_toc2"><a href="#3.10">3.10 - zFileStoreText</a></p>
-<p class="zdoc_toc2"><a href="#3.11">3.11 - zFileStoreTextArray</a></p>
-<p class="zdoc_toc2"><a href="#3.12">3.12 - zFileWriteText</a></p>
-<p class="zdoc_toc1"><a href="#4">4 - zList</a></p>
-<p class="zdoc_toc2"><a href="#4.1">4.1 - zListAdd</a></p>
-<p class="zdoc_toc2"><a href="#4.2">4.2 - zListGet</a></p>
-<p class="zdoc_toc2"><a href="#4.3">4.3 - zListSave</a></p>
-<p class="zdoc_toc2"><a href="#4.4">4.4 - zListSet</a></p>
-<p class="zdoc_toc1"><a href="#5">5 - zLock</a></p>
-<p class="zdoc_toc2"><a href="#5.1">5.1 - zLockCreate</a></p>
-<p class="zdoc_toc2"><a href="#5.2">5.2 - zLockCreateFile</a></p>
-<p class="zdoc_toc2"><a href="#5.3">5.3 - zLockDestroy</a></p>
-<p class="zdoc_toc1"><a href="#6">6 - zUtil</a></p>
-<p class="zdoc_toc2"><a href="#6.1">6.1 - zUtilGetValue</a></p>
+<p class="zdoc_toc1"><a href="#3">3 - zData</a></p>
+<p class="zdoc_toc2"><a href="#3.1">3.1 - zDataGet</a></p>
+<p class="zdoc_toc2"><a href="#3.2">3.2 - zDataSave</a></p>
+<p class="zdoc_toc2"><a href="#3.3">3.3 - zDataSet</a></p>
+<p class="zdoc_toc1"><a href="#4">4 - zDataList</a></p>
+<p class="zdoc_toc2"><a href="#4.1">4.1 - zDataListAdd</a></p>
+<p class="zdoc_toc2"><a href="#4.2">4.2 - zDataListGet</a></p>
+<p class="zdoc_toc2"><a href="#4.3">4.3 - zDataListSave</a></p>
+<p class="zdoc_toc2"><a href="#4.4">4.4 - zDataListSet</a></p>
+<p class="zdoc_toc1"><a href="#5">5 - zFile</a></p>
+<p class="zdoc_toc2"><a href="#5.1">5.1 - zDirCreate</a></p>
+<p class="zdoc_toc2"><a href="#5.2">5.2 - zDirIsExsiting</a></p>
+<p class="zdoc_toc2"><a href="#5.3">5.3 - zFileAppendText</a></p>
+<p class="zdoc_toc2"><a href="#5.4">5.4 - zFileConnect</a></p>
+<p class="zdoc_toc2"><a href="#5.5">5.5 - zFileConnectIsGood</a></p>
+<p class="zdoc_toc2"><a href="#5.6">5.6 - zFileDisconnect</a></p>
+<p class="zdoc_toc2"><a href="#5.7">5.7 - zFileIsExisting</a></p>
+<p class="zdoc_toc2"><a href="#5.8">5.8 - zFileLoadText</a></p>
+<p class="zdoc_toc2"><a href="#5.9">5.9 - zFileLoadTextArray</a></p>
+<p class="zdoc_toc2"><a href="#5.10">5.10 - zFileStoreText</a></p>
+<p class="zdoc_toc2"><a href="#5.11">5.11 - zFileStoreTextArray</a></p>
+<p class="zdoc_toc2"><a href="#5.12">5.12 - zFileWriteText</a></p>
+<p class="zdoc_toc1"><a href="#6">6 - zLock</a></p>
+<p class="zdoc_toc2"><a href="#6.1">6.1 - zLockCreate</a></p>
+<p class="zdoc_toc2"><a href="#6.2">6.2 - zLockCreateFile</a></p>
+<p class="zdoc_toc2"><a href="#6.3">6.3 - zLockDestroy</a></p>
+<p class="zdoc_toc1"><a href="#7">7 - zUtil</a></p>
+<p class="zdoc_toc2"><a href="#7.1">7.1 - zUtilGetValue</a></p>
 
 
 <h1 class="zdoc"><a name="1">1 - Summary</a></h1>
@@ -70,10 +74,246 @@ SOFTWARE.
 </pre>
 
 
-<h1 class="zdoc"><a name="3">3 - zFile</a></h1>
+<h1 class="zdoc"><a name="3">3 - zData</a></h1>
+<p class="zdoc">Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.</p>
+
+<h2 class="zdoc"><a name="3.1">3.1 - zDataGet</a></h2>
+<p class="zdoc">Get a data's key'ed value.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$value = zDataListGet($data, $key);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$data</strong></nobr></td>
+<td class="zdoc_fill">The data structure.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$key</strong></nobr></td>
+<td class="zdoc_fill">The key value in the record we want the value for.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>*</strong></nobr></td>
+<td class="zdoc_fill">The value associated with the key for the data.  Type will depend on what is stored there.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="3.2">3.2 - zDataSave</a></h2>
+<p class="zdoc">Save the array of records to a php file.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+zDataSave($file, $data, $varName);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$file</strong></nobr></td>
+<td class="zdoc_fill">The file name to use to write to.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
+<td class="zdoc_fill">The list of records.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$varName</strong></nobr></td>
+<td class="zdoc_fill">The name of the php variable to be used for the array of records.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<p class="zdoc">No return value.</p>
+
+<h2 class="zdoc"><a name="3.3">3.3 - zDataSet</a></h2>
+<p class="zdoc">Set a data's key'ed value.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+zDataGet($data, $key, $value);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$data</strong></nobr></td>
+<td class="zdoc_fill">The data structure.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$key</strong></nobr></td>
+<td class="zdoc_fill">The key value in the data we want to set.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$value</strong></nobr></td>
+<td class="zdoc_fill">The value we want to associate with the key.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<p class="zdoc">No return value.</p>
+
+
+<h1 class="zdoc"><a name="4">4 - zDataList</a></h1>
+<p class="zdoc">Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.</p>
+
+<h2 class="zdoc"><a name="4.1">4.1 - zDataListAdd</a></h2>
+<p class="zdoc">Add a new record to the array.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$index = zDataListAdd($list);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
+<td class="zdoc_fill">The list to modify.  Pass in by reference.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>integer</strong></nobr></td>
+<td class="zdoc_fill">The index of the new record.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="4.2">4.2 - zDataListGet</a></h2>
+<p class="zdoc">Get a record's key'ed value from the array.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+$value = zDataListGet($list, $index, $key);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
+<td class="zdoc_fill">The list of records.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$index</strong></nobr></td>
+<td class="zdoc_fill">The index of the record in the list.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$key</strong></nobr></td>
+<td class="zdoc_fill">The key value in the record we want the value for.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>*</strong></nobr></td>
+<td class="zdoc_fill">The value associated with the key for the record.  Type will depend on what is stored there.</td>
+
+</tr>
+
+</tbody></table>
+
+<h2 class="zdoc"><a name="4.3">4.3 - zDataListSave</a></h2>
+<p class="zdoc">Save the array of records to a php file.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+zDataListSave($file, $list, $varName);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$file</strong></nobr></td>
+<td class="zdoc_fill">The file name to use to write to.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
+<td class="zdoc_fill">The list of records.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$varName</strong></nobr></td>
+<td class="zdoc_fill">The name of the php variable to be used for the array of records.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<p class="zdoc">No return value.</p>
+
+<h2 class="zdoc"><a name="4.4">4.4 - zDataListSet</a></h2>
+<p class="zdoc">Set a record's key'ed value in the array.</p>
+
+<h3 class="zdoc">Use:</h3>
+<pre class="zdoc">
+zDataListGet($list, $index, $key, $value);
+</pre>
+
+<h3 class="zdoc">Parameter:</h3>
+<table class="zdoc"><tbody class="zdoc">
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
+<td class="zdoc_fill">The list of records.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$index</strong></nobr></td>
+<td class="zdoc_fill">The index of the record in the list.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$key</strong></nobr></td>
+<td class="zdoc_fill">The key value in the record we want to set.</td>
+
+</tr>
+<tr class="zdoc">
+<td class="zdoc"><nobr><strong>$value</strong></nobr></td>
+<td class="zdoc_fill">The value we want to associate with the key.</td>
+
+</tr>
+
+</tbody></table>
+
+<h3 class="zdoc">Return:</h3>
+<p class="zdoc">No return value.</p>
+
+
+<h1 class="zdoc"><a name="5">5 - zFile</a></h1>
 <p class="zdoc">Functions for file io with optional file locking.</p>
 
-<h2 class="zdoc"><a name="3.1">3.1 - zDirCreate</a></h2>
+<h2 class="zdoc"><a name="5.1">5.1 - zDirCreate</a></h2>
 <p class="zdoc">Create a directory</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -101,7 +341,7 @@ $result = zDirCreate($dirName);
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="3.2">3.2 - zDirIsExsiting</a></h2>
+<h2 class="zdoc"><a name="5.2">5.2 - zDirIsExsiting</a></h2>
 <p class="zdoc">Check if a directory exists.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -129,7 +369,7 @@ $result = zDirIsExisting($dirName);
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="3.3">3.3 - zFileAppendText</a></h2>
+<h2 class="zdoc"><a name="5.3">5.3 - zFileAppendText</a></h2>
 <p class="zdoc">Append a string to a file.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -167,7 +407,7 @@ zFileAppendText($filePath, $string, $isLocking)
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="3.4">3.4 - zFileConnect</a></h2>
+<h2 class="zdoc"><a name="5.4">5.4 - zFileConnect</a></h2>
 <p class="zdoc">Connect to a file for reading or writing.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -205,7 +445,7 @@ $fileConnection = zFileConnect($filePath, $mode, $isLocking)
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="3.5">3.5 - zFileConnectIsGood</a></h2>
+<h2 class="zdoc"><a name="5.5">5.5 - zFileConnectIsGood</a></h2>
 <p class="zdoc">Check to see if the file connection was made.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -233,7 +473,7 @@ $result = zFileConnectIsGood($fileCon);
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="3.6">3.6 - zFileDisconnect</a></h2>
+<h2 class="zdoc"><a name="5.6">5.6 - zFileDisconnect</a></h2>
 <p class="zdoc">Disconnect from a file.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -254,7 +494,7 @@ zFileDisconnect($fileCon);
 <h3 class="zdoc">Result:</h3>
 <p class="zdoc">No return value;</p>
 
-<h2 class="zdoc"><a name="3.7">3.7 - zFileIsExisting</a></h2>
+<h2 class="zdoc"><a name="5.7">5.7 - zFileIsExisting</a></h2>
 <p class="zdoc">Test to see if a file exits.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -282,7 +522,7 @@ $result = zFileIsExisting($filePath);
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="3.8">3.8 - zFileLoadText</a></h2>
+<h2 class="zdoc"><a name="5.8">5.8 - zFileLoadText</a></h2>
 <p class="zdoc">Load the entire text file into one giant string.  This routine will open, read, and close the file.  You do not need a file connection array.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -315,7 +555,7 @@ $string = zFileLoadText($filePath, $isLocking);
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="3.9">3.9 - zFileLoadTextArray</a></h2>
+<h2 class="zdoc"><a name="5.9">5.9 - zFileLoadTextArray</a></h2>
 <p class="zdoc">Load the entire text file into an array of strings, one line of text file per string.  This routine will open, read, and close the file.  You do not need a file connection array.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -348,7 +588,7 @@ $stringArray = zFileLoadTextArray($filePath, $isLocking);
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="3.10">3.10 - zFileStoreText</a></h2>
+<h2 class="zdoc"><a name="5.10">5.10 - zFileStoreText</a></h2>
 <p class="zdoc">Replaces the entire file with the provided string.  This routine will open, write, and close the file.  You do not need a file connection array.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -386,7 +626,7 @@ $result = zFileStoreText($filePath, $string, $isLocking);
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="3.11">3.11 - zFileStoreTextArray</a></h2>
+<h2 class="zdoc"><a name="5.11">5.11 - zFileStoreTextArray</a></h2>
 <p class="zdoc">Replaces the entire file with the provided array of strings.  This routine will open, write, and close the file.  You do not need a file connection array.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -424,7 +664,7 @@ $result = zFileStoreTextArray($filePath, $lineArray, $isLocking);
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="3.12">3.12 - zFileWriteText</a></h2>
+<h2 class="zdoc"><a name="5.12">5.12 - zFileWriteText</a></h2>
 <p class="zdoc">Write to a file.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -458,147 +698,10 @@ zFileWriteText($fileCon, $string)
 </tbody></table>
 
 
-<h1 class="zdoc"><a name="4">4 - zList</a></h1>
-<p class="zdoc">Functions for managing an array of records.  This will handle the fetching, adding, updating, removal of records in the array of records and for the writing the php file for the array.</p>
-
-<h2 class="zdoc"><a name="4.1">4.1 - zListAdd</a></h2>
-<p class="zdoc">Add a new record to the array.</p>
-
-<h3 class="zdoc">Use:</h3>
-<pre class="zdoc">
-$index = zListAdd($list);
-</pre>
-
-<h3 class="zdoc">Parameter:</h3>
-<table class="zdoc"><tbody class="zdoc">
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
-<td class="zdoc_fill">The list to modify.  Pass in by reference.</td>
-
-</tr>
-
-</tbody></table>
-
-<h3 class="zdoc">Return:</h3>
-<table class="zdoc"><tbody class="zdoc">
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>integer</strong></nobr></td>
-<td class="zdoc_fill">The index of the new record.</td>
-
-</tr>
-
-</tbody></table>
-
-<h2 class="zdoc"><a name="4.2">4.2 - zListGet</a></h2>
-<p class="zdoc">Get a record's key'ed value from the array.</p>
-
-<h3 class="zdoc">Use:</h3>
-<pre class="zdoc">
-$value = zListGet($list, $index, $key);
-</pre>
-
-<h3 class="zdoc">Parameter:</h3>
-<table class="zdoc"><tbody class="zdoc">
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
-<td class="zdoc_fill">The list of records.</td>
-
-</tr>
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$index</strong></nobr></td>
-<td class="zdoc_fill">The index of the record in the list.</td>
-
-</tr>
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$key</strong></nobr></td>
-<td class="zdoc_fill">The key value in the record we want the value for.</td>
-
-</tr>
-
-</tbody></table>
-
-<h3 class="zdoc">Return:</h3>
-<table class="zdoc"><tbody class="zdoc">
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>*</strong></nobr></td>
-<td class="zdoc_fill">The value associated with the key for the record.  Type will depend on what is stored there.</td>
-
-</tr>
-
-</tbody></table>
-
-<h2 class="zdoc"><a name="4.3">4.3 - zListSave</a></h2>
-<p class="zdoc">Save the array of records to a php file.</p>
-
-<h3 class="zdoc">Use:</h3>
-<pre class="zdoc">
-zListSave($file, $list, $varName);
-</pre>
-
-<h3 class="zdoc">Parameter:</h3>
-<table class="zdoc"><tbody class="zdoc">
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$file</strong></nobr></td>
-<td class="zdoc_fill">The file name to use to write to.</td>
-
-</tr>
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
-<td class="zdoc_fill">The list of records.</td>
-
-</tr>
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$varName</strong></nobr></td>
-<td class="zdoc_fill">The name of the php variable to be used for the array of records.</td>
-
-</tr>
-
-</tbody></table>
-
-<h3 class="zdoc">Return:</h3>
-<p class="zdoc">No return value.</p>
-
-<h2 class="zdoc"><a name="4.4">4.4 - zListSet</a></h2>
-<p class="zdoc">Set a record's key'ed value in the array.</p>
-
-<h3 class="zdoc">Use:</h3>
-<pre class="zdoc">
-zListGet($list, $index, $key, $value);
-</pre>
-
-<h3 class="zdoc">Parameter:</h3>
-<table class="zdoc"><tbody class="zdoc">
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$list</strong></nobr></td>
-<td class="zdoc_fill">The list of records.</td>
-
-</tr>
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$index</strong></nobr></td>
-<td class="zdoc_fill">The index of the record in the list.</td>
-
-</tr>
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$key</strong></nobr></td>
-<td class="zdoc_fill">The key value in the record we want to set.</td>
-
-</tr>
-<tr class="zdoc">
-<td class="zdoc"><nobr><strong>$value</strong></nobr></td>
-<td class="zdoc_fill">The value we want to associate with the key.</td>
-
-</tr>
-
-</tbody></table>
-
-<h3 class="zdoc">Return:</h3>
-<p class="zdoc">No return value.</p>
-
-
-<h1 class="zdoc"><a name="5">5 - zLock</a></h1>
+<h1 class="zdoc"><a name="6">6 - zLock</a></h1>
 <p class="zdoc">File/Folder locking at a file/folder level.  This is very simple locking in that it uses and operating system trick of making a folder in the folder you want to make a lock in.  If two processes try to create the same folder, only one process will be successful.  The other will fail.  The one which is successful will be able to proceed.  Releasing the lock will mean the deletion of the folder.  Eventually the other process will be able to create the folder an 'obtain' a lock.</p>
 
-<h2 class="zdoc"><a name="5.1">5.1 - zLockCreate</a></h2>
+<h2 class="zdoc"><a name="6.1">6.1 - zLockCreate</a></h2>
 <p class="zdoc">Create a lock.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -626,7 +729,7 @@ $lock = zLockCreate($name);
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="5.2">5.2 - zLockCreateFile</a></h2>
+<h2 class="zdoc"><a name="6.2">6.2 - zLockCreateFile</a></h2>
 <p class="zdoc">Create a lock on a specific file name.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -654,7 +757,7 @@ $lock = zLockCreateFile($fileName);
 
 </tbody></table>
 
-<h2 class="zdoc"><a name="5.3">5.3 - zLockDestroy</a></h2>
+<h2 class="zdoc"><a name="6.3">6.3 - zLockDestroy</a></h2>
 <p class="zdoc">Release a lock.</p>
 
 <h3 class="zdoc">Use:</h3>
@@ -676,10 +779,10 @@ zLockDestroy($name);
 <p class="zdoc">No return value.</p>
 
 
-<h1 class="zdoc"><a name="6">6 - zUtil</a></h1>
+<h1 class="zdoc"><a name="7">7 - zUtil</a></h1>
 <p class="zdoc">A collection of routines that are generic that do not have a dedicated heading for them.</p>
 
-<h2 class="zdoc"><a name="6.1">6.1 - zUtilGetValue</a></h2>
+<h2 class="zdoc"><a name="7.1">7.1 - zUtilGetValue</a></h2>
 <p class="zdoc">Fetch the value for a key from a GET or POST message.</p>
 
 <h3 class="zdoc">Use:</h3>

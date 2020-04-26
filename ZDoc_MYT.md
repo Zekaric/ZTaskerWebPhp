@@ -6,21 +6,22 @@
 **2 - Install**<br />
 **3 - Use**<br />
  3.1 - Common Commands<br />
-  3.1.1 - O Command, Ordering the Project list<br />
-  3.1.2 - V Command, Visibility setting of a Project<br />
-  3.1.3 - L Command, Change list.<br />
+  3.1.1 - L Command, Change list<br />
+  3.1.2 - O Command, Ordering the list<br />
+  3.1.3 - P Command, Visibility setting of a Project<br />
  3.2 - Project List Commands<br />
   3.2.1 - A Command, Add a Project<br />
   3.2.2 - E Command, Edit a Project<br />
  3.3 - Task List Commands<br />
   3.3.1 - A Command, Add a Task<br />
-  3.3.2 - E Command, Edit a Project<br />
+  3.3.2 - E Command, Edit a Task<br />
   3.3.3 - S Command, Change the Status of a Task<br />
-  3.3.4 - Tilde Command, Delete a Task<br />
+  3.3.4 - T Command, Visibility setting of a Task<br />
+  3.3.5 - Tilde Command, Delete a Task<br />
 
 # 1 - Summary
 
-Mighty is a simple task tracker as well as a simple web program.  All work is performed on a command line prompt with simple commands.  The ideal is speed of entry and speed of keeping it all in order.
+My Tea is a simple task tracker as well as a simple web program.  All work is performed on a command line prompt with simple commands.  The ideal is speed of entry and speed of keeping it all in order.
 
 # 2 - Install
 
@@ -63,7 +64,15 @@ There is help text below the command line to show what commands are available in
 
 These commands for the command line are the same no matter which list you are currently showing.
 
-### 3.1.1 - O Command, Ordering the Project list
+### 3.1.1 - L Command, Change list
+
+```
+l
+```
+
+This command will toggle between the project list and the task list.
+
+### 3.1.2 - O Command, Ordering the list
 
 ```
 ojV
@@ -73,30 +82,22 @@ Order the list by column "j" and then by column "v".  Each column has a letter p
 
 A capital letter will invert the sort order for that column.  So in the above command the visibility (vis) column will be inverted in sort order.
 
-### 3.1.2 - V Command, Visibility setting of a Project
+### 3.1.3 - P Command, Visibility setting of a Project
 
 ```
-v23 +
-v. -
-v.
-V4
+p23 +
+p. -
+p.
+P4
 ```
 
-First v command includes a project id.  23 in this case.  There is no space between v and the number.  There is a space between the project id number and "+".  The "+" is saying we want to make project with PID 23 to be visible.
+First command includes a project id.  23 in this case.  There is no space between "p" and the number.  There is a space between the project id number and "+".  The "+" is saying we want to make project with PID 23 to be visible.
 
-Second v command has a "." for project id.  This means this visibility command applies to all projects.  The "-" meands we what to turn off the visibility.  So this command will turn off the visibility for all Projects.
+Second command has a "." for project id.  This means this visibility command applies to all projects.  The "-" meands we what to turn off the visibility.  So this command will turn off the visibility for all Projects.
 
-Third v command similar to the second one except there is no "+" or "-" that follows.  This will toggle the visibility of each project in the list.
+Third command similar to the second one except there is no "+" or "-" that follows.  This will toggle the visibility of each project in the list.
 
-Fourth v command uses a capital V.  This essentially performs the command "v. -" followed by a "v4 +" command.  Or in other words.  Make only the project with PID equal to 4 visible and everything else invisible.
-
-### 3.1.3 - L Command, Change list.
-
-```
-l
-```
-
-You can add "t" or "p" but it really is unnecessary.  "l" by itself will toggle between the project list and the task list.
+Fourth command uses a capital "P".  This essentially performs the command "p. -" followed by a "p4 +" command.  Or in other words.  Make only the project with PID equal to 4 visible and everything else invisible.
 
 ## 3.2 - Project List Commands
 
@@ -148,7 +149,7 @@ All options are optional.  "n", "p", "e" will default to what is shown above the
 
 PID values are automatically assigned.
 
-### 3.3.2 - E Command, Edit a Project
+### 3.3.2 - E Command, Edit a Task
 
 ```
 e1 n12 p2 e3 siw `Fix problem with that thing and that other thing.
@@ -172,7 +173,33 @@ Second command will change the status of Task whose id is 2 to the previous logi
 
 Third command will change the status of Task whose id is 3 to "ad" which is "Archive Done"
 
-### 3.3.4 - Tilde Command, Delete a Task
+### 3.3.4 - T Command, Visibility setting of a Task
+
+```
+ta
+t.
+twtdra
+```
+
+First command will toggle the visibility of archived tasks.
+
+Second command will change toggle the visibility of all status options.
+
+Third command will do the same thing as the second command.
+
+Similar to the o command you can provide any combination of the letters.
+
+"a" for archived tasks.
+
+"d" for documentation tasks.
+
+"r" for releas tasks.
+
+"t" for testing tasks.
+
+"w" for work tasks.
+
+### 3.3.5 - Tilde Command, Delete a Task
 
 ```
 ~13

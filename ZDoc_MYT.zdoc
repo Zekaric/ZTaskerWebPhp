@@ -3,7 +3,7 @@ HH Table Of Contents
 toc
 
 h	|chapter| - Summary
-	Mighty is a simple task tracker as well as a simple web program.  All work is performed on a command line prompt with simple commands.  The ideal is speed of entry and speed of keeping it all in order.
+	My Tea is a simple task tracker as well as a simple web program.  All work is performed on a command line prompt with simple commands.  The ideal is speed of entry and speed of keeping it all in order.
 
 h	|chapter| - Install
 	Copy the files to a browser accessable folder on your web server.
@@ -30,26 +30,26 @@ hh	|chapter| - Common Commands
 
 	These commands for the command line are the same no matter which list you are currently showing.
 
-hhh	|chapter| - O Command, Ordering the Project list
+hhh	|chapter| - L Command, Change list
+...	l
+	This command will toggle between the project list and the task list.
+
+hhh	|chapter| - O Command, Ordering the list
 ...	ojV
 	Order the list by column "j" and then by column "v".  Each column has a letter prefix.  This is the letter you provide to the "o" command.  You can sort by one or more columns.
 	A capital letter will invert the sort order for that column.  So in the above command the visibility (vis) column will be inverted in sort order.
 
-hhh	|chapter| - V Command, Visibility setting of a Project
+hhh	|chapter| - P Command, Visibility setting of a Project
 ...[
-v23 +
-v. -
-v.
-V4
+p23 +
+p. -
+p.
+P4
 ...]
-	First v command includes a project id.  23 in this case.  There is no space between v and the number.  There is a space between the project id number and "+".  The "+" is saying we want to make project with PID 23 to be visible.
-	Second v command has a "." for project id.  This means this visibility command applies to all projects.  The "-" meands we what to turn off the visibility.  So this command will turn off the visibility for all Projects.
-	Third v command similar to the second one except there is no "+" or "-" that follows.  This will toggle the visibility of each project in the list.
-	Fourth v command uses a capital V.  This essentially performs the command "v. -" followed by a "v4 +" command.  Or in other words.  Make only the project with PID equal to 4 visible and everything else invisible.
-
-hhh	|chapter| - L Command, Change list.
-...	l
-	You can add "t" or "p" but it really is unnecessary.  "l" by itself will toggle between the project list and the task list.
+	First command includes a project id.  23 in this case.  There is no space between "p" and the number.  There is a space between the project id number and "+".  The "+" is saying we want to make project with PID 23 to be visible.
+	Second command has a "." for project id.  This means this visibility command applies to all projects.  The "-" meands we what to turn off the visibility.  So this command will turn off the visibility for all Projects.
+	Third command similar to the second one except there is no "+" or "-" that follows.  This will toggle the visibility of each project in the list.
+	Fourth command uses a capital "P".  This essentially performs the command "p. -" followed by a "p4 +" command.  Or in other words.  Make only the project with PID equal to 4 visible and everything else invisible.
 
 hh	|chapter| - Project List Commands
 
@@ -78,7 +78,7 @@ hhh	|chapter| - A Command, Add a Task
 	All options are optional.  "n", "p", "e" will default to what is shown above the command line.  "s" will default to "nw" which means needs work.  "`" is optional but technically needed for this command.
 	PID values are automatically assigned.  
 
-hhh	|chapter| - E Command, Edit a Project
+hhh	|chapter| - E Command, Edit a Task
 ...	e1 n12 p2 e3 siw `Fix problem with that thing and that other thing.
 	Edit an existing task.  Id number must be a valid task id and cannot be omitted or can be ".".
 	See "a" command above.  Again all options are optional.  Existing values will not change if they are not provided.
@@ -92,6 +92,22 @@ s3 ad
 	First command will change the status of Task whose id is 1 to the next logical state.
 	Second command will change the status of Task whose id is 2 to the previous logical state.
 	Third command will change the status of Task whose id is 3 to "ad" which is "Archive Done"
+
+hhh	|chapter| - T Command, Visibility setting of a Task
+...[
+ta
+t.
+twtdra
+...]
+	First command will toggle the visibility of archived tasks. 
+	Second command will change toggle the visibility of all status options.
+	Third command will do the same thing as the second command.  
+	Similar to the o command you can provide any combination of the letters.
+	"a" for archived tasks.
+	"d" for documentation tasks.
+	"r" for releas tasks.
+	"t" for testing tasks.
+	"w" for work tasks.
 
 hhh	|chapter| - Tilde Command, Delete a Task
 ...	~13
