@@ -487,8 +487,6 @@ if ($str != "")
          $val = substr($str, 0, 1);
          $str = substr($str, 1);
               
-         zDebugPrint($val);
-
          if ($val == "." || $val == "a")
          {
             mytVarSetIsVisibleArchive(!mytVarIsVisibleArchive());
