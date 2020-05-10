@@ -1,5 +1,5 @@
 <?php
-/* mytDisplay **************************************************************
+/* mytDisplay *****************************************************************
 
 Author: Robbert de Groot
 
@@ -102,6 +102,7 @@ END;
 
   <table>
    <tbody>
+    <tr>
 END;
 
    // Get the project list.  It's always needed.
@@ -115,7 +116,6 @@ END;
       // Print the table header.
 
       print <<< END
-    <tr>
       <th><nobr>n:PID</nobr></th>
        <th><nobr>v:Vis</nobr></th>
         <th><nobr>j:Project</nobr></th>
@@ -144,7 +144,7 @@ END;
          // Display the project data.
          if (($index % 2) == 0)
          {
-            print "         <tr class=\"altrow\">\n";
+            print "         <tr class=\"rowAlt\">\n";
          }
          else
          {
@@ -164,10 +164,59 @@ END;
    else
    {
       /////////////////////////////////////////////////////////////////////////
+      // Print the task visibility
+      print <<< END
+     <td> 
+      <table class="narrow">
+       <tbody>
+        <tr>
+         <th>Task Visibility</th>
+        </tr>
+        <tr>
+         <td>
+END;
+
+      // Print the task visibilities.
+      $aIsVis = "<img class=sized src=rankBit0.svg />";
+      if (mytVarIsVisibleArchive())
+      {
+         $aIsVis = "<img class=sized src=rankBit1.svg />";
+      }
+      $dIsVis = "<img class=sized src=rankBit0.svg />";
+      if (mytVarIsVisibleDocumentation())
+      {
+         $dIsVis = "<img class=sized src=rankBit1.svg />";
+      }
+      $rIsVis = "<img class=sized src=rankBit0.svg />";
+      if (mytVarIsVisibleRelease())
+      {
+         $rIsVis = "<img class=sized src=rankBit1.svg />";
+      }
+      $tIsVis = "<img class=sized src=rankBit0.svg />";
+      if (mytVarIsVisibleTesting())
+      {
+         $tIsVis = "<img class=sized src=rankBit1.svg />";
+      }
+      $wIsVis = "<img class=sized src=rankBit0.svg />";
+      if (mytVarIsVisibleWork())
+      {
+         $wIsVis = "<img class=sized src=rankBit1.svg />";
+      }
+
+      print "" .
+         "        <tr class=\"rowAlt\"><td><nobr>" . $wIsVis . " Work         </nobr></td></tr>" .
+         "        <tr                 ><td><nobr>" . $tIsVis . " Testing      </nobr></td></tr>" .
+         "        <tr class=\"rowAlt\"><td><nobr>" . $dIsVis . " Documentation</nobr></td></tr>" .
+         "        <tr                 ><td><nobr>" . $rIsVis . " Release      </nobr></td></tr>" .
+         "        <tr class=\"rowAlt\"><td><nobr>" . $aIsVis . " Archive      </nobr></td></tr>" .
+         "       </tbody>\n" .
+         "      </table>\n" .
+         "     </td>\n";
+
+      /////////////////////////////////////////////////////////////////////////
       // Print the table header
 
       print <<< END
-    <tr>
      <td> 
       <table class="narrow">
        <tbody>
@@ -195,7 +244,7 @@ END;
          // Display the project data.
          if (($index % 2) == 0)
          {
-            print "         <tr class=\"altrow\">\n";
+            print "         <tr class=\"rowAlt\">\n";
          }
          else
          {
@@ -319,16 +368,28 @@ END;
          $taskDesc = mytTaskGetDescription($index);
 
          // Display the task.
-         if (($rowIndex % 2) == 0)
+         $alt = "";
+         if (($rowIndex % 2) == 0) 
          {
-            print "" .
-                "        <tr class=\"altrow\">\n";
+            $alt = "Alt";
          }
-         else
+
+         switch ($status)
          {
-            print "" .
-                "        <tr>\n";
+         default:
+         case "nw": print "        <tr class=\"rowStyle1" . $alt . "\">\n"; break;
+         case "iw": print "        <tr class=\"rowStyle2" . $alt . "\">\n"; break;
+         case "nt": print "        <tr class=\"rowStyle3" . $alt . "\">\n"; break;
+         case "it": print "        <tr class=\"rowStyle4" . $alt . "\">\n"; break;
+         case "nd": print "        <tr class=\"rowStyle5" . $alt . "\">\n"; break;
+         case "id": print "        <tr class=\"rowStyle6" . $alt . "\">\n"; break;
+         case "nr": print "        <tr class=\"rowStyle7" . $alt . "\">\n"; break;
+         case "ir": print "        <tr class=\"rowStyle8" . $alt . "\">\n"; break;
+         case "ar": print "        <tr class=\"rowStyle9" . $alt . "\">\n"; break;
+         case "ad": print "        <tr class=\"rowStyle9" . $alt . "\">\n"; break;
+         case "an": print "        <tr class=\"rowStyle9" . $alt . "\">\n"; break;
          }
+
          print "" .
             "          <td class=\"num\">"        . $taskId        . "</td>\n" .
             "           <td class=\"num\">"       . $projId        . "</td>\n" .
@@ -343,25 +404,16 @@ END;
       }
 
       // Print a count. 
-      if (($rowIndex % 2) == 0)
-      {
-         print "" .
-             "        <tr class=\"altrow\">\n";
-      }
-      else
-      {
-         print "" .
-             "        <tr>\n";
-      }
       print "" .
-            "          <td class=\"num\"><nobr>Count: " . $rowIndex . "</nobr></td>\n" .
-            "           <td></td>\n" .
-            "            <td></td>\n" .
-            "             <td></td>\n" .
-            "              <td></td>\n" .
-            "               <td></td>\n" .
-            "                <td class=\"fill\"></td>\n" .
-            "        </tr>\n";
+         "        <tr>\n" .
+         "          <td class=\"num\"><nobr>Count: " . $rowIndex . "</nobr></td>\n" .
+         "           <td></td>\n" .
+         "            <td></td>\n" .
+         "             <td></td>\n" .
+         "              <td></td>\n" .
+         "               <td></td>\n" .
+         "                <td class=\"fill\"></td>\n" .
+         "        </tr>\n";
    }
 
    ////////////////////////////////////////////////////////////////////////////
@@ -382,51 +434,10 @@ END;
   <table>
    <tbody>
     <tr>
-     <th>Task Visibility</th>
      <th class="fill">Default values</th>
     </tr>
     <tr>
-     <td>
-END;
-
-      // Print the task visibilities.
-      $aIsVis = "<img class=sized src=rankBit0.svg />";
-      if (mytVarIsVisibleArchive())
-      {
-         $aIsVis = "<img class=sized src=rankBit1.svg />";
-      }
-      $dIsVis = "<img class=sized src=rankBit0.svg />";
-      if (mytVarIsVisibleDocumentation())
-      {
-         $dIsVis = "<img class=sized src=rankBit1.svg />";
-      }
-      $rIsVis = "<img class=sized src=rankBit0.svg />";
-      if (mytVarIsVisibleRelease())
-      {
-         $rIsVis = "<img class=sized src=rankBit1.svg />";
-      }
-      $tIsVis = "<img class=sized src=rankBit0.svg />";
-      if (mytVarIsVisibleTesting())
-      {
-         $tIsVis = "<img class=sized src=rankBit1.svg />";
-      }
-      $wIsVis = "<img class=sized src=rankBit0.svg />";
-      if (mytVarIsVisibleWork())
-      {
-         $wIsVis = "<img class=sized src=rankBit1.svg />";
-      }
-
-      print "<table><tbody>" .
-         "<tr><td><nobr>" . $wIsVis . " Work</nobr></td></tr>" .
-         "<tr><td><nobr>" . $tIsVis . " Testing</nobr></td></tr>" .
-         "<tr><td><nobr>" . $dIsVis . " Documentation</nobr></td></tr>" .
-         "<tr><td><nobr>" . $rIsVis . " Release</nobr></td></tr>" .
-         "<tr><td><nobr>" . $aIsVis . " Archive</nobr></td></tr>" .
-         "</tbody></table>\n";
-
-      print <<< END
-     </td>
-     <td class="fill">
+     <td class="fill"><nobr>
 END;
 
       // Print the defaults.
@@ -454,14 +465,13 @@ END;
       case 5: $defaultEffort = "<img class=sized src= rank5.svg />"; break;
       }
    
-      print "<table><tbody>" .
-         "<tr><td>n</td><td class=\"fill\"><nobr>" . $defaultPid . " " . $defaultProject . "</nobr></td></tr>\n" .
-         "<tr><td>p</td><td>" . $defaultPriority . "</td></tr>\n" .
-         "<tr><td>e</td><td>" . $defaultEffort . "</td></tr>\n" .
-         "</tbody></table>\n";
+      print "" .
+         "n " . $defaultPid      . " " . $defaultProject . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" .
+         "p " . $defaultPriority . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" .
+         "e " . $defaultEffort;
 
       print <<< END
-     </td>
+     </nobr></td>
     </tr>
    </tobdy>
   </table>

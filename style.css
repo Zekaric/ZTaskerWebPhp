@@ -82,10 +82,25 @@ th.desc
    margin:              1rem;
 }
 
-tr.altrow
-{
-   background-color:	#eee;
-}
+tr.rowAlt       { background-color: #f8f8f8; }
+tr.rowStyle1    { background-color: #ffd8d8; }
+tr.rowStyle1Alt { background-color: #ffd0d0; }
+tr.rowStyle2    { background-color: #ffb8b8; }
+tr.rowStyle2Alt { background-color: #ffb0b0; }
+tr.rowStyle3    { background-color: #ffffd8; }
+tr.rowStyle3Alt { background-color: #ffffb8; }
+tr.rowStyle4    { background-color: #ffff00; }
+tr.rowStyle4Alt { background-color: #f8f800; }
+tr.rowStyle5    { background-color: #d8ffff; }
+tr.rowStyle5Alt { background-color: #68ffff; }
+tr.rowStyle6    { background-color: #00efef; }
+tr.rowStyle6Alt { background-color: #00e8e8; }
+tr.rowStyle7    { background-color: #d8d8ff; }
+tr.rowStyle7Alt { background-color: #d0d0ff; }
+tr.rowStyle8    { background-color: #b8b8ff; }
+tr.rowStyle8Alt { background-color: #b0b0ff; }
+tr.rowStyle9    { background-color: #ffffff; }
+tr.rowStyle9Alt { background-color: #f8f8f8; }
 
 td
 {
