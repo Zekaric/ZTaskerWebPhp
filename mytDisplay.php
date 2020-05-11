@@ -390,13 +390,26 @@ END;
          case "an": print "        <tr class=\"rowStyle9" . $alt . "\">\n"; break;
          }
 
+         $uri = $_SERVER["REQUEST_URI"];
+         $uri = substr($uri, 0, strrpos($uri, "/") + 1);
+         $statusPrev = "<button onclick=\"window.location.href='" . $uri . "?cmd=s" . $taskId . "+-';\">-</button>";
+         $statusNext = "<button onclick=\"window.location.href='" . $uri . "?cmd=s" . $taskId . "+%2B';\">+</button>";
+         $statusDone = "<button onclick=\"window.location.href='" . $uri . "?cmd=s" . $taskId . "+ad';\">X</button>";
+         $statusButtons = "";
+         if (!($status == "ar" ||
+               $status == "ad" ||
+               $status == "an"))
+         {
+            $statusButtons = $statusPrev . $statusNext . $statusDone . " ";
+         }
+
          print "" .
             "          <td class=\"num\">"        . $taskId        . "</td>\n" .
             "           <td class=\"num\">"       . $projId        . "</td>\n" .
             "            <td>"                    . $projName      . "</td>\n" .
             "             <td>"                   . $taskPriority  . "</td>\n" .
             "              <td>"                  . $taskEffort    . "</td>\n" .
-            "               <td>"                 . $taskStatus    . "</td>\n" .
+            "               <td><nobr>"           . $statusButtons . $taskStatus . "</nobr></td>\n" .
             "                <td class=\"fill\">" . $taskDesc      . "</td>\n" .
             "        </tr>\n";
 
