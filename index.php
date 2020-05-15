@@ -54,7 +54,7 @@ function _ParseCommand($str)
    $str    = trim($str);
    $letter = substr($str, 0, 1);
    $str    = trim(substr($str, 1));
-
+   
    // Prep the result.
    $result    = array();
    $result[0] = "";
@@ -113,15 +113,17 @@ function _ParseCommand($str)
          $letter = substr($str, 0, 1);
          if ($letter == "`")
          {
-            $result[1] = trim($val);
-            $result[2] = trim($str);
-      
-            return $result;
+            break;
          }
 
          $val .= $letter;
          $str  = substr($str, 1);
       }
+
+      $result[1] = trim($val);
+      $result[2] = trim($str);
+
+      return $result;
    }
 }
 
